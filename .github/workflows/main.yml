@@ -8,8 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Removing unnecessary files
-      run: rm -r ./dist
     - name: All things angular
       uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.4.0
       with:
