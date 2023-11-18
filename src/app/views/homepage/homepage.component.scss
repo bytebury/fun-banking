@@ -18,11 +18,11 @@ header {
 
     h1 {
       margin-bottom: 16px;
-      @apply text-5xl font-extrabold;
+      @apply text-3xl md:text-5xl font-extrabold;
     }
 
     p {
-      @apply text-2xl;
+      @apply text-lg md:text-2xl;
     }
   }
 
