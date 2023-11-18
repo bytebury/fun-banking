@@ -1,27 +1,25 @@
-# FunBanking
+# <img src="./src/assets/favicon.svg" width="28" height="20"> Fun Banking
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.0.
+Where money makes cents &mdash; your online banking simulator.
 
-## Development server
+## 🐷 Welcome!
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Get your piggy bank loaded with Fun Banking! We are an online banking simulator. Our goal is to have an easy, intuitive tool to help children and students manage money. While, our goal is to help children and students; the app can be used for anything or anyone.
 
-## Code scaffolding
+## Our Roadmap
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+We are working towards creating Fun Banking 2.0 (our current website is outdated and doesn't offer many features). Our "next wave" Fun Banking application will have the following features on day one, and we'll grow our features from there:
 
-## Build
+- [ ] Account Creation
+- [ ] Banks
+- [ ] Customers (these are your students / children)
+- [ ] Bulk-add Customers
+- [ ] Customer Sign-on via PINs
+- [ ] Checking Accounts
+- [ ] Money Transfers (e.g. Withdraw and Deposit)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## FAQ
 
-## Running unit tests
+### What about my current account?
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+We're going to work towards automatically migrating over data, but if we are unable to, we'll start fresh but give all of our users a heads up before migration starts.
