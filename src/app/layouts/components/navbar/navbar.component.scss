@@ -1,0 +1,60 @@
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  height: 55px;
+  width: 100%;
+  padding: 0 16px;
+  @apply border-b border-gray-200;
+
+  a {
+    @apply no-underline;
+    @apply text-inherit;
+    @apply inline-block rounded-lg;
+    @apply ease-in-out duration-300 transition-all;
+    @apply hover:bg-primary active:bg-primary-dark;
+  }
+
+  a.brand {
+    @apply py-2 px-0;
+    @apply hover:px-3 hover:-mx-3;
+  }
+
+  a.login {
+    @apply hover:px-2 hover:-mx-2;
+    @apply py-1;
+  }
+
+  a.action {
+    @apply py-1 font-bold bg-primary hover:bg-primary-dark active:bg-primary-darker;
+  }
+
+  .arrow-btn {
+    position: relative;
+    @apply pl-2 pr-8;
+
+    &:hover::after {
+      right: 8px;
+    }
+
+    &::after {
+      position: absolute;
+      content: " →";
+      right: 12px;
+      @apply transition-all ease-in-out duration-300;
+    }
+  }
+
+  h1 {
+    @apply text-xl font-extrabold;
+  }
+
+  .hamburger-toggle {
+    @apply py-2 rounded-lg;
+    @apply duration-300 transition-all ease-in-out;
+    @apply hover:px-3 hover:-mx-3;
+    @apply hover:bg-primary;
+  }
+}

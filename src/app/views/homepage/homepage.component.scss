@@ -1,0 +1,56 @@
+header {
+  padding: 64px 0;
+  @apply bg-primary/25;
+
+  a {
+    @apply text-inherit no-underline;
+  }
+
+  .container {
+    @apply max-w-full md:max-w-[720px];
+  }
+
+  section:first-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    h1 {
+      margin-bottom: 16px;
+      @apply text-5xl font-extrabold;
+    }
+
+    p {
+      @apply text-2xl;
+    }
+  }
+
+  div.call-to-action {
+    @apply flex flex-col items-center gap-4 mt-8;
+  }
+
+  a.action-btn {
+    position: relative;
+    @apply inline-block w-fit;
+    @apply rounded-lg font-bold text-xl py-2 pl-8 px-12;
+    @apply transition-all ease-in-out duration-300;
+    @apply font-bold bg-primary hover:bg-primary-dark active:bg-primary-darker;
+
+    &:hover::after {
+      right: 14px;
+    }
+
+    &::after {
+      position: absolute;
+      right: 20px;
+      @apply transition-all ease-in-out duration-300;
+      content: " →";
+    }
+  }
+
+  .fine-print {
+    @apply flex gap-2 items-center;
+    @apply text-sm text-gray-500;
+  }
+}

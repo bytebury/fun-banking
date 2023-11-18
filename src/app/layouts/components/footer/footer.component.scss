@@ -1,0 +1,20 @@
+footer {
+  @apply w-full text-sm border-t border-gray-200 py-4 bg-gray-50;
+
+  .wrapper {
+    @apply flex flex-col md:flex-row justify-between items-center md:items-baseline;
+    @apply gap-2;
+  }
+
+  ul {
+    @apply flex gap-2;
+  }
+
+  .copyright {
+    @apply flex flex-col items-center md:items-start text-gray-600 w-full md:w-fit;
+
+    div {
+      @apply flex items-center gap-1;
+    }
+  }
+}
