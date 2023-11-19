@@ -7,20 +7,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
   @apply text-gray-800;
-}
-
-app-root {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-}
-
-app-footer {
-  margin-top: auto;
 }
 
 a {
