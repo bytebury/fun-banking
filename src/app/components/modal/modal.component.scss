@@ -1,0 +1,36 @@
+:host {
+  display: block;
+}
+
+.modal {
+  @apply relative z-30;
+}
+
+.backdrop {
+  @apply fixed inset-0 bg-gray-400 bg-opacity-75 backdrop-blur-sm transition-opacity;
+}
+
+.body {
+  @apply bg-white p-4;
+}
+
+.footer {
+  @apply bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6;
+}
+
+.content {
+  @apply mt-2;
+}
+
+button.cancel {
+  @apply absolute right-2 top-2 rounded-full p-2 text-gray-500;
+  @apply transition-colors duration-300 ease-linear;
+
+  &:hover {
+    @apply bg-gray-200 text-gray-900;
+  }
+}
+
+h3 {
+  @apply text-lg font-semibold leading-6 text-gray-900;
+}

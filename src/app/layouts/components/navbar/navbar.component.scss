@@ -59,3 +59,21 @@ nav {
     @apply hover:bg-primary;
   }
 }
+
+.modal-nav {
+  ul {
+    @apply flex flex-col justify-start items-start gap-1;
+
+    li {
+      @apply w-full border-b border-gray-200;
+
+      &:first-child {
+        @apply border-t;
+      }
+    }
+
+    li a {
+      @apply w-full py-2 block no-underline hover:underline;
+    }
+  }
+}
