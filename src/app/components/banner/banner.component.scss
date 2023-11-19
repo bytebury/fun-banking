@@ -1,0 +1,19 @@
+:host {
+  display: block;
+}
+
+.banner {
+  @apply flex items-center text-sm gap-3 rounded-lg p-2 border-dashed border;
+
+  .pill {
+    @apply p-1.5 rounded-lg;
+  }
+
+  &.default {
+    @apply bg-pink-100 border-pink-200;
+
+    .pill {
+      @apply bg-pink-200;
+    }
+  }
+}
