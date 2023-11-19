@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  Renderer2,
   ViewChild,
   signal,
 } from '@angular/core';
@@ -18,6 +19,8 @@ import {
 export class ModalComponent {
   @ViewChild('modal') modal!: ElementRef;
 
+  constructor(private renderer: Renderer2) {}
+
   isModalOpen = signal(false);
 
   dismiss(event: any): void {
@@ -28,9 +31,11 @@ export class ModalComponent {
 
   close(): void {
     this.isModalOpen.set(false);
+    this.renderer.setStyle(document.body, 'overflow', 'auto');
   }
 
   open(): void {
     this.isModalOpen.set(true);
+    this.renderer.setStyle(document.body, 'overflow', 'hidden');
   }
 }

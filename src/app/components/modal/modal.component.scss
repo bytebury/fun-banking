@@ -4,6 +4,12 @@
 
 .modal {
   @apply relative z-30;
+
+  .card {
+    min-height: 100svh;
+    min-height: -webkit-fill-available;
+    overflow-y: auto;
+  }
 }
 
 .backdrop {
