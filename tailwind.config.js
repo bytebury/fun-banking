@@ -7,6 +7,10 @@ module.exports = {
         center: true,
         padding: "16px",
       },
+      screens: {
+        xl: "768px",
+        "2xl": "768px",
+      },
       colors: {
         primary: "#b7f7c8",
         "primary-dark": "#84d198",
