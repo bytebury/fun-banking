@@ -1,0 +1,32 @@
+<app-secured-layout>
+  <ng-container ngProjectAs="title">Sign in to Fun Banking</ng-container>
+  <form [formGroup]="signinForm">
+    <div class="form-input">
+      <input
+        formControlName="email"
+        id="email"
+        type="email"
+        autocomplete="email"
+        maxlength="255"
+        required
+      />
+      <label for="email">Email</label>
+    </div>
+    <div class="form-input">
+      <input
+        formControlName="password"
+        id="password"
+        type="password"
+        maxlength="255"
+        autocomplete="new-password"
+        required
+      />
+      <label for="password">Password</label>
+    </div>
+    <input type="submit" value="Sign in" [disabled]="signinForm.invalid" />
+  </form>
+  <div class="flex flex-col gap-2 mt-4 text-center">
+    <div>Need have an account? <a routerLink="/signup">Sign up here</a>.</div>
+    <div><a routerLink="/signup"> Forgot your password?</a></div>
+  </div>
+</app-secured-layout>

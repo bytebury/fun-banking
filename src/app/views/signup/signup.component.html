@@ -1,0 +1,86 @@
+<app-secured-layout>
+  <ng-container ngProjectAs="title">Sign up for Fun Banking</ng-container>
+  <form [formGroup]="signupForm">
+    <div class="flex flex-col md:flex-row gap-4">
+      <div class="form-input">
+        <input
+          formControlName="firstName"
+          id="first_name"
+          type="text"
+          autocomplete="given-name"
+          maxlength="25"
+          required
+        />
+        <label for="first_name">First Name</label>
+      </div>
+      <div class="form-input">
+        <input
+          formControlName="lastName"
+          id="last_name"
+          type="text"
+          autocomplete="family-name"
+          maxlength="25"
+          required
+        />
+        <label for="last_name">Last Name</label>
+      </div>
+    </div>
+    <div class="form-input">
+      <input
+        formControlName="username"
+        id="username"
+        type="text"
+        maxlength="12"
+        autocomplete="username"
+        required
+      />
+      <label for="username">Username</label>
+    </div>
+    <div class="form-input">
+      <input
+        formControlName="email"
+        id="email"
+        type="email"
+        autocomplete="email"
+        maxlength="255"
+        required
+      />
+      <label for="email">Email</label>
+    </div>
+    <div class="form-input">
+      <input
+        formControlName="password"
+        id="password"
+        type="password"
+        maxlength="255"
+        autocomplete="new-password"
+        required
+      />
+      <label for="password">Password</label>
+    </div>
+    <div class="form-input">
+      <input
+        formControlName="passwordConfirmation"
+        id="password_confirmation"
+        type="password"
+        maxlength="255"
+        autocomplete="new-password"
+        required
+      />
+      <label for="password_confirmation">Confirm Password</label>
+    </div>
+    <input
+      type="submit"
+      value="Create my Account"
+      [disabled]="signupForm.invalid"
+    />
+    <p class="text-gray-500 text-xs text-center">
+      By creating an account, you agree to our Privacy and Terms.
+    </p>
+  </form>
+  <div class="flex flex-col gap-2 mt-4 text-center">
+    <div>
+      Already have an account? <a routerLink="/signin">Sign in here</a>.
+    </div>
+  </div>
+</app-secured-layout>

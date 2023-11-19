@@ -1,0 +1,7 @@
+:host {
+  display: block;
+}
+
+form {
+  @apply flex flex-col gap-4;
+}

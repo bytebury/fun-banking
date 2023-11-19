@@ -5,12 +5,46 @@
 
 html,
 body {
-  margin: 0;
-  padding: 0;
-  @apply text-gray-800;
+  @apply m-0 p-0 text-gray-800;
 }
 
 a {
   text-decoration: underline;
   @apply text-primary-link;
+}
+
+/** Forms are globally styled */
+form {
+  .form-input {
+    @apply flex flex-col-reverse gap-1 w-full;
+
+    label {
+      @apply font-medium w-full;
+    }
+
+    input.ng-invalid.ng-touched + label {
+      @apply text-pink-400;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+      @apply border border-gray-200 rounded-lg p-2;
+      @apply outline-none focus:ring-1 focus:ring-primary-link focus:border-primary-link;
+
+      &.ng-invalid.ng-touched {
+        @apply border-pink-400 focus:ring-pink-400 focus:border-pink-400;
+      }
+    }
+  }
+
+  input[type="submit"] {
+    @apply bg-primary rounded-lg p-2 font-extrabold;
+    @apply hover:bg-primary-dark active:bg-primary-darker;
+    @apply duration-300 ease-in-out cursor-pointer;
+
+    &:disabled {
+      @apply cursor-not-allowed bg-primary/40;
+    }
+  }
 }

@@ -1,0 +1,14 @@
+:host {
+  min-height: 100vh;
+  @apply block m-0 py-8 bg-gray-100;
+}
+
+.card {
+  @apply flex flex-col gap-6;
+  @apply border rounded-lg border-gray-200;
+  @apply p-6 bg-white shadow-sm;
+
+  h1 {
+    @apply font-extrabold text-2xl text-center;
+  }
+}
