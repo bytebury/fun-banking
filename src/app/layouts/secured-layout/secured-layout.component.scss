@@ -1,6 +1,5 @@
 :host {
-  min-height: 100vh;
-  @apply block m-0 py-8 bg-gray-100;
+  @apply min-h-screen block m-0 py-8 bg-gray-100;
 }
 
 .card {
