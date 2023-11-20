@@ -1,6 +1,9 @@
 <app-secured-layout>
   <ng-container ngProjectAs="title">Sign in to Fun Banking</ng-container>
-  <form [formGroup]="signinForm">
+  @if (loginError) {
+  <app-banner exclamation="❌">{{ loginError.message }}</app-banner>
+  }
+  <form [formGroup]="signinForm" (ngSubmit)="login()">
     <div class="form-input">
       <input
         formControlName="email"
