@@ -1,0 +1,16 @@
+<app-navbar></app-navbar>
+<main>
+  <aside class="drawer">
+    <ng-content select="dashboard-drawer"></ng-content>
+  </aside>
+  <div class="wrapper">
+    <section>
+      <ng-content select="dashboard-content"></ng-content>
+    </section>
+    <aside class="updates">
+      <app-card>
+        <h3 class="font-semibold">Latest News</h3>
+      </app-card>
+    </aside>
+  </div>
+</main>

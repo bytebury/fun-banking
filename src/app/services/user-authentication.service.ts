@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, map, of, tap, throwError } from 'rxjs';
+import { BrowserStorageService } from './browser-storage.service';
 
 export type AuthCredentials = {
   username: string;
@@ -20,13 +21,17 @@ const mockAuthResponse = {
   providedIn: 'root',
 })
 export class UserAuthenticationService {
-  constructor() {}
+  constructor(private browserStorage: BrowserStorageService) {}
+
+  isLoggedIn(): boolean {
+    return !!this.browserStorage.get('test_auth_token');
+  }
 
   login(credentials: AuthCredentials): Observable<any> {
     if (credentials) {
       return of(mockAuthResponse).pipe(
         tap((response) => {
-          localStorage.setItem('test_auth_token', response.token_id);
+          this.browserStorage.set('test_auth_token', response.token_id);
         }),
         map((response) => response.user)
       );

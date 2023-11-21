@@ -8,8 +8,8 @@ module.exports = {
         padding: "16px",
       },
       screens: {
-        xl: "768px",
-        "2xl": "768px",
+        xl: "1280px",
+        "2xl": "1280px",
       },
       colors: {
         primary: "#b7f7c8",

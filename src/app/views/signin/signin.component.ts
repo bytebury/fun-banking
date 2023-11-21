@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { SecuredLayoutComponent } from '../../layouts/secured-layout/secured-layout.component';
 import { BannerComponent } from '../../components/banner/banner.component';
 import { UserAuthenticationService } from '../../services/user-authentication.service';
@@ -34,7 +34,10 @@ export class SigninComponent {
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor(private auth: UserAuthenticationService) {}
+  constructor(
+    private router: Router,
+    private auth: UserAuthenticationService
+  ) {}
 
   login(): void {
     this.auth
@@ -46,6 +49,7 @@ export class SigninComponent {
       .subscribe({
         next: (response) => {
           console.log(response);
+          this.router.navigate(['dashboard']);
         },
         error: (error) => {
           this.loginError = error;
