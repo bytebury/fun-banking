@@ -11,11 +11,18 @@ export type AuthCredentials = {
 const mockAuthResponse = {
   token_id: '12345',
   user: {
-    first_name: 'Test',
-    last_name: 'Account',
+    first_name: 'John',
+    last_name: 'Doe',
     username: 'tester',
     email: 'hey@bytebury.com',
   },
+};
+
+type User = {
+  first_name: string;
+  last_name: string;
+  username: string;
+  email: string;
 };
 
 @Injectable({
@@ -31,6 +38,10 @@ export class UserAuthenticationService {
 
   isLoggedIn(): boolean {
     return !!this.browserStorage.get(this.authTokenKey);
+  }
+
+  getCurrentUser(): User {
+    return mockAuthResponse.user;
   }
 
   login(credentials: AuthCredentials): Observable<any> {

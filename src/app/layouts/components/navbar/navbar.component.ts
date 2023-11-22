@@ -21,6 +21,10 @@ export class NavbarComponent {
     return this.auth.isLoggedIn();
   }
 
+  getCurrentUser() {
+    return this.auth.getCurrentUser();
+  }
+
   logout(): void {
     this.auth.logout();
   }

@@ -30,18 +30,21 @@
   </section>
   <section id="NavBar_Links" class="hidden md:block">
     @if (isLoggedIn()) {
-    <button class="profile-nav" (click)="openMobileNavigation()">
-      <img
-        height="40"
-        width="40"
-        src="https://avatars.githubusercontent.com/u/104793781?v=4"
-        alt="profile-picture-navigation"
-      />
-    </button>
+    <!-- Do nothing right now -->
     } @else {
     <div *ngTemplateOutlet="loggedOutNavigation"></div>
     }
   </section>
+  @if(isLoggedIn()) {
+  <button class="profile-nav" (click)="openMobileNavigation()">
+    <img
+      height="40"
+      width="40"
+      src="https://avatars.githubusercontent.com/u/104793781?v=4"
+      alt="profile-picture-navigation"
+    />
+  </button>
+  } @else {
   <button
     class="inline-block md:hidden hamburger-toggle"
     aria-label="Navigation menu"
@@ -59,6 +62,7 @@
       />
     </svg>
   </button>
+  }
 </nav>
 <app-modal #mobileNavigation ngSkipHydration>
   <div ngProjectAs="modal-title">Navigation</div>
@@ -72,6 +76,22 @@
 </app-modal>
 
 <ng-template #loggedInNavigation>
+  <div class="flex items-center gap-4 mb-4">
+    <img
+      class="rounded-full"
+      src="https://avatars.githubusercontent.com/u/104793781?v=4"
+      alt="profile image"
+      width="64"
+      height="64"
+    />
+    <section>
+      <h2 class="font-extrabold text-lg">
+        {{ getCurrentUser().first_name | titlecase }}
+        {{ getCurrentUser().last_name | titlecase }}
+      </h2>
+      <p class="text-gray-500">{{ "@" }}{{ getCurrentUser().username }}</p>
+    </section>
+  </div>
   <ul class="flex items-center gap-4">
     <li>
       <a
