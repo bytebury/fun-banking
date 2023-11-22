@@ -23,6 +23,15 @@ nav {
     @apply hover:px-3 hover:-mx-3;
   }
 
+  button.profile-nav {
+    @apply block;
+
+    img {
+      @apply w-10 h-10 rounded-full;
+    }
+  }
+
+  a.link,
   a.login {
     @apply hover:px-2 hover:-mx-2;
     @apply py-1;

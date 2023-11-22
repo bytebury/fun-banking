@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, map, of, tap, throwError } from 'rxjs';
 import { BrowserStorageService } from './browser-storage.service';
+import { Router } from '@angular/router';
 
 export type AuthCredentials = {
   username: string;
@@ -21,22 +22,32 @@ const mockAuthResponse = {
   providedIn: 'root',
 })
 export class UserAuthenticationService {
-  constructor(private browserStorage: BrowserStorageService) {}
+  private readonly authTokenKey = 'test_auth_token';
+
+  constructor(
+    private browserStorage: BrowserStorageService,
+    private router: Router
+  ) {}
 
   isLoggedIn(): boolean {
-    return !!this.browserStorage.get('test_auth_token');
+    return !!this.browserStorage.get(this.authTokenKey);
   }
 
   login(credentials: AuthCredentials): Observable<any> {
     if (credentials) {
       return of(mockAuthResponse).pipe(
         tap((response) => {
-          this.browserStorage.set('test_auth_token', response.token_id);
+          this.browserStorage.set(this.authTokenKey, response.token_id);
         }),
         map((response) => response.user)
       );
     }
 
     return throwError(() => new Error('Invalid credentials'));
+  }
+
+  logout(): void {
+    this.browserStorage.remove(this.authTokenKey);
+    this.router.navigate(['/']);
   }
 }

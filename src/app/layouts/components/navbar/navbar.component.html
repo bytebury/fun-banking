@@ -29,7 +29,18 @@
     </a>
   </section>
   <section id="NavBar_Links" class="hidden md:block">
+    @if (isLoggedIn()) {
+    <button class="profile-nav" (click)="openMobileNavigation()">
+      <img
+        height="40"
+        width="40"
+        src="https://avatars.githubusercontent.com/u/104793781?v=4"
+        alt="profile-picture-navigation"
+      />
+    </button>
+    } @else {
     <div *ngTemplateOutlet="loggedOutNavigation"></div>
+    }
   </section>
   <button
     class="inline-block md:hidden hamburger-toggle"
@@ -52,9 +63,36 @@
 <app-modal #mobileNavigation ngSkipHydration>
   <div ngProjectAs="modal-title">Navigation</div>
   <div class="modal-nav">
+    @if (isLoggedIn()) {
+    <div *ngTemplateOutlet="loggedInNavigation"></div>
+    } @else {
     <div *ngTemplateOutlet="loggedOutNavigation"></div>
+    }
   </div>
 </app-modal>
+
+<ng-template #loggedInNavigation>
+  <ul class="flex items-center gap-4">
+    <li>
+      <a
+        class="link"
+        routerLink="/dashboard"
+        (click)="mobileNavigationModal.close()"
+      >
+        Dashboard
+      </a>
+    </li>
+    <li>
+      <a
+        class="link"
+        routerLink="/"
+        (click)="logout(); mobileNavigationModal.close()"
+      >
+        Sign out
+      </a>
+    </li>
+  </ul>
+</ng-template>
 
 <ng-template #loggedOutNavigation>
   <ul class="flex items-center gap-4">
@@ -63,16 +101,18 @@
         class="login"
         routerLink="/signin"
         (click)="mobileNavigationModal.close()"
-        >Sign in</a
       >
+        Sign in
+      </a>
     </li>
     <li>
       <a
         class="action arrow-btn"
         routerLink="/signup"
         (click)="mobileNavigationModal.close()"
-        >Create an Account</a
       >
+        Create an Account
+      </a>
     </li>
   </ul>
 </ng-template>

@@ -12,7 +12,12 @@ export class BrowserStorageService {
   get(key: string) {
     return this.storage.getItem(key);
   }
+
   set(key: string, value: string) {
     this.storage.setItem(key, value);
+  }
+
+  remove(key: string): void {
+    return this.storage.removeItem(key);
   }
 }
