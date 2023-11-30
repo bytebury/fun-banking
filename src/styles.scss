@@ -48,3 +48,15 @@ form {
     }
   }
 }
+
+@layer components {
+  .btn {
+    @apply rounded-lg no-underline;
+  }
+
+  .btn-success {
+    @apply font-bold;
+    @apply text-white bg-green-700 hover:bg-green-800 active:bg-green-900;
+    @apply duration-300 ease-linear transition-colors;
+  }
+}

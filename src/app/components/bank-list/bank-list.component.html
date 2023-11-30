@@ -1,0 +1,13 @@
+<section class="flex flex-col gap-2">
+  <header class="flex justify-between items-center">
+    <h2 class="font-bold">Banks</h2>
+    <a routerLink="/banks/new" class="btn btn-success px-2 py-1 text-sm">
+      New
+    </a>
+  </header>
+  <ul>
+    <li *ngFor="let bank of banks$ | async">
+      <a [routerLink]="['/banks', bank.id]" class="text-sm">{{ bank.name }}</a>
+    </li>
+  </ul>
+</section>

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { DashboardLayoutComponent } from '../../layouts/dashboard-layout/dashboard-layout.component';
 import { CardComponent } from '../../components/card/card.component';
+import { BankListComponent } from '../../components/bank-list/bank-list.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,6 +10,11 @@ import { CardComponent } from '../../components/card/card.component';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, DashboardLayoutComponent, CardComponent],
+  imports: [
+    CommonModule,
+    DashboardLayoutComponent,
+    CardComponent,
+    BankListComponent,
+  ],
 })
 export class DashboardComponent {}

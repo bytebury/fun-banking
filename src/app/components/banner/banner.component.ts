@@ -1,13 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-
-export enum BannerVariety {
-  Default = 'default',
-  Danger = 'danger',
-  Success = 'success',
-  Warning = 'warning',
-  Info = 'info',
-}
+import { Severity } from '../../models/severity.enum';
 
 @Component({
   selector: 'app-banner',
@@ -19,5 +12,5 @@ export enum BannerVariety {
 })
 export class BannerComponent {
   @Input() exclamation = '🚀';
-  @Input() variety = BannerVariety.Default;
+  @Input() severity = Severity.Default;
 }

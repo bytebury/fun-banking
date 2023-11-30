@@ -9,7 +9,18 @@
     </section>
     <aside class="updates">
       <app-card>
-        <h3 class="font-semibold">Latest News</h3>
+        <div class="flex flex-col gap-2">
+          <h1 class="font-semibold">Latest News</h1>
+          <app-timeline>
+            <a
+              ngProjectAs="view-more"
+              class="text-xs text-gray-500 no-underline hover:text-primary-link hover:underline"
+              [routerLink]="['/announcements']"
+            >
+              View announcements &rarr;
+            </a>
+          </app-timeline>
+        </div>
       </app-card>
     </aside>
   </div>

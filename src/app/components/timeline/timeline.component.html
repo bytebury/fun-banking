@@ -1,0 +1,23 @@
+<ol class="relative flex flex-col gap-0 border-l border-gray-300 pl-4">
+  <li class="text-sm py-1" *ngFor="let announcement of announcements$ | async">
+    <div
+      class="absolute -left-1.5 bg-gray-300 rounded-full w-3 h-3 border-2 mt-1 border-white"
+    >
+      {{ " " }}
+    </div>
+    <time class="text-xs text-gray-500">
+      {{ announcement.created_at | date }}
+    </time>
+    <div class="whitespace-nowrap text-ellipsis overflow-hidden">
+      <a
+        [routerLink]="['/announcements', announcement.id]"
+        class="text-gray-800 no-underline hover:underline hover:text-primary-link"
+      >
+        {{ announcement.title }}
+      </a>
+    </div>
+  </li>
+  <li>
+    <ng-content select="view-more"></ng-content>
+  </li>
+</ol>
