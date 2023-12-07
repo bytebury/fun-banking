@@ -1,8 +1,10 @@
 <app-dashboard-layout>
-  <ng-container ngProjectAs="dashboard-drawer">
-    <app-bank-list></app-bank-list>
-  </ng-container>
   <ng-container ngProjectAs="dashboard-content">
+    <ng-container *ngIf="alert$ | async as alert">
+      <app-banner [exclamation]="alert.exclamation" [severity]="alert.severity">
+        {{ alert.message }}
+      </app-banner>
+    </ng-container>
     <div class="flex justify-between items-center">
       <h1 class="text-xl font-semibold">Dashboard</h1>
       <div>
@@ -14,6 +16,23 @@
         </a>
       </div>
     </div>
-    <app-card> Nice OK </app-card>
+    <app-card>
+      <h2 class="font-semibold">Welcome to Fun Banking!</h2>
+      <p class="mb-2">
+        This is the dashboard &mdash; where you'll find some high-level updates
+        about what's going on in your banks. Including some informational
+        updates from the Fun Banking team.
+      </p>
+      <p>
+        You can create and view banks that you own or are a part of on the
+        left-side navigation.
+      </p>
+    </app-card>
+    <app-card>
+      <div class="text-gray-500">
+        There are currently no updates &mdash;
+        <a routerLink="/banks/new">create a bank</a> to get started.
+      </div>
+    </app-card>
   </ng-container>
 </app-dashboard-layout>

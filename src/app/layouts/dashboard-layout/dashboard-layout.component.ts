@@ -5,6 +5,7 @@ import { FooterComponent } from '../components/footer/footer.component';
 import { CardComponent } from '../../components/card/card.component';
 import { TimelineComponent } from '../../components/timeline/timeline.component';
 import { RouterModule } from '@angular/router';
+import { BankListComponent } from '../../components/bank-list/bank-list.component';
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -19,6 +20,7 @@ import { RouterModule } from '@angular/router';
     CardComponent,
     TimelineComponent,
     RouterModule,
+    BankListComponent,
   ],
 })
 export class DashboardLayoutComponent {}

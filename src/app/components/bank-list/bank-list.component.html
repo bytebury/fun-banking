@@ -7,7 +7,13 @@
   </header>
   <ul>
     <li *ngFor="let bank of banks$ | async">
-      <a [routerLink]="['/banks', bank.id]" class="text-sm">{{ bank.name }}</a>
+      <a
+        [routerLink]="['/banks', bank.id]"
+        class="inline-flex items-center gap-2 text-sm"
+      >
+        <img class="profile" [src]="bank.owner.avatar" alt="profile picture" />
+        {{ bank.owner.username }}/{{ bank.slug }}
+      </a>
     </li>
   </ul>
 </section>
