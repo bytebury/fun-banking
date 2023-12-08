@@ -1,0 +1,36 @@
+<app-secured-layout>
+  <ng-container ngProjectAs="title">Create a Bank</ng-container>
+  <form
+    [formGroup]="form"
+    class="flex flex-col gap-4"
+    (ngSubmit)="createBank()"
+  >
+    <div class="form-input">
+      @if (form.controls.name.errors?.['pattern']) {
+      <div class="error-message">
+        Bank names can only contain letters, numbers and spaces.
+      </div>
+      }
+      <input
+        id="bank_name"
+        type="text"
+        formControlName="name"
+        required
+        maxlength="30"
+      />
+      <label for="bank_name">Name</label>
+    </div>
+    <div class="form-input">
+      <textarea
+        id="bank_description"
+        type="text"
+        formControlName="description"
+        required
+        class="min-h-[5rem]"
+        maxlength="255"
+      ></textarea>
+      <label for="bank_description">Description</label>
+    </div>
+    <input type="submit" value="Create Bank" [disabled]="form.invalid" />
+  </form>
+</app-secured-layout>

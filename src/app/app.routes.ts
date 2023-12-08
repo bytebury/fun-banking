@@ -5,6 +5,7 @@ import { SigninComponent } from './views/signin/signin.component';
 import { signedInGuard } from './guards/signed-in.guard';
 import { notSignedInGuard } from './guards/not-signed-in.guard';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
+import { NewBankComponent } from './views/banks/new/new-bank.component';
 
 export const routes: Routes = [
   {
@@ -26,5 +27,15 @@ export const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [signedInGuard],
+  },
+  {
+    path: 'banks',
+    children: [
+      {
+        path: 'new',
+        component: NewBankComponent,
+      },
+    ],
+    canActivateChild: [signedInGuard],
   },
 ];

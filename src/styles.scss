@@ -22,6 +22,7 @@ form {
       @apply font-medium w-full;
     }
 
+    textarea.ng-invalid.ng-touched + label,
     input.ng-invalid.ng-touched + label {
       @apply text-pink-400;
     }
@@ -35,6 +36,19 @@ form {
       &.ng-invalid.ng-touched {
         @apply border-pink-400 focus:ring-pink-400 focus:border-pink-400;
       }
+    }
+
+    textarea {
+      @apply border border-gray-200 rounded-lg p-2;
+      @apply outline-none focus:ring-1 focus:ring-primary-link focus:border-primary-link;
+
+      &.ng-invalid.ng-touched {
+        @apply border-pink-400 focus:ring-pink-400 focus:border-pink-400;
+      }
+    }
+
+    .error-message {
+      @apply text-sm text-pink-400;
     }
   }
 
