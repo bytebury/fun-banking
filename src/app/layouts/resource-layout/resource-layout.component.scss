@@ -1,0 +1,20 @@
+:host {
+  padding-top: 55px;
+  @apply flex flex-col min-h-screen;
+}
+
+main {
+  @apply p-4 h-full flex-grow;
+}
+
+main .container {
+  @apply flex gap-4;
+}
+
+main .drawer {
+  @apply w-96;
+}
+
+main .content {
+  @apply w-full;
+}
