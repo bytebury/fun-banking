@@ -4,15 +4,15 @@
 }
 
 main {
-  @apply p-4 h-full flex-grow;
-}
-
-main .container {
-  @apply flex gap-4;
+  @apply h-full flex-grow;
 }
 
 main .drawer {
-  @apply w-96;
+  @apply flex flex-col gap-4 w-full md:w-[400px];
+
+  ::ng-deep h1 {
+    @apply font-bold;
+  }
 }
 
 main .content {

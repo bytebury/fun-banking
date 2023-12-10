@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ResourceLayoutComponent } from '../../../layouts/resource-layout/resource-layout.component';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BankService } from '../../../services/bank.service';
 import { Observable, of } from 'rxjs';
 import { Bank } from '../../../models/bank.model';
+import { CopyToClipboardDirective } from '../../../directives/copy-to-clipboard.directive';
 
 @Component({
   selector: 'app-bank',
@@ -13,10 +14,16 @@ import { Bank } from '../../../models/bank.model';
   templateUrl: './bank.component.html',
   styleUrl: './bank.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, ResourceLayoutComponent, RouterModule],
+  imports: [
+    CommonModule,
+    ResourceLayoutComponent,
+    RouterModule,
+    CopyToClipboardDirective,
+  ],
 })
 export class BankComponent {
   bank$: Observable<Bank | undefined> = of();
+  hasCopiedBankUrl = signal(false);
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -25,5 +32,12 @@ export class BankComponent {
     this.route.paramMap.pipe(takeUntilDestroyed()).subscribe((params) => {
       this.bank$ = this.bankService.getBank(params.get('id')!);
     });
+  }
+
+  copiedBankUrl(): void {
+    this.hasCopiedBankUrl.set(true);
+    setTimeout(() => {
+      this.hasCopiedBankUrl.set(false);
+    }, 3_000);
   }
 }
