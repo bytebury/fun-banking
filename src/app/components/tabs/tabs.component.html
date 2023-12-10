@@ -1,0 +1,19 @@
+<div class="tabs">
+  <ul class="tabs-nav">
+    <li
+      class="tab-item"
+      *ngFor="let tab of tabs(); let i = index"
+      [ngClass]="{ active: i === activeTab() }"
+      (click)="setActiveTab(i)"
+    >
+      <ng-container *ngTemplateOutlet="tab.title"></ng-container>
+    </li>
+  </ul>
+  <div class="tabs-content">
+    <ng-container *ngFor="let tab of tabs(); let i = index">
+      <div class="tab-panel" *ngIf="i === activeTab()">
+        <ng-container *ngTemplateOutlet="tab.content"></ng-container>
+      </div>
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+
+.tabs {
+  @apply flex flex-col;
+}
+
+.tabs-nav {
+  @apply flex gap-2 overflow-x-auto p-0 m-0 border-b border-b-gray-300;
+}
+
+.tab-item {
+  @apply p-2 py-1 mb-2 cursor-pointer hover:bg-gray-200 rounded-lg;
+  @apply transition-colors duration-200 ease-linear;
+}
+
+.tab-item.active {
+  @apply font-bold rounded-none px-2 py-1 mb-0;
+  @apply hover:bg-inherit border-b-[3px] border-b-primary-link;
+}
+
+.tabs-content {
+  padding: 10px;
+}
