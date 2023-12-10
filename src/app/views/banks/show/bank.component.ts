@@ -67,14 +67,14 @@ export class BankComponent implements AfterViewInit {
         content: this.customersContent,
       },
       {
-        id: 'settings',
-        title: this.settingsTitle,
-        content: this.settingsContent,
-      },
-      {
         id: 'insights',
         title: this.insightsTitle,
         content: this.insightsContent,
+      },
+      {
+        id: 'settings',
+        title: this.settingsTitle,
+        content: this.settingsContent,
       },
     ]);
   }
