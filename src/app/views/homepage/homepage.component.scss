@@ -52,7 +52,7 @@ header {
   @apply flex flex-col lg:flex-row gap-6;
 
   .card {
-    @apply flex flex-col p-4 rounded-lg border border-gray-200 gap-4;
+    @apply flex flex-col p-4 rounded-lg border border-gray-300 gap-4;
     @apply duration-300 ease-in-out cursor-default;
 
     h1 {
