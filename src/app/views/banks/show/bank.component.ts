@@ -18,6 +18,7 @@ import { Tab, TabsComponent } from '../../../components/tabs/tabs.component';
 import { Customer } from '../../../models/customer.model';
 import { CustomerService } from '../../../services/customer.service';
 import { MenuComponent } from '../../../components/menu/menu.component';
+import { ModalComponent } from '../../../components/modal/modal.component';
 
 @Component({
   selector: 'app-bank',
@@ -32,6 +33,7 @@ import { MenuComponent } from '../../../components/menu/menu.component';
     CopyToClipboardDirective,
     TabsComponent,
     MenuComponent,
+    ModalComponent,
   ],
 })
 export class BankComponent implements AfterViewInit {
@@ -41,12 +43,14 @@ export class BankComponent implements AfterViewInit {
   @ViewChild('settingsContent') settingsContent!: TemplateRef<unknown>;
   @ViewChild('insightsTitle') insightsTitle!: TemplateRef<unknown>;
   @ViewChild('insightsContent') insightsContent!: TemplateRef<unknown>;
+  @ViewChild('editCustomerModal') editCustomerModal!: ModalComponent;
 
   bank$: Observable<Bank | undefined> = of();
   customers$: Observable<Customer[]> = of([]);
   hasCopiedBankUrl = signal(false);
 
   tabs = signal<Tab[]>([]);
+  currentCustomer = signal<Customer | null>(null);
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -57,6 +61,11 @@ export class BankComponent implements AfterViewInit {
       this.bank$ = this.bankService.getBank(params.get('id')!);
       this.customers$ = this.customerService.getCustomers(params.get('id')!);
     });
+  }
+
+  openEditCustomer(customer: Customer): void {
+    this.editCustomerModal.open();
+    this.currentCustomer.set(customer);
   }
 
   copiedBankUrl(): void {

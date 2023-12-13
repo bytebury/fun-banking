@@ -1,14 +1,9 @@
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  Inject,
-  TemplateRef,
   ViewChild,
-  ViewChildren,
-  effect,
   signal,
 } from '@angular/core';
 

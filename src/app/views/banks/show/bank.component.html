@@ -184,9 +184,9 @@
     <div ngProjectAs="menu">
       <ul class="flex flex-col gap-1 p-2">
         <li class="block whitespace-nowrap">
-          <a
-            class="flex gap-1 items-center hover:bg-slate-100 p-1 px-2 rounded-lg text-inherit no-underline"
-            routerLink="/"
+          <button
+            class="flex gap-1 items-center hover:bg-slate-100 p-1 px-2 rounded-lg text-inherit w-full"
+            (click)="openEditCustomer(customer)"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -199,7 +199,7 @@
               />
             </svg>
             Edit {{ customer.first_name }}
-          </a>
+          </button>
         </li>
         <li class="whitespace-nowrap">
           <a
@@ -223,3 +223,11 @@
     </div>
   </app-menu>
 </ng-template>
+<app-modal #editCustomerModal>
+  <div ngProjectAs="modal-title">
+    {{ currentCustomer()?.first_name }} {{ currentCustomer()?.last_name }}
+  </div>
+  <div>
+    <div class="">{{ currentCustomer()?.balance | currency }}</div>
+  </div>
+</app-modal>

@@ -7,8 +7,20 @@ import { Customer } from '../models/customer.model';
 })
 export class CustomerService {
   private customers: Customer[] = [
-    { id: '1', first_name: 'Michael', last_name: 'Scott', pin: '123456' },
-    { id: '1', first_name: 'Dwight', last_name: 'Schrute', pin: '123457' },
+    {
+      id: '1',
+      first_name: 'Michael',
+      last_name: 'Scott',
+      balance: 20_432.64,
+      pin: '123456',
+    },
+    {
+      id: '1',
+      first_name: 'Dwight',
+      last_name: 'Schrute',
+      balance: 90,
+      pin: '123457',
+    },
   ];
 
   getCustomers(_bankId: string): Observable<Customer[]> {
