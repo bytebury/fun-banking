@@ -65,12 +65,16 @@ form {
 
 @layer components {
   .btn {
-    @apply rounded-lg no-underline;
+    @apply rounded-lg no-underline font-bold;
+    @apply duration-300 ease-linear transition-colors;
   }
 
   .btn-success {
-    @apply font-bold;
     @apply text-white bg-green-700 hover:bg-green-800 active:bg-green-900;
-    @apply duration-300 ease-linear transition-colors;
+  }
+
+  .btn-default {
+    @apply text-gray-700 bg-gray-100 hover:bg-gray-200 active:bg-gray-300;
+    @apply border border-gray-300;
   }
 }

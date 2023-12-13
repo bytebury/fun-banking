@@ -87,6 +87,7 @@
 <ng-template let-bank="bank" #about> </ng-template>
 
 <!-- Tabs -->
+<!-- Customers -->
 <ng-template #customersTitle>
   <div class="flex items-center gap-2">
     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 16 16">
@@ -98,7 +99,44 @@
     Customers
   </div>
 </ng-template>
-<ng-template #customersContent> Sup </ng-template>
+<ng-template #customersContent>
+  <div class="flex flex-col gap-4">
+    <div class="flex justify-end">
+      <a routerLink="" class="btn btn-success py-1 px-3">New Customer</a>
+    </div>
+    <div>
+      <div
+        class="grid bg-gray-200 text-gray-800 rounded-t-lg p-2 border border-b-0 border-gray-300 font-bold"
+      >
+        <div>Customer</div>
+      </div>
+      <div class="border border-gray-300 last:rounded-b-lg">
+        @for(customer of customers$ | async; track customer.id) {
+        <div
+          class="grid grid-cols-2 border-b border-gray-300 p-2 last:border-b-0 last:rounded-b-lg items-center hover:bg-slate-50"
+        >
+          <div>
+            <div class="font-semibold">
+              {{ customer.first_name }} {{ customer.last_name }}
+            </div>
+            <div class="text-xs text-gray-600">PIN-{{ customer.pin }}</div>
+          </div>
+          <div class="flex gap-2 justify-end">
+            <a class="btn btn-default px-2.5 py-1" routerLink="#">View</a>
+            <ng-container
+              *ngTemplateOutlet="
+                customerActions;
+                context: { customer: customer }
+              "
+            ></ng-container>
+          </div>
+        </div>
+        } @empty { No customers }
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- Settings -->
 <ng-template #settingsTitle>
   <div class="flex items-center gap-2">
     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 16 16">
@@ -128,3 +166,60 @@
   </div>
 </ng-template>
 <ng-template #insightsContent> Sup </ng-template>
+<ng-template #customerActions let-customer="customer">
+  <app-menu>
+    <div class="flex items-center btn btn-default px-2.5 py-2">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-4 h-4"
+        aria-label="view more icon"
+        viewBox="0 0 24 24"
+      >
+        <path
+          fill="currentColor"
+          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2s-2 .9-2 2s.9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2"
+        />
+      </svg>
+    </div>
+    <div ngProjectAs="menu">
+      <ul class="flex flex-col gap-1 p-2">
+        <li class="block whitespace-nowrap">
+          <a
+            class="flex gap-1 items-center hover:bg-slate-100 p-1 px-2 rounded-lg text-inherit no-underline"
+            routerLink="/"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="m14.06 9.02l.92.92L5.92 19H5v-.92zM17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83l3.75 3.75l1.83-1.83a.996.996 0 0 0 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94z"
+              />
+            </svg>
+            Edit {{ customer.first_name }}
+          </a>
+        </li>
+        <li class="whitespace-nowrap">
+          <a
+            class="flex gap-1 items-center hover:bg-pink-50 p-1 px-2 rounded-lg no-underline text-pink-600"
+            routerLink="/"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM8 9h8v10H8zm7.5-5l-1-1h-5l-1 1H5v2h14V4z"
+              />
+            </svg>
+            Delete {{ customer.first_name }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </app-menu>
+</ng-template>

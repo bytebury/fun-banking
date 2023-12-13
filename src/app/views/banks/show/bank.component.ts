@@ -15,6 +15,9 @@ import { Observable, of } from 'rxjs';
 import { Bank } from '../../../models/bank.model';
 import { CopyToClipboardDirective } from '../../../directives/copy-to-clipboard.directive';
 import { Tab, TabsComponent } from '../../../components/tabs/tabs.component';
+import { Customer } from '../../../models/customer.model';
+import { CustomerService } from '../../../services/customer.service';
+import { MenuComponent } from '../../../components/menu/menu.component';
 
 @Component({
   selector: 'app-bank',
@@ -28,6 +31,7 @@ import { Tab, TabsComponent } from '../../../components/tabs/tabs.component';
     RouterModule,
     CopyToClipboardDirective,
     TabsComponent,
+    MenuComponent,
   ],
 })
 export class BankComponent implements AfterViewInit {
@@ -39,16 +43,19 @@ export class BankComponent implements AfterViewInit {
   @ViewChild('insightsContent') insightsContent!: TemplateRef<unknown>;
 
   bank$: Observable<Bank | undefined> = of();
+  customers$: Observable<Customer[]> = of([]);
   hasCopiedBankUrl = signal(false);
 
   tabs = signal<Tab[]>([]);
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly bankService: BankService
+    private readonly bankService: BankService,
+    private readonly customerService: CustomerService
   ) {
     this.route.paramMap.pipe(takeUntilDestroyed()).subscribe((params) => {
       this.bank$ = this.bankService.getBank(params.get('id')!);
+      this.customers$ = this.customerService.getCustomers(params.get('id')!);
     });
   }
 

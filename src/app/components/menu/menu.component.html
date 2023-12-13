@@ -1,0 +1,11 @@
+<div #menuRef class="relative">
+  <button aria-label="menu button" (click)="toggle()">
+    <ng-content></ng-content>
+  </button>
+
+  @if (showMenu()) {
+  <div class="menu">
+    <ng-content select="menu"></ng-content>
+  </div>
+  }
+</div>

@@ -1,0 +1,9 @@
+:host {
+  @apply block;
+
+  .menu {
+    @apply absolute right-0 rounded-lg w-fit max-w-lg;
+    @apply bg-white mt-1 shadow border-gray-300 border;
+    @apply z-10;
+  }
+}

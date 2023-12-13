@@ -1,0 +1,17 @@
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { Customer } from '../models/customer.model';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CustomerService {
+  private customers: Customer[] = [
+    { id: '1', first_name: 'Michael', last_name: 'Scott', pin: '123456' },
+    { id: '1', first_name: 'Dwight', last_name: 'Schrute', pin: '123457' },
+  ];
+
+  getCustomers(_bankId: string): Observable<Customer[]> {
+    return of<Customer[]>(this.customers);
+  }
+}
