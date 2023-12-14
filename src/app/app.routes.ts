@@ -1,13 +1,8 @@
 import { Routes } from '@angular/router';
 import { HomepageComponent } from './views/homepage/homepage.component';
-import { SignupComponent } from './views/signup/signup.component';
-import { SigninComponent } from './views/signin/signin.component';
 import { signedInGuard } from './guards/signed-in.guard';
 import { notSignedInGuard } from './guards/not-signed-in.guard';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
-import { NewBankComponent } from './views/banks/new/new-bank.component';
-import { BankComponent } from './views/banks/show/bank.component';
-import { NewCustomerComponent } from './views/customers/new/new-customer.component';
 
 export const routes: Routes = [
   {
@@ -17,12 +12,14 @@ export const routes: Routes = [
   },
   {
     path: 'signup',
-    component: SignupComponent,
+    loadComponent: () =>
+      import('./views/signup/signup.component').then((m) => m.SignupComponent),
     canActivate: [notSignedInGuard],
   },
   {
     path: 'signin',
-    component: SigninComponent,
+    loadComponent: () =>
+      import('./views/signin/signin.component').then((m) => m.SigninComponent),
     canActivate: [notSignedInGuard],
   },
   {
@@ -35,16 +32,25 @@ export const routes: Routes = [
     children: [
       {
         path: 'new',
-        component: NewBankComponent,
+        loadComponent: () =>
+          import('./views/banks/new/new-bank.component').then(
+            (m) => m.NewBankComponent
+          ),
       },
       {
         path: ':id',
         pathMatch: 'full',
-        component: BankComponent,
+        loadComponent: () =>
+          import('./views/banks/show/bank.component').then(
+            (m) => m.BankComponent
+          ),
       },
       {
         path: ':id/customers/new',
-        component: NewCustomerComponent,
+        loadComponent: () =>
+          import('./views/customers/new/new-customer.component').then(
+            (m) => m.NewCustomerComponent
+          ),
       },
     ],
     canActivateChild: [signedInGuard],
