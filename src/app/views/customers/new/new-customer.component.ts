@@ -8,8 +8,9 @@ import {
 } from '@angular/forms';
 import { CustomerService } from '../../../services/customer.service';
 import { take } from 'rxjs';
-import { BankService } from '../../../services/bank.service';
 import { SecuredLayoutComponent } from '../../../layouts/secured-layout/secured-layout.component';
+import { ActivatedRoute } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-new-customer',
@@ -22,6 +23,8 @@ import { SecuredLayoutComponent } from '../../../layouts/secured-layout/secured-
 export class NewCustomerComponent {
   readonly VALID_NAME = /^[A-Za-z]+$/;
   readonly VALID_PIN = /^\d{4,6}$/;
+
+  bankId = '';
 
   form: FormGroup = new FormGroup({
     first_name: new FormControl('', [
@@ -40,12 +43,21 @@ export class NewCustomerComponent {
     ]),
   });
 
-  constructor(private readonly customerService: CustomerService) {}
+  constructor(
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly customerService: CustomerService
+  ) {
+    this.activatedRoute.paramMap
+      .pipe(takeUntilDestroyed())
+      .subscribe((params) => {
+        this.bankId = params.get('id')!;
+      });
+  }
 
   createCustomer(): void {
     if (this.form.valid) {
       this.customerService
-        .createCustomer('1', {
+        .createCustomer(this.bankId, {
           first_name: this.form.get('first_name')?.value,
           last_name: this.form.get('last_name')?.value,
           pin: this.form.get('pin')?.value,
