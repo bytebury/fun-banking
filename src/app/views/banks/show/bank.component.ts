@@ -11,7 +11,7 @@ import {
 import { ResourceLayoutComponent } from '../../../layouts/resource-layout/resource-layout.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BankService } from '../../../services/bank.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, take } from 'rxjs';
 import { Bank } from '../../../models/bank.model';
 import { CopyToClipboardDirective } from '../../../directives/copy-to-clipboard.directive';
 import { Tab, TabsComponent } from '../../../components/tabs/tabs.component';
@@ -19,6 +19,7 @@ import { Customer } from '../../../models/customer.model';
 import { CustomerService } from '../../../services/customer.service';
 import { MenuComponent } from '../../../components/menu/menu.component';
 import { ModalComponent } from '../../../components/modal/modal.component';
+import { EditCustomerFormComponent } from '../../customers/edit-customer-form/edit-customer-form.component';
 
 @Component({
   selector: 'app-bank',
@@ -34,6 +35,7 @@ import { ModalComponent } from '../../../components/modal/modal.component';
     TabsComponent,
     MenuComponent,
     ModalComponent,
+    EditCustomerFormComponent,
   ],
 })
 export class BankComponent implements AfterViewInit {
@@ -44,6 +46,7 @@ export class BankComponent implements AfterViewInit {
   @ViewChild('insightsTitle') insightsTitle!: TemplateRef<unknown>;
   @ViewChild('insightsContent') insightsContent!: TemplateRef<unknown>;
   @ViewChild('editCustomerModal') editCustomerModal!: ModalComponent;
+  @ViewChild('showCustomerModal') showCustomerModal!: ModalComponent;
 
   bank$: Observable<Bank | undefined> = of();
   customers$: Observable<Customer[]> = of([]);
@@ -66,6 +69,20 @@ export class BankComponent implements AfterViewInit {
   openEditCustomer(customer: Customer): void {
     this.editCustomerModal.open();
     this.currentCustomer.set(customer);
+  }
+
+  openViewCustomer(customer: Customer): void {
+    this.showCustomerModal.open();
+    this.currentCustomer.set(customer);
+  }
+
+  updateCustomer(customer: Customer): void {
+    this.customerService
+      .updateCustomer(customer)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.editCustomerModal.close();
+      });
   }
 
   copiedBankUrl(): void {

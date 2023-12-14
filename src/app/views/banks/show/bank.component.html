@@ -122,7 +122,12 @@
             <div class="text-xs text-gray-600">PIN-{{ customer.pin }}</div>
           </div>
           <div class="flex gap-2 justify-end">
-            <a class="btn btn-default px-2.5 py-1" routerLink="#">View</a>
+            <button
+              class="btn btn-default px-2.5 py-1"
+              (click)="openViewCustomer(customer)"
+            >
+              View
+            </button>
             <ng-container
               *ngTemplateOutlet="
                 customerActions;
@@ -223,7 +228,16 @@
     </div>
   </app-menu>
 </ng-template>
-<app-modal #editCustomerModal>
+<app-modal #editCustomerModal [dismissable]="false">
+  <div ngProjectAs="modal-title">
+    {{ currentCustomer()?.first_name }} {{ currentCustomer()?.last_name }}
+  </div>
+  <app-edit-customer-form
+    [customer]="currentCustomer()"
+    (saved)="updateCustomer($event)"
+  ></app-edit-customer-form>
+</app-modal>
+<app-modal #showCustomerModal>
   <div ngProjectAs="modal-title">
     {{ currentCustomer()?.first_name }} {{ currentCustomer()?.last_name }}
   </div>

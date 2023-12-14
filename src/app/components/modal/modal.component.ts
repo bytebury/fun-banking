@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  Input,
   Renderer2,
   ViewChild,
   signal,
@@ -18,12 +19,17 @@ import {
 })
 export class ModalComponent {
   @ViewChild('modal') modal!: ElementRef;
+  @Input() dismissable = true;
 
   constructor(private renderer: Renderer2) {}
 
   isModalOpen = signal(false);
 
   dismiss(event: any): void {
+    if (!this.dismissable) {
+      return;
+    }
+
     if (!this.modal.nativeElement.contains(event.target)) {
       this.close();
     }

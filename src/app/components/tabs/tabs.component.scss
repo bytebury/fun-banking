@@ -11,7 +11,7 @@
 }
 
 .tab-item {
-  @apply p-2 py-1 mb-2 cursor-pointer hover:bg-gray-200 rounded-lg;
+  @apply p-2 py-1 mb-2 cursor-pointer hover:bg-slate-200 rounded-lg;
   @apply transition-colors duration-200 ease-linear;
 }
 

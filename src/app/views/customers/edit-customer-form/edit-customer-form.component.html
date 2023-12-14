@@ -1,0 +1,43 @@
+<form [formGroup]="form" class="flex flex-col gap-4" (ngSubmit)="submit()">
+  <div class="form-input">
+    @if (form.controls['first_name'].errors?.['pattern']) {
+    <div class="error-message">Names can only contain letters.</div>
+    }
+    <input
+      id="customer_first_name"
+      type="text"
+      formControlName="first_name"
+      required
+      maxlength="15"
+    />
+    <label for="customer_first_name">First Name</label>
+  </div>
+  <div class="form-input">
+    @if (form.controls['last_name'].errors?.['pattern']) {
+    <div class="error-message">Names can only contain letters.</div>
+    }
+    <input
+      id="customer_last_name"
+      type="text"
+      formControlName="last_name"
+      required
+      maxlength="15"
+    />
+    <label for="customer_last_name">Last Name</label>
+  </div>
+  <div class="form-input">
+    @if (form.controls['pin'].errors?.['pattern']) {
+    <div class="error-message">PINs can only contain 4 to 6 numbers.</div>
+    }
+    <input
+      id="customer_pin"
+      type="text"
+      formControlName="pin"
+      required
+      maxlength="6"
+      minlength="4"
+    />
+    <label for="customer_pin">PIN</label>
+  </div>
+  <input type="submit" value="Save Customer" [disabled]="form.invalid" />
+</form>

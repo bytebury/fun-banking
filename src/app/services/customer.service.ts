@@ -26,4 +26,8 @@ export class CustomerService {
   getCustomers(_bankId: string): Observable<Customer[]> {
     return of<Customer[]>(this.customers);
   }
+
+  updateCustomer(_customer: Customer): Observable<any> {
+    return of(null);
+  }
 }
