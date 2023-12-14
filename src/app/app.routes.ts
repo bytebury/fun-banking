@@ -7,6 +7,7 @@ import { notSignedInGuard } from './guards/not-signed-in.guard';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { NewBankComponent } from './views/banks/new/new-bank.component';
 import { BankComponent } from './views/banks/show/bank.component';
+import { NewCustomerComponent } from './views/customers/new/new-customer.component';
 
 export const routes: Routes = [
   {
@@ -38,7 +39,12 @@ export const routes: Routes = [
       },
       {
         path: ':id',
+        pathMatch: 'full',
         component: BankComponent,
+      },
+      {
+        path: ':id/customers/new',
+        component: NewCustomerComponent,
       },
     ],
     canActivateChild: [signedInGuard],

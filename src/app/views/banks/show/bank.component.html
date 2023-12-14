@@ -102,7 +102,11 @@
 <ng-template #customersContent>
   <div class="flex flex-col gap-4">
     <div class="flex justify-end">
-      <a routerLink="" class="btn btn-success py-1 px-3">New Customer</a>
+      <a
+        [routerLink]="['/banks', (bank$ | async)?.id, 'customers', 'new']"
+        class="btn btn-success py-1 px-3"
+        >New Customer</a
+      >
     </div>
     <div>
       <div

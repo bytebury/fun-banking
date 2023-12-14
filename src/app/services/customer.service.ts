@@ -30,4 +30,11 @@ export class CustomerService {
   updateCustomer(_customer: Customer): Observable<any> {
     return of(null);
   }
+
+  createCustomer(
+    _bankId: string,
+    _customer: Omit<Customer, 'id'>
+  ): Observable<Customer> {
+    return of(this.customers[0]);
+  }
 }
