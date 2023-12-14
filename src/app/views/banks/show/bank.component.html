@@ -194,7 +194,7 @@
       <ul class="flex flex-col gap-1 p-2">
         <li class="block whitespace-nowrap">
           <button
-            class="flex gap-1 items-center hover:bg-slate-100 p-1 px-2 rounded-lg text-inherit w-full"
+            class="flex gap-2 items-center hover:bg-slate-100 p-1 px-2 rounded-lg text-inherit w-full"
             (click)="openEditCustomer(customer)"
           >
             <svg
@@ -210,9 +210,43 @@
             Edit {{ customer.first_name }}
           </button>
         </li>
+        <li class="block whitespace-nowrap">
+          <button
+            class="flex gap-2 items-center hover:bg-slate-100 p-1 px-2 rounded-lg text-inherit w-full"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8m3-13.5V9h-4v2h4v2.5l3.5-3.5zm-6 4L5.5 14L9 17.5V15h4v-2H9z"
+              />
+            </svg>
+            Transfer Money
+          </button>
+        </li>
+        <li class="block whitespace-nowrap">
+          <button
+            class="flex gap-2 items-center hover:bg-slate-100 p-1 px-2 rounded-lg text-inherit w-full"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M20 6h-8l-2-2H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2m0 12H4V6h5.17l2 2H20zm-8-4h2v2h2v-2h2v-2h-2v-2h-2v2h-2z"
+              />
+            </svg>
+            Open an Account
+          </button>
+        </li>
         <li class="whitespace-nowrap">
           <a
-            class="flex gap-1 items-center hover:bg-pink-50 p-1 px-2 rounded-lg no-underline text-pink-600"
+            class="flex gap-2 items-center hover:bg-pink-50 p-1 px-2 rounded-lg no-underline text-pink-600"
             routerLink="/"
           >
             <svg
