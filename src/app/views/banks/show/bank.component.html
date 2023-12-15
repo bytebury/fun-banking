@@ -159,7 +159,9 @@
     Settings
   </div>
 </ng-template>
-<ng-template #settingsContent> Sup </ng-template>
+<ng-template #settingsContent>
+  <app-edit-bank [bank]="bank$ | async"></app-edit-bank>
+</ng-template>
 <ng-template #insightsTitle>
   <div class="flex items-center gap-2">
     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 16 16">
@@ -172,7 +174,12 @@
     Insights
   </div>
 </ng-template>
-<ng-template #insightsContent> Sup </ng-template>
+<ng-template #insightsContent>
+  <app-banner exclamation="🫣" severity="info" [fullWidth]="true">
+    We're working hard to get this section ready. We're apologize about any
+    inconvenience.
+  </app-banner>
+</ng-template>
 <ng-template #customerActions let-customer="customer">
   <app-menu>
     <div class="flex items-center btn btn-default px-2.5 py-2">

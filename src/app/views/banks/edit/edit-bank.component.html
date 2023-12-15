@@ -1,0 +1,54 @@
+<div class="flex flex-col gap-4">
+  <form
+    [formGroup]="form"
+    class="flex flex-col gap-4"
+    (ngSubmit)="updateBank()"
+  >
+    <div class="form-input">
+      @if (form.controls.name.errors?.['pattern']) {
+      <div class="error-message">
+        Bank names can only contain letters, numbers and spaces.
+      </div>
+      }
+      <input
+        id="bank_name"
+        type="text"
+        formControlName="name"
+        required
+        maxlength="30"
+      />
+      <label for="bank_name">Name</label>
+    </div>
+    <div class="form-input">
+      <textarea
+        id="bank_description"
+        type="text"
+        formControlName="description"
+        required
+        class="min-h-[5rem]"
+        maxlength="255"
+      ></textarea>
+      <label for="bank_description">Description</label>
+    </div>
+    <input
+      class="w-fit"
+      type="submit"
+      value="Update Bank"
+      [disabled]="form.invalid"
+    />
+  </form>
+  <section
+    class="flex flex-col gap-4 w-full bg-pink-50 border-dashed border border-pink-500 rounded-lg p-3"
+  >
+    <div>
+      <h1 class="font-extrabold">Danger Zone</h1>
+      <p class="text-sm">
+        The things you do in this section cannot be undone. Make sure you're
+        certain about what you're doing.
+      </p>
+    </div>
+    <div>
+      <button class="btn btn-danger py-1 px-3">Delete Bank</button>
+    </div>
+  </section>
+</div>

@@ -25,6 +25,7 @@ import { AccountsService } from '../../../services/accounts.service';
 import { BankAccount } from '../../../models/bank-account.model';
 import { ShowAccountComponent } from '../../accounts/show/show-account.component';
 import { BannerComponent } from '../../../components/banner/banner.component';
+import { EditBankComponent } from '../edit/edit-bank.component';
 
 @Component({
   selector: 'app-bank',
@@ -44,6 +45,7 @@ import { BannerComponent } from '../../../components/banner/banner.component';
     ShowCustomerComponent,
     ShowAccountComponent,
     BannerComponent,
+    EditBankComponent,
   ],
 })
 export class BankComponent implements AfterViewInit {
@@ -57,7 +59,7 @@ export class BankComponent implements AfterViewInit {
   @ViewChild('showCustomerModal') showCustomerModal!: ModalComponent;
   @ViewChild('showAccountModal') showAccountModal!: ModalComponent;
 
-  bank$: Observable<Bank | undefined> = of();
+  bank$: Observable<Bank | null> = of(null);
   customers$: Observable<Customer[]> = of([]);
   account$: Observable<BankAccount> = of();
   hasCopiedBankUrl = signal(false);

@@ -39,7 +39,7 @@ export class BankService {
     return of(this.banks);
   }
 
-  getBank(id: string): Observable<Bank | undefined> {
-    return of(this.banks.find((bank) => bank.id === id));
+  getBank(id: string): Observable<Bank | null> {
+    return of(this.banks.find((bank) => bank.id === id) ?? null);
   }
 }
