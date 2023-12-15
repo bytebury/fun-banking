@@ -176,7 +176,7 @@
 </ng-template>
 <ng-template #insightsContent>
   <app-banner exclamation="🫣" severity="info" [fullWidth]="true">
-    We're working hard to get this section ready. We're apologize about any
+    We're working hard to get this section ready. We apologize about any
     inconvenience.
   </app-banner>
 </ng-template>
@@ -200,6 +200,23 @@
         <li class="block whitespace-nowrap">
           <button
             class="flex gap-2 items-center hover:bg-slate-100 p-1 px-2 rounded-lg text-inherit w-full"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8m3-13.5V9h-4v2h4v2.5l3.5-3.5zm-6 4L5.5 14L9 17.5V15h4v-2H9z"
+              />
+            </svg>
+            Transfer Money
+          </button>
+        </li>
+        <li class="block whitespace-nowrap">
+          <button
+            class="flex gap-2 items-center hover:bg-slate-100 p-1 px-2 rounded-lg text-inherit w-full"
             (click)="openEditCustomer(customer)"
           >
             <svg
@@ -213,23 +230,6 @@
               />
             </svg>
             Edit {{ customer.first_name }}
-          </button>
-        </li>
-        <li class="block whitespace-nowrap">
-          <button
-            class="flex gap-2 items-center hover:bg-slate-100 p-1 px-2 rounded-lg text-inherit w-full"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-4 h-4"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fill="currentColor"
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8m3-13.5V9h-4v2h4v2.5l3.5-3.5zm-6 4L5.5 14L9 17.5V15h4v-2H9z"
-              />
-            </svg>
-            Transfer Money
           </button>
         </li>
         <!-- COMING SOON -->

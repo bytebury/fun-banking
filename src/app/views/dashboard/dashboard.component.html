@@ -22,21 +22,24 @@
     </div>
     <app-card>
       <h2 class="font-semibold">Welcome to Fun Banking!</h2>
-      <p class="mb-2">
-        This is the dashboard &mdash; where you'll find some high-level updates
-        about what's going on in your banks. Including some informational
-        updates from the Fun Banking team.
-      </p>
-      <p>
-        You can create and view banks that you own or are a part of on the
-        left-side navigation.
-      </p>
+      <div class="flex flex-col gap-3">
+        <p>
+          This is the dashboard &mdash; where you'll find some high-level
+          updates about what's going on in your banks. Including some
+          informational updates from the Fun Banking team. Although, we're still
+          in the middle of developing it further.
+        </p>
+        <p>
+          You can <a routerLink="/banks/new">create a bank</a> to get started.
+        </p>
+      </div>
     </app-card>
-    <app-card>
+    <!-- COMING SOON -->
+    <!-- <app-card>
       <div class="text-gray-500">
         There are currently no updates &mdash;
         <a routerLink="/banks/new">create a bank</a> to get started.
       </div>
-    </app-card>
+    </app-card> -->
   </ng-container>
 </app-dashboard-layout>
