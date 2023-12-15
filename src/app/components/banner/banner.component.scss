@@ -24,4 +24,12 @@
       @apply bg-blue-200;
     }
   }
+
+  &.warning {
+    @apply bg-orange-100 border-orange-200;
+
+    .pill {
+      @apply bg-orange-200;
+    }
+  }
 }
