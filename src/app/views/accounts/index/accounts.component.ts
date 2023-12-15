@@ -2,8 +2,10 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
   OnChanges,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { Observable, of } from 'rxjs';
@@ -12,27 +14,23 @@ import { Severity } from '../../../models/severity.enum';
 import { CustomerService } from '../../../services/customer.service';
 import { Customer } from '../../../models/customer.model';
 import { BannerComponent } from '../../../components/banner/banner.component';
-import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-accounts',
   standalone: true,
-  imports: [CommonModule, BannerComponent, RouterModule],
+  imports: [CommonModule, BannerComponent],
   templateUrl: './accounts.component.html',
   styleUrl: './accounts.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountsComponent implements OnChanges {
   @Input({ required: true }) customer: Customer | null = null;
+  @Output() opened = new EventEmitter<string>();
 
   bankAccounts$: Observable<BankAccount[]> = of([]);
-
   severity = Severity.Info;
 
-  constructor(
-    private readonly router: Router,
-    private readonly customerService: CustomerService
-  ) {}
+  constructor(private readonly customerService: CustomerService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['customer'] && this.customer) {
@@ -43,6 +41,6 @@ export class AccountsComponent implements OnChanges {
   }
 
   openAccount(accountId: string): void {
-    this.router.navigate(['accounts', accountId]);
+    this.opened.emit(accountId);
   }
 }

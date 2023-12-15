@@ -11,7 +11,7 @@ import {
 import { ResourceLayoutComponent } from '../../../layouts/resource-layout/resource-layout.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BankService } from '../../../services/bank.service';
-import { Observable, of, take } from 'rxjs';
+import { BehaviorSubject, Observable, of, take } from 'rxjs';
 import { Bank } from '../../../models/bank.model';
 import { CopyToClipboardDirective } from '../../../directives/copy-to-clipboard.directive';
 import { Tab, TabsComponent } from '../../../components/tabs/tabs.component';
@@ -21,6 +21,9 @@ import { MenuComponent } from '../../../components/menu/menu.component';
 import { ModalComponent } from '../../../components/modal/modal.component';
 import { EditCustomerFormComponent } from '../../customers/edit-customer-form/edit-customer-form.component';
 import { ShowCustomerComponent } from '../../customers/show-customer/show-customer.component';
+import { AccountsService } from '../../../services/accounts.service';
+import { BankAccount } from '../../../models/bank-account.model';
+import { ShowAccountComponent } from '../../accounts/show/show-account.component';
 
 @Component({
   selector: 'app-bank',
@@ -38,6 +41,7 @@ import { ShowCustomerComponent } from '../../customers/show-customer/show-custom
     ModalComponent,
     EditCustomerFormComponent,
     ShowCustomerComponent,
+    ShowAccountComponent,
   ],
 })
 export class BankComponent implements AfterViewInit {
@@ -49,9 +53,11 @@ export class BankComponent implements AfterViewInit {
   @ViewChild('insightsContent') insightsContent!: TemplateRef<unknown>;
   @ViewChild('editCustomerModal') editCustomerModal!: ModalComponent;
   @ViewChild('showCustomerModal') showCustomerModal!: ModalComponent;
+  @ViewChild('showAccountModal') showAccountModal!: ModalComponent;
 
   bank$: Observable<Bank | undefined> = of();
   customers$: Observable<Customer[]> = of([]);
+  account$: Observable<BankAccount> = of();
   hasCopiedBankUrl = signal(false);
 
   tabs = signal<Tab[]>([]);
@@ -60,7 +66,8 @@ export class BankComponent implements AfterViewInit {
   constructor(
     private readonly route: ActivatedRoute,
     private readonly bankService: BankService,
-    private readonly customerService: CustomerService
+    private readonly customerService: CustomerService,
+    private readonly accountService: AccountsService
   ) {
     this.route.paramMap.pipe(takeUntilDestroyed()).subscribe((params) => {
       this.bank$ = this.bankService.getBank(params.get('id')!);
@@ -92,6 +99,12 @@ export class BankComponent implements AfterViewInit {
     setTimeout(() => {
       this.hasCopiedBankUrl.set(false);
     }, 3_000);
+  }
+
+  openAccount(accountId: string): void {
+    this.showCustomerModal.close();
+    this.account$ = this.accountService.getAccount(accountId);
+    this.showAccountModal.open();
   }
 
   ngAfterViewInit(): void {

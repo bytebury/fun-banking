@@ -40,5 +40,8 @@
       {{ customer?.pin }}
     </div>
   </div>
-  <app-accounts [customer]="customer"></app-accounts>
+  <app-accounts
+    (opened)="openedAccount.emit($event)"
+    [customer]="customer"
+  ></app-accounts>
 </section>

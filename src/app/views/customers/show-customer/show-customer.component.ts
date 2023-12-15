@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { Customer } from '../../../models/customer.model';
 import { RouterModule } from '@angular/router';
 import { AccountsComponent } from '../../accounts/index/accounts.component';
@@ -14,4 +20,5 @@ import { AccountsComponent } from '../../accounts/index/accounts.component';
 })
 export class ShowCustomerComponent {
   @Input({ required: true }) customer: Customer | null = null;
+  @Output() openedAccount = new EventEmitter<string>();
 }

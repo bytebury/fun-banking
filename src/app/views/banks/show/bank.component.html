@@ -227,7 +227,8 @@
             Transfer Money
           </button>
         </li>
-        <li class="block whitespace-nowrap">
+        <!-- COMING SOON -->
+        <!-- <li class="block whitespace-nowrap">
           <button
             class="flex gap-2 items-center hover:bg-slate-100 p-1 px-2 rounded-lg text-inherit w-full"
           >
@@ -243,7 +244,7 @@
             </svg>
             Open an Account
           </button>
-        </li>
+        </li> -->
         <li class="whitespace-nowrap">
           <a
             class="flex gap-2 items-center hover:bg-pink-50 p-1 px-2 rounded-lg no-underline text-pink-600"
@@ -273,5 +274,11 @@
   ></app-edit-customer-form>
 </app-modal>
 <app-modal #showCustomerModal>
-  <app-show-customer [customer]="currentCustomer()"></app-show-customer>
+  <app-show-customer
+    (openedAccount)="openAccount($event)"
+    [customer]="currentCustomer()"
+  ></app-show-customer>
+</app-modal>
+<app-modal #showAccountModal>
+  <app-show-account [account]="account$ | async"></app-show-account>
 </app-modal>

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Customer } from '../models/customer.model';
-import { Transaction, TransactionStatus } from '../models/transaction.model';
 import { BankAccount } from '../models/bank-account.model';
 
 @Injectable({
@@ -43,7 +42,6 @@ export class CustomerService {
   getBankAccounts(_customerId: string): Observable<BankAccount[]> {
     return of([
       { id: '123', name: 'My Checkings Account', balance: 20_432.64 },
-      { id: '123', name: 'My Savings Account', balance: 20_432.64 },
     ]);
   }
 }
