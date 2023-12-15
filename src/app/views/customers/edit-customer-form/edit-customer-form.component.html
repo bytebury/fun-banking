@@ -1,4 +1,7 @@
 <form [formGroup]="form" class="flex flex-col gap-4" (ngSubmit)="submit()">
+  <h1 class="text-xl font-extrabold">
+    {{ customer?.first_name }} {{ customer?.last_name }}
+  </h1>
   <div class="form-input">
     @if (form.controls['first_name'].errors?.['pattern']) {
     <div class="error-message">Names can only contain letters.</div>

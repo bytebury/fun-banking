@@ -1,0 +1,13 @@
+<app-secured-layout>
+  <ng-container ngProjectAs="title">{{
+    (account$ | async)?.name
+  }}</ng-container>
+  <div class="flex flex-col items-center mb-4">
+    <div class="w-fit p-2 font-bold rounded-lg bg-green-100">
+      Balance: {{ (account$ | async)?.balance | currency }}
+    </div>
+  </div>
+  <section class="flex flex-col gap-4">
+    <h1 class="font-extrabold">Recent Transactions</h1>
+  </section>
+</app-secured-layout>

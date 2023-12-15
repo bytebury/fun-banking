@@ -267,9 +267,6 @@
   </app-menu>
 </ng-template>
 <app-modal #editCustomerModal [dismissable]="false">
-  <div ngProjectAs="modal-title">
-    {{ currentCustomer()?.first_name }} {{ currentCustomer()?.last_name }}
-  </div>
   <app-edit-customer-form
     [customer]="currentCustomer()"
     (saved)="updateCustomer($event)"

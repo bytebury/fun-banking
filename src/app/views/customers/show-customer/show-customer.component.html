@@ -40,39 +40,5 @@
       {{ customer?.pin }}
     </div>
   </div>
-  <h2 class="text-lg font-extrabold">Accounts</h2>
-  <div>
-    @if ((bankAccounts$ | async)!.length > 0) {
-    <div
-      class="grid grid-cols-2 items-center font-bold bg-gray-200 border border-gray-300 p-2 rounded-t-lg"
-    >
-      <div>Account</div>
-      <div class="text-right">Balance</div>
-    </div>
-    } @for (bankAccount of bankAccounts$ | async; track bankAccount.id) {
-    <div
-      class="grid grid-cols-2 items-center border border-gray-300 border-t-0 last:rounded-b-lg p-2 cursor-pointer hover:bg-slate-100"
-    >
-      <div>{{ bankAccount.name }}</div>
-      <div class="flex justify-end items-center gap-1 font-bold">
-        {{ bankAccount.balance | currency }}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-4 h-4"
-          viewBox="0 0 24 24"
-        >
-          <path
-            fill="currentColor"
-            d="M8.59 16.59L13.17 12L8.59 7.41L10 6l6 6l-6 6z"
-          />
-        </svg>
-      </div>
-    </div>
-    } @empty {
-    <app-banner exclamation="💭" [severity]="severity">
-      {{ customer?.first_name }} does not have any accounts. Do you want to open
-      one?
-    </app-banner>
-    }
-  </div>
+  <app-accounts [customer]="customer"></app-accounts>
 </section>

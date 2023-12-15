@@ -3,6 +3,7 @@ import { HomepageComponent } from './views/homepage/homepage.component';
 import { signedInGuard } from './guards/signed-in.guard';
 import { notSignedInGuard } from './guards/not-signed-in.guard';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
+import { ShowAccountComponent } from './views/accounts/show/show-account.component';
 
 export const routes: Routes = [
   {
@@ -51,6 +52,17 @@ export const routes: Routes = [
           import('./views/customers/new/new-customer.component').then(
             (m) => m.NewCustomerComponent
           ),
+      },
+    ],
+    canActivateChild: [signedInGuard],
+  },
+  {
+    path: 'accounts',
+    children: [
+      {
+        path: ':id',
+        pathMatch: 'full',
+        component: ShowAccountComponent,
       },
     ],
     canActivateChild: [signedInGuard],
