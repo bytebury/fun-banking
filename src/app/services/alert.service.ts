@@ -13,7 +13,7 @@ export class AlertService {
     return of<Alert>({
       message:
         'Welcome to the new Fun Banking website. Please be sure to report any bugs via the "Send Feedback" button.',
-      exclamation: '🚀',
+      exclamation: '👋',
       severity: Severity.Default,
     });
   }

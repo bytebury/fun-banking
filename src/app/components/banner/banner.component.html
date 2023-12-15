@@ -1,5 +1,5 @@
 <div class="flex justify-center w-full">
-  <div class="banner" [ngClass]="severity">
+  <div class="banner {{ severity }}" [ngClass]="{ 'w-full': fullWidth }">
     <div class="pill">{{ exclamation }}</div>
     <ng-content></ng-content>
   </div>

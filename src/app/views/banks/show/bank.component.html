@@ -69,22 +69,20 @@
     <app-tabs [tabs]="tabs"></app-tabs>
   </div>
   <ng-container *ngIf="bank$ | async as bank" ngProjectAs="drawer">
-    <div class="hidden md:flex flex-col gap-4">
-      <ng-container
-        *ngTemplateOutlet="about; context: { bank: bank }"
-      ></ng-container>
-    </div>
-    <section>
+    <section class="flex flex-col gap-2">
       <h1>Employees</h1>
-      Employees will go here
+      <app-banner exclamation="🫣" severity="info" [fullWidth]="true">
+        We're working on this section! Stay tuned!
+      </app-banner>
     </section>
-    <section>
+    <section class="flex flex-col gap-2">
       <h1>Information</h1>
-      Things like: Bank interest, fees, and things like that.
+      <app-banner exclamation="🫣" severity="info" [fullWidth]="true">
+        We're working on this section! Stay tuned!
+      </app-banner>
     </section>
   </ng-container>
 </app-resource-layout>
-<ng-template let-bank="bank" #about> </ng-template>
 
 <!-- Tabs -->
 <!-- Customers -->

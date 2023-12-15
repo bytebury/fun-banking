@@ -24,6 +24,7 @@ import { ShowCustomerComponent } from '../../customers/show-customer/show-custom
 import { AccountsService } from '../../../services/accounts.service';
 import { BankAccount } from '../../../models/bank-account.model';
 import { ShowAccountComponent } from '../../accounts/show/show-account.component';
+import { BannerComponent } from '../../../components/banner/banner.component';
 
 @Component({
   selector: 'app-bank',
@@ -42,6 +43,7 @@ import { ShowAccountComponent } from '../../accounts/show/show-account.component
     EditCustomerFormComponent,
     ShowCustomerComponent,
     ShowAccountComponent,
+    BannerComponent,
   ],
 })
 export class BankComponent implements AfterViewInit {

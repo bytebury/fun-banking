@@ -1,7 +1,11 @@
 <app-dashboard-layout>
   <ng-container ngProjectAs="dashboard-content">
     <ng-container *ngIf="alert$ | async as alert">
-      <app-banner [exclamation]="alert.exclamation" [severity]="alert.severity">
+      <app-banner
+        [exclamation]="alert.exclamation"
+        [severity]="alert.severity"
+        [fullWidth]="true"
+      >
         {{ alert.message }}
       </app-banner>
     </ng-container>
