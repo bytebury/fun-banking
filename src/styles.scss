@@ -29,6 +29,7 @@ form {
 
     input[type="text"],
     input[type="password"],
+    input[type="number"],
     input[type="email"] {
       @apply border border-gray-300 rounded-lg p-2;
       @apply outline-none focus:ring-1 focus:ring-primary-link focus:border-primary-link;

@@ -57,12 +57,14 @@ export const routes: Routes = [
     canActivateChild: [signedInGuard],
   },
   {
-    path: 'accounts',
+    path: 'customers',
     children: [
       {
-        path: ':id',
-        pathMatch: 'full',
-        component: ShowAccountComponent,
+        path: ':id/transfer',
+        loadComponent: () =>
+          import(
+            './views/customers/money-transfer/money-transfer.component'
+          ).then((m) => m.MoneyTransferComponent),
       },
     ],
     canActivateChild: [signedInGuard],

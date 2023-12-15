@@ -1,0 +1,73 @@
+<app-secured-layout>
+  <ng-container ngProjectAs="title">Create a Money Transfer</ng-container>
+  <div class="flex flex-col gap-4">
+    <section>
+      <h1 class="text-lg font-extrabold mb-2">Marcello's Checking</h1>
+      <div
+        class="text-sm inline-flex items-center gap-1 rounded-lg bg-green-100 py-2 px-3"
+      >
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 h-4"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="currentColor"
+              d="M18 4H6C3.79 4 2 5.79 2 8v8c0 2.21 1.79 4 4 4h12c2.21 0 4-1.79 4-4V8c0-2.21-1.79-4-4-4m-1.86 9.77c-.24.2-.57.28-.88.2L4.15 11.25C4.45 10.52 5.16 10 6 10h12c.67 0 1.26.34 1.63.84zM6 6h12c1.1 0 2 .9 2 2v.55c-.59-.34-1.27-.55-2-.55H6c-.73 0-1.41.21-2 .55V8c0-1.1.9-2 2-2"
+            />
+          </svg>
+        </div>
+        <div class="font-bold">Balance:</div>
+        {{ 20000 | currency }}
+      </div>
+    </section>
+    <form [formGroup]="form" class="flex flex-col gap-4">
+      <div class="form-input">
+        @if (form.controls.amount.errors?.['min'] ||
+        form.controls.amount.errors?.['max']) {
+        <div class="error-message">
+          Amount must greater than $0 and less than $10,000.
+        </div>
+        }
+        <input
+          id="transfer_amount"
+          type="number"
+          step="0.01"
+          formControlName="amount"
+          required
+          maxlength="30"
+        />
+        <label for="transfer_amount">Amount</label>
+      </div>
+      <div class="form-input">
+        <textarea
+          id="bank_description"
+          type="text"
+          formControlName="description"
+          required
+          class="min-h-[5rem]"
+          maxlength="255"
+          placeholder="Paying for lunch"
+        ></textarea>
+        <label for="bank_description">Description</label>
+      </div>
+      <div class="flex justify-between items-center">
+        <button
+          class="btn btn-success w-fit px-4 py-2 disabled:opacity-40 disabled:cursor-not-allowed"
+          [disabled]="form.invalid"
+          (click)="deposit()"
+        >
+          Deposit
+        </button>
+        <button
+          class="btn btn-danger w-fit px-4 py-2 disabled:opacity-40 disabled:cursor-not-allowed"
+          [disabled]="form.invalid"
+          (click)="withdraw()"
+        >
+          Withdraw
+        </button>
+      </div>
+    </form>
+  </div>
+</app-secured-layout>

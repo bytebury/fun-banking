@@ -8,7 +8,6 @@ import {
   TemplateRef,
   signal,
 } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 export interface Tab {
   id: string;
@@ -19,7 +18,7 @@ export interface Tab {
 @Component({
   selector: 'app-tabs',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule],
   templateUrl: './tabs.component.html',
   styleUrl: './tabs.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,15 +28,8 @@ export class TabsComponent {
   @Input({ required: true }) tabs = signal<Tab[]>([]);
   @Output() selected = new EventEmitter<Tab>();
 
-  constructor(private router: Router) {}
-
   setActiveTab(index: number): void {
     this.activeTab.set(index);
     this.selected.emit(this.tabs()[index]);
-    this.router.navigate([window.location.pathname], {
-      queryParams: {
-        tab: this.tabs().at(this.activeTab())?.id,
-      },
-    });
   }
 }

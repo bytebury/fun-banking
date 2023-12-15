@@ -198,8 +198,9 @@
     <div ngProjectAs="menu">
       <ul class="flex flex-col gap-1 p-2">
         <li class="block whitespace-nowrap">
-          <button
-            class="flex gap-2 items-center hover:bg-slate-100 p-1 px-2 rounded-lg text-inherit w-full"
+          <a
+            [routerLink]="['/customers', customer.id, 'transfer']"
+            class="flex gap-2 items-center hover:bg-slate-100 p-1 px-2 rounded-lg text-inherit w-full no-underline"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -212,7 +213,7 @@
               />
             </svg>
             Transfer Money
-          </button>
+          </a>
         </li>
         <li class="block whitespace-nowrap">
           <button

@@ -20,7 +20,7 @@ import { CustomerService } from '../../../services/customer.service';
 import { MenuComponent } from '../../../components/menu/menu.component';
 import { ModalComponent } from '../../../components/modal/modal.component';
 import { EditCustomerFormComponent } from '../../customers/edit-customer-form/edit-customer-form.component';
-import { ShowCustomerComponent } from '../../customers/show-customer/show-customer.component';
+import { ShowCustomerComponent } from '../../customers/show/show-customer.component';
 import { AccountsService } from '../../../services/accounts.service';
 import { BankAccount } from '../../../models/bank-account.model';
 import { ShowAccountComponent } from '../../accounts/show/show-account.component';
