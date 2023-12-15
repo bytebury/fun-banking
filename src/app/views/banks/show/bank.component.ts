@@ -20,6 +20,7 @@ import { CustomerService } from '../../../services/customer.service';
 import { MenuComponent } from '../../../components/menu/menu.component';
 import { ModalComponent } from '../../../components/modal/modal.component';
 import { EditCustomerFormComponent } from '../../customers/edit-customer-form/edit-customer-form.component';
+import { ShowCustomerComponent } from '../../customers/show-customer/show-customer.component';
 
 @Component({
   selector: 'app-bank',
@@ -36,6 +37,7 @@ import { EditCustomerFormComponent } from '../../customers/edit-customer-form/ed
     MenuComponent,
     ModalComponent,
     EditCustomerFormComponent,
+    ShowCustomerComponent,
   ],
 })
 export class BankComponent implements AfterViewInit {

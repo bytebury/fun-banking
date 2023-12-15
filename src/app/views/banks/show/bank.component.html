@@ -276,47 +276,5 @@
   ></app-edit-customer-form>
 </app-modal>
 <app-modal #showCustomerModal>
-  <div ngProjectAs="modal-title">
-    {{ currentCustomer()?.first_name }} {{ currentCustomer()?.last_name }}
-  </div>
-  <div class="flex flex-col gap-4">
-    <div class="flex gap-2 text-sm">
-      <div
-        class="inline-flex items-center gap-1 rounded-lg bg-green-100 py-2 px-3"
-      >
-        <div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-4 h-4"
-            viewBox="0 0 24 24"
-          >
-            <path
-              fill="currentColor"
-              d="M18 4H6C3.79 4 2 5.79 2 8v8c0 2.21 1.79 4 4 4h12c2.21 0 4-1.79 4-4V8c0-2.21-1.79-4-4-4m-1.86 9.77c-.24.2-.57.28-.88.2L4.15 11.25C4.45 10.52 5.16 10 6 10h12c.67 0 1.26.34 1.63.84zM6 6h12c1.1 0 2 .9 2 2v.55c-.59-.34-1.27-.55-2-.55H6c-.73 0-1.41.21-2 .55V8c0-1.1.9-2 2-2"
-            />
-          </svg>
-        </div>
-        <div class="font-bold">Net Balance:</div>
-        {{ currentCustomer()?.balance | currency }}
-      </div>
-      <div
-        class="inline-flex items-center gap-1 rounded-lg bg-gray-100 py-2 px-3"
-      >
-        <div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-4 h-4"
-            viewBox="0 0 24 24"
-          >
-            <path
-              fill="currentColor"
-              d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91c4.59-1.15 8-5.86 8-10.91V5zm6 9.09c0 4-2.55 7.7-6 8.83c-3.45-1.13-6-4.82-6-8.83v-4.7l6-2.25l6 2.25z"
-            />
-          </svg>
-        </div>
-        <div class="font-bold">PIN:</div>
-        {{ currentCustomer()?.pin }}
-      </div>
-    </div>
-  </div>
+  <app-show-customer [customer]="currentCustomer()"></app-show-customer>
 </app-modal>
