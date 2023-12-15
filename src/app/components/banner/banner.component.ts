@@ -12,5 +12,5 @@ import { Severity } from '../../models/severity.enum';
 })
 export class BannerComponent {
   @Input() exclamation = '🚀';
-  @Input() severity = Severity.Default;
+  @Input() severity: string | Severity = Severity.Default;
 }
