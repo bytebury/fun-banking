@@ -1,14 +1,19 @@
 import { Router, type CanActivateFn } from '@angular/router';
-import { UserAuthenticationService } from '../services/user-authentication.service';
 import { inject } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { first, map } from 'rxjs';
 
 export const notSignedInGuard: CanActivateFn = () => {
   const router = inject(Router);
-  const auth = inject(UserAuthenticationService);
+  const auth = inject(AuthService);
 
-  if (auth.isLoggedIn()) {
-    return router.parseUrl('dashboard');
-  }
-
-  return true;
+  return auth.isLoggedIn$.pipe(
+    first(),
+    map((isLoggedIn) => {
+      if (isLoggedIn) {
+        return router.createUrlTree(['dashboard']);
+      }
+      return true;
+    })
+  );
 };

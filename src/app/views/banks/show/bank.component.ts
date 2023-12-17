@@ -59,7 +59,7 @@ export class BankComponent implements AfterViewInit {
   @ViewChild('showCustomerModal') showCustomerModal!: ModalComponent;
   @ViewChild('showAccountModal') showAccountModal!: ModalComponent;
 
-  bank$: Observable<Bank | null> = of(null);
+  bank$ = this.bank.bank$;
   customers$: Observable<Customer[]> = of([]);
   account$: Observable<BankAccount> = of();
   hasCopiedBankUrl = signal(false);
@@ -69,12 +69,12 @@ export class BankComponent implements AfterViewInit {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly bankService: BankService,
+    private readonly bank: BankService,
     private readonly customerService: CustomerService,
     private readonly accountService: AccountsService
   ) {
     this.route.paramMap.pipe(takeUntilDestroyed()).subscribe((params) => {
-      this.bank$ = this.bankService.getBank(params.get('id')!);
+      this.bank.setBank(params.get('id')!);
       this.customers$ = this.customerService.getCustomers(params.get('id')!);
     });
   }

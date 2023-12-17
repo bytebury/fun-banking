@@ -8,6 +8,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { UserService } from '../../services/user.service';
+import { BannerComponent } from '../../components/banner/banner.component';
 
 @Component({
   selector: 'app-signup',
@@ -20,9 +22,12 @@ import { RouterModule } from '@angular/router';
     SecuredLayoutComponent,
     ReactiveFormsModule,
     RouterModule,
+    BannerComponent,
   ],
 })
 export class SignupComponent {
+  errorMessage$ = this.user.errorMessage$;
+
   signupForm = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
@@ -40,4 +45,18 @@ export class SignupComponent {
       Validators.minLength(6),
     ]),
   });
+
+  constructor(private readonly user: UserService) {}
+
+  signUp(): void {
+    this.user.signUp({
+      first_name: this.signupForm.get('firstName')?.value ?? '',
+      last_name: this.signupForm.get('lastName')?.value ?? '',
+      username: this.signupForm.get('username')?.value ?? '',
+      email: this.signupForm.get('email')?.value ?? '',
+      password: this.signupForm.get('password')?.value ?? '',
+      password_confirmation:
+        this.signupForm.get('passwordConfirmation')?.value ?? '',
+    });
+  }
 }

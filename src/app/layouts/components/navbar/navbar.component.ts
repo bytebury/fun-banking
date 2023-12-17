@@ -2,7 +2,10 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ModalComponent } from '../../../components/modal/modal.component';
-import { UserAuthenticationService } from '../../../services/user-authentication.service';
+import { AuthService } from '../../../services/auth.service';
+import { Observable } from 'rxjs';
+import { UserService } from '../../../services/user.service';
+import { User } from '../../../models/user.model';
 
 @Component({
   selector: 'app-navbar',
@@ -15,15 +18,10 @@ import { UserAuthenticationService } from '../../../services/user-authentication
 export class NavbarComponent {
   @ViewChild('mobileNavigation') mobileNavigationModal!: ModalComponent;
 
-  constructor(private auth: UserAuthenticationService) {}
-
-  isLoggedIn(): boolean {
-    return this.auth.isLoggedIn();
-  }
-
-  getCurrentUser() {
-    return this.auth.getCurrentUser();
-  }
+  constructor(
+    private readonly auth: AuthService,
+    private readonly user: UserService
+  ) {}
 
   logout(): void {
     this.auth.logout();
@@ -31,5 +29,13 @@ export class NavbarComponent {
 
   openMobileNavigation(): void {
     this.mobileNavigationModal.open();
+  }
+
+  get isLoggedIn$(): Observable<boolean> {
+    return this.auth.isLoggedIn$;
+  }
+
+  get currentUser$(): Observable<User> {
+    return this.user.currentUser$;
   }
 }

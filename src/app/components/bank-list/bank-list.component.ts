@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { BankService } from '../../services/bank.service';
 import { RouterModule } from '@angular/router';
 
@@ -11,10 +11,8 @@ import { RouterModule } from '@angular/router';
   styleUrl: './bank-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BankListComponent implements OnInit {
-  banks$ = this.bankService.getBanks();
+export class BankListComponent {
+  banks$ = this.bank.banks$;
 
-  constructor(private bankService: BankService) {}
-
-  ngOnInit(): void {}
+  constructor(private bank: BankService) {}
 }

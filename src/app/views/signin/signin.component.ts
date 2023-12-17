@@ -9,8 +9,7 @@ import {
 import { Router, RouterModule } from '@angular/router';
 import { SecuredLayoutComponent } from '../../layouts/secured-layout/secured-layout.component';
 import { BannerComponent } from '../../components/banner/banner.component';
-import { UserAuthenticationService } from '../../services/user-authentication.service';
-import { take } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-signin',
@@ -27,33 +26,19 @@ import { take } from 'rxjs';
   ],
 })
 export class SigninComponent {
-  loginError: Error | null = null;
-
   signinForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor(
-    private router: Router,
-    private auth: UserAuthenticationService
-  ) {}
+  errorMessage$ = this.auth.errorMessage$;
+
+  constructor(private readonly auth: AuthService) {}
 
   login(): void {
-    this.auth
-      .login({
-        username: this.signinForm.get('email')?.value ?? '',
-        password: this.signinForm.get('password')?.value ?? '',
-      })
-      .pipe(take(1))
-      .subscribe({
-        next: (response) => {
-          console.log(response);
-          this.router.navigate(['dashboard']);
-        },
-        error: (error) => {
-          this.loginError = error;
-        },
-      });
+    this.auth.login({
+      email: this.signinForm.get('email')?.value ?? '',
+      password: this.signinForm.get('password')?.value ?? '',
+    });
   }
 }

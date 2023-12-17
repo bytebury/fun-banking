@@ -3,7 +3,6 @@ import { HomepageComponent } from './views/homepage/homepage.component';
 import { signedInGuard } from './guards/signed-in.guard';
 import { notSignedInGuard } from './guards/not-signed-in.guard';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
-import { ShowAccountComponent } from './views/accounts/show/show-account.component';
 
 export const routes: Routes = [
   {

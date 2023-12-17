@@ -6,7 +6,8 @@
     </a>
   </header>
   <ul>
-    <li *ngFor="let bank of banks$ | async">
+    @for(bank of banks$ | async; track bank.id) {
+    <li>
       <a
         [routerLink]="['/banks', bank.id]"
         class="inline-flex items-center gap-2 text-sm"
@@ -15,5 +16,11 @@
         {{ bank.owner.username }}/{{ bank.slug }}
       </a>
     </li>
+    } @empty {
+    <div class="text-gray-500 text-sm">
+      Looks like you don't have or belong to any banks yet.
+      <a [routerLink]="['/', 'banks', 'new']">Create one</a> to get started.
+    </div>
+    }
   </ul>
 </section>

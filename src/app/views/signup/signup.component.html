@@ -1,6 +1,9 @@
 <app-secured-layout>
   <ng-container ngProjectAs="title">Sign up for Fun Banking</ng-container>
-  <form [formGroup]="signupForm">
+  <form [formGroup]="signupForm" (ngSubmit)="signUp()">
+    @if (errorMessage$ | async) {
+    <app-banner exclamation="❌">{{ errorMessage$ | async }}</app-banner>
+    }
     <div class="flex flex-col md:flex-row gap-4">
       <div class="form-input">
         <input

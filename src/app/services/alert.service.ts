@@ -7,8 +7,6 @@ import { Severity } from '../models/severity.enum';
   providedIn: 'root',
 })
 export class AlertService {
-  constructor() {}
-
   getAlert(): Observable<Alert> {
     return of<Alert>({
       message:

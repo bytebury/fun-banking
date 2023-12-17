@@ -1,45 +1,45 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, first, of } from 'rxjs';
 import { Bank } from '../models/bank.model';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BankService {
-  private readonly banks = [
-    {
-      id: '123',
-      owner: {
-        username: 'marcello',
-        first_name: 'Marcello',
-        last_name: 'Sabino',
-        avatar: 'https://avatars.githubusercontent.com/u/104793781?v=4',
-      },
-      name: 'Bank of Fun',
-      slug: 'bank-of-fun',
-      description: 'The official bank of fun.',
-    },
-    {
-      id: '124',
-      owner: {
-        username: 'marcello',
-        first_name: 'Marcello',
-        last_name: 'Sabino',
-        avatar: 'https://avatars.githubusercontent.com/u/104793781?v=4',
-      },
-      name: 'Kingswoods Bank',
-      slug: 'kingswoods-bank',
-      description: 'The official bank for Kingswood School.',
-    },
-  ];
+  private readonly banks = new BehaviorSubject<Bank[]>([]);
+  private readonly bank = new BehaviorSubject<Bank | null>(null);
 
-  constructor() {}
-
-  getBanks(): Observable<Bank[]> {
-    return of(this.banks);
+  constructor(private readonly http: HttpClient) {
+    if (this.banks.value.length === 0) {
+      this.loadBanks();
+    }
   }
 
-  getBank(id: string): Observable<Bank | null> {
-    return of(this.banks.find((bank) => bank.id === id) ?? null);
+  setBank(bankId: string): void {
+    this.http
+      .get<Bank>(`${environment.apiUrl}/banks/${bankId}`)
+      .pipe(first())
+      .subscribe((bank) => {
+        this.bank.next(bank);
+      });
+  }
+
+  get banks$(): Observable<Bank[]> {
+    return this.banks.asObservable();
+  }
+
+  get bank$(): Observable<Bank | null> {
+    return this.bank.asObservable();
+  }
+
+  private loadBanks(): void {
+    this.http
+      .get<Bank[]>(`${environment.apiUrl}/banks`)
+      .pipe(first())
+      .subscribe((banks) => {
+        this.banks.next(banks);
+      });
   }
 }

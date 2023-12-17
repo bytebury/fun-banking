@@ -29,18 +29,22 @@
     </a>
   </section>
   <section id="NavBar_Links" class="hidden md:block">
-    @if (isLoggedIn()) {
+    @if (isLoggedIn$ | async) {
     <!-- Do nothing right now -->
     } @else {
     <div *ngTemplateOutlet="loggedOutNavigation"></div>
     }
   </section>
-  @if(isLoggedIn()) {
-  <button class="profile-nav" (click)="openMobileNavigation()">
+  @if(isLoggedIn$ | async) {
+  <button
+    *ngIf="currentUser$ | async as currentUser"
+    class="profile-nav"
+    (click)="openMobileNavigation()"
+  >
     <img
       height="40"
       width="40"
-      src="https://avatars.githubusercontent.com/u/104793781?v=4"
+      [src]="currentUser.avatar"
       alt="profile-picture-navigation"
     />
   </button>
@@ -67,7 +71,7 @@
 <app-modal #mobileNavigation ngSkipHydration>
   <div ngProjectAs="modal-title">Navigation</div>
   <div class="modal-nav">
-    @if (isLoggedIn()) {
+    @if (isLoggedIn$ | async) {
     <div *ngTemplateOutlet="loggedInNavigation"></div>
     } @else {
     <div *ngTemplateOutlet="loggedOutNavigation"></div>
@@ -76,20 +80,23 @@
 </app-modal>
 
 <ng-template #loggedInNavigation>
-  <div class="flex items-center gap-4 mb-4">
+  <div
+    class="flex items-center gap-4 mb-4"
+    *ngIf="currentUser$ | async as currentUser"
+  >
     <img
       class="rounded-full"
-      src="https://avatars.githubusercontent.com/u/104793781?v=4"
+      [src]="currentUser.avatar"
       alt="profile image"
       width="64"
       height="64"
     />
     <section>
       <h2 class="font-extrabold text-lg">
-        {{ getCurrentUser().first_name | titlecase }}
-        {{ getCurrentUser().last_name | titlecase }}
+        {{ currentUser.first_name | titlecase }}
+        {{ currentUser.last_name | titlecase }}
       </h2>
-      <p class="text-gray-500">{{ "@" }}{{ getCurrentUser().username }}</p>
+      <p class="text-gray-500">{{ "@" }}{{ currentUser.username }}</p>
     </section>
   </div>
   <ul class="flex items-center gap-4">

@@ -6,8 +6,6 @@ import { Announcement } from '../models/announcement.model';
   providedIn: 'root',
 })
 export class AnnouncementService {
-  constructor() {}
-
   getAnnouncements(): Observable<Announcement[]> {
     return of([
       {
