@@ -4,6 +4,11 @@ import { Bank } from '../models/bank.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
+interface BankInfo {
+  name: string;
+  description: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -26,6 +31,19 @@ export class BankService {
       });
   }
 
+  create(bankInfo: BankInfo): Observable<Bank> {
+    const request = { ...bankInfo, slug: this.generateSlug(bankInfo.name) };
+    return this.http.post<Bank>(`${environment.apiUrl}/banks`, request);
+  }
+
+  update(bankInfo: BankInfo): Observable<Bank> {
+    const request = { ...bankInfo, slug: this.generateSlug(bankInfo.name) };
+    return this.http.put<Bank>(
+      `${environment.apiUrl}/banks/${this.bank.value?.id}`,
+      request
+    );
+  }
+
   get banks$(): Observable<Bank[]> {
     return this.banks.asObservable();
   }
@@ -41,5 +59,12 @@ export class BankService {
       .subscribe((banks) => {
         this.banks.next(banks);
       });
+  }
+
+  private generateSlug(name: string): string {
+    if (!name) {
+      return '';
+    }
+    return name.trim().toLowerCase().replaceAll(/\s+/g, '-');
   }
 }

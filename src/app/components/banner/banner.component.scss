@@ -32,4 +32,12 @@
       @apply bg-orange-200;
     }
   }
+
+  &.success {
+    @apply bg-green-100 border-green-200;
+
+    .pill {
+      @apply bg-green-200;
+    }
+  }
 }

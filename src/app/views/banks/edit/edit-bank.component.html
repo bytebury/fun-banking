@@ -4,6 +4,15 @@
     class="flex flex-col gap-4"
     (ngSubmit)="updateBank()"
   >
+    @if (errorMessage().message) {
+    <app-banner
+      [severity]="errorMessage().severity"
+      [exclamation]="errorMessage().exclamation"
+      [fullWidth]="true"
+    >
+      {{ errorMessage().message }}
+    </app-banner>
+    }
     <div class="form-input">
       @if (form.controls.name.errors?.['pattern']) {
       <div class="error-message">
