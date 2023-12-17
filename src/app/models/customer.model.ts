@@ -1,7 +1,7 @@
 export interface Customer {
-  id: string;
+  id: number;
   first_name: string;
   last_name: string;
-  balance: number;
   pin: string;
+  bank_id: number;
 }

@@ -11,8 +11,7 @@ import {
 import { ResourceLayoutComponent } from '../../../layouts/resource-layout/resource-layout.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BankService } from '../../../services/bank.service';
-import { BehaviorSubject, Observable, of, take } from 'rxjs';
-import { Bank } from '../../../models/bank.model';
+import { Observable, of, take } from 'rxjs';
 import { CopyToClipboardDirective } from '../../../directives/copy-to-clipboard.directive';
 import { Tab, TabsComponent } from '../../../components/tabs/tabs.component';
 import { Customer } from '../../../models/customer.model';
@@ -59,8 +58,8 @@ export class BankComponent implements AfterViewInit {
   @ViewChild('showCustomerModal') showCustomerModal!: ModalComponent;
   @ViewChild('showAccountModal') showAccountModal!: ModalComponent;
 
-  bank$ = this.bank.bank$;
-  customers$: Observable<Customer[]> = of([]);
+  bank$ = this.bankService.bank$;
+  customers$ = this.bankService.customers$;
   account$: Observable<BankAccount> = of();
   hasCopiedBankUrl = signal(false);
 
@@ -69,13 +68,11 @@ export class BankComponent implements AfterViewInit {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly bank: BankService,
-    private readonly customerService: CustomerService,
+    private readonly bankService: BankService,
     private readonly accountService: AccountsService
   ) {
     this.route.paramMap.pipe(takeUntilDestroyed()).subscribe((params) => {
-      this.bank.setBank(params.get('id')!);
-      this.customers$ = this.customerService.getCustomers(params.get('id')!);
+      this.bankService.setBank(params.get('id')!);
     });
   }
 
@@ -90,12 +87,8 @@ export class BankComponent implements AfterViewInit {
   }
 
   updateCustomer(customer: Customer): void {
-    this.customerService
-      .updateCustomer(customer)
-      .pipe(take(1))
-      .subscribe(() => {
-        this.editCustomerModal.close();
-      });
+    this.bankService.setBank(customer.bank_id.toString());
+    this.editCustomerModal.close();
   }
 
   copiedBankUrl(): void {

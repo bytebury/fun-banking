@@ -7,6 +7,7 @@ import {
   OnChanges,
   Output,
   SimpleChanges,
+  signal,
 } from '@angular/core';
 import { Customer } from '../../../models/customer.model';
 import {
@@ -15,11 +16,14 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { CustomerService } from '../../../services/customer.service';
+import { first } from 'rxjs';
+import { BannerComponent } from '../../../components/banner/banner.component';
 
 @Component({
   selector: 'app-edit-customer-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, BannerComponent],
   templateUrl: './edit-customer-form.component.html',
   styleUrl: './edit-customer-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,6 +34,8 @@ export class EditCustomerFormComponent implements OnChanges {
 
   @Input({ required: true }) customer: Customer | null = null;
   @Output() saved = new EventEmitter<Customer>();
+
+  errorMessage = signal('');
 
   form: FormGroup = new FormGroup({
     first_name: new FormControl('', [
@@ -48,6 +54,8 @@ export class EditCustomerFormComponent implements OnChanges {
     ]),
   });
 
+  constructor(private readonly customerService: CustomerService) {}
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['customer'].currentValue) {
       this.form.get('first_name')?.patchValue(this.customer?.first_name);
@@ -58,12 +66,21 @@ export class EditCustomerFormComponent implements OnChanges {
 
   submit(): void {
     if (this.form.valid && this.customer) {
-      this.saved.emit({
-        ...this.customer,
-        first_name: this.form.get('first_name')?.value,
-        last_name: this.form.get('last_name')?.value,
-        pin: this.form.get('pin')?.value,
-      });
+      this.customerService
+        .update(this.customer.id, {
+          first_name: this.form.get('first_name')?.value,
+          last_name: this.form.get('last_name')?.value,
+          pin: this.form.get('pin')?.value,
+        })
+        .pipe(first())
+        .subscribe({
+          next: (customer) => {
+            this.saved.emit(customer);
+          },
+          error: (error) => {
+            this.errorMessage.set(error.error.message);
+          },
+        });
     }
   }
 }

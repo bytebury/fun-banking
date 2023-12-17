@@ -34,9 +34,9 @@ export class AccountsComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['customer'] && this.customer) {
-      this.bankAccounts$ = this.customerService.getBankAccounts(
-        this.customer!.id
-      );
+      // this.bankAccounts$ = this.customerService.getBankAccounts(
+      //   this.customer!.id
+      // );
     }
   }
 

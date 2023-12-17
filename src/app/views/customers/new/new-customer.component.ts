@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -9,13 +9,20 @@ import {
 import { CustomerService } from '../../../services/customer.service';
 import { take } from 'rxjs';
 import { SecuredLayoutComponent } from '../../../layouts/secured-layout/secured-layout.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Customer } from '../../../models/customer.model';
+import { BannerComponent } from '../../../components/banner/banner.component';
 
 @Component({
   selector: 'app-new-customer',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, SecuredLayoutComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    SecuredLayoutComponent,
+    BannerComponent,
+  ],
   templateUrl: './new-customer.component.html',
   styleUrl: './new-customer.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -43,9 +50,12 @@ export class NewCustomerComponent {
     ]),
   });
 
+  errorMessage = signal('');
+
   constructor(
     private readonly activatedRoute: ActivatedRoute,
-    private readonly customerService: CustomerService
+    private readonly customerService: CustomerService,
+    private readonly router: Router
   ) {
     this.activatedRoute.paramMap
       .pipe(takeUntilDestroyed())
@@ -57,15 +67,19 @@ export class NewCustomerComponent {
   createCustomer(): void {
     if (this.form.valid) {
       this.customerService
-        .createCustomer(this.bankId, {
+        .create({
+          bank_id: Number(this.bankId),
           first_name: this.form.get('first_name')?.value,
           last_name: this.form.get('last_name')?.value,
           pin: this.form.get('pin')?.value,
-          balance: 100,
         })
         .pipe(take(1))
-        .subscribe((customer) => {
-          console.log(customer);
+        .subscribe({
+          next: (customer: Customer) =>
+            this.router.navigate(['/', 'banks', customer.bank_id]),
+          error: (error) => {
+            this.errorMessage.set(error.error.message);
+          },
         });
     }
   }

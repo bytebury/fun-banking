@@ -5,6 +5,9 @@
     class="flex flex-col gap-4"
     (ngSubmit)="createCustomer()"
   >
+    @if (errorMessage()) {
+    <app-banner exclamation="❌">{{ errorMessage() }}</app-banner>
+    }
     <div class="form-input">
       @if (form.controls['first_name'].errors?.['pattern']) {
       <div class="error-message">Names can only contain letters.</div>

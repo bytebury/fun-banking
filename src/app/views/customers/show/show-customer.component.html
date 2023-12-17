@@ -1,6 +1,6 @@
 <section class="flex flex-col gap-4">
   <h1 class="text-xl font-extrabold">
-    {{ customer?.first_name }} {{ customer?.last_name }}
+    {{ customer?.first_name | titlecase }} {{ customer?.last_name | titlecase }}
   </h1>
   <div class="flex gap-2 text-sm">
     <div
@@ -19,7 +19,7 @@
         </svg>
       </div>
       <div class="font-bold">Balance:</div>
-      {{ customer?.balance | currency }}
+      TODO
     </div>
     <div
       class="inline-flex items-center gap-1 rounded-lg bg-gray-100 py-2 px-3"

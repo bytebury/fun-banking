@@ -1,7 +1,10 @@
 <form [formGroup]="form" class="flex flex-col gap-4" (ngSubmit)="submit()">
   <h1 class="text-xl font-extrabold">
-    {{ customer?.first_name }} {{ customer?.last_name }}
+    {{ customer?.first_name | titlecase }} {{ customer?.last_name | titlecase }}
   </h1>
+  @if (errorMessage()) {
+  <app-banner exclamation="❌">{{ errorMessage() }}</app-banner>
+  }
   <div class="form-input">
     @if (form.controls['first_name'].errors?.['pattern']) {
     <div class="error-message">Names can only contain letters.</div>
@@ -42,5 +45,5 @@
     />
     <label for="customer_pin">PIN</label>
   </div>
-  <input type="submit" value="Save Customer" [disabled]="form.invalid" />
+  <input type="submit" value="Update Customer" [disabled]="form.invalid" />
 </form>

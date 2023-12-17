@@ -29,9 +29,9 @@
       </div>
     </div>
     } @empty {
-    <app-banner exclamation="💭" [severity]="severity">
-      {{ customer?.first_name }} does not have any accounts. Do you want to open
-      one?
+    <app-banner exclamation="💭" [severity]="severity" [fullWidth]="true">
+      {{ customer?.first_name | titlecase }} does not have any accounts. Do you
+      want to open one?
     </app-banner>
     }
   </div>
