@@ -1,3 +1,5 @@
+import { User } from './user.model';
+
 export enum TransferStatus {
   APPROVED = 'approved',
   DECLINED = 'declined',
@@ -5,7 +7,7 @@ export enum TransferStatus {
 }
 
 export interface Transfer {
-  id: string;
+  id: number;
   amount: number;
   description: string;
   current_balance: number;
@@ -14,4 +16,5 @@ export interface Transfer {
   user_id?: number;
   created_at?: Date;
   updated_at?: Date;
+  updated_by?: User;
 }

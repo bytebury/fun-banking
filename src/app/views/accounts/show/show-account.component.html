@@ -26,16 +26,108 @@
       Coming soon!
     </app-banner>
   </section>
+  @if (pendingTransfers().length > 0) {
   <section class="flex flex-col gap-4">
     <h2 class="text-lg font-extrabold">Pending Transactions</h2>
-    <app-banner [fullWidth]="true" severity="warning" exclamation="⏳">
-      Coming soon!
-    </app-banner>
+    <div>
+      <div
+        class="grid grid-cols-1 bg-gray-200 border border-gray-300 rounded-t-lg p-2 font-bold"
+      >
+        Details
+      </div>
+      @for(transfer of pendingTransfers(); track transfer.id) {
+      <div
+        class="grid grid-cols-2 items-center border border-t-0 border-gray-300 last:rounded-b-lg p-2 hover:bg-slate-100"
+      >
+        <div>
+          <h3 class="text-xs text-gray-500">{{ transfer.description }}</h3>
+          <div
+            class="font-bold"
+            [ngClass]="{
+              deposit: transfer.amount >= 0,
+              withdraw: transfer.amount < 0
+            }"
+          >
+            {{ transfer.amount | currency }}
+          </div>
+          <div class="text-xs text-gray-500">
+            {{ transfer.created_at | date : "MMMM dd, yyyy 'at' h:mma" }}
+          </div>
+        </div>
+        <div class="flex gap-2 justify-end">
+          <button class="approve" (click)="approve(transfer.id)">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M9 16.17L4.83 12l-1.42 1.41L9 19L21 7l-1.41-1.41z"
+              />
+            </svg>
+          </button>
+          <button class="decline" (click)="decline(transfer.id)">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      }
+    </div>
   </section>
+  } @if (completedTransfers().length > 0) {
   <section class="flex flex-col gap-4">
     <h2 class="text-lg font-extrabold">Recent Transactions</h2>
-    <app-banner [fullWidth]="true" severity="info" exclamation="🧾">
-      Coming soon!
-    </app-banner>
+    <div>
+      <div
+        class="grid grid-cols-1 bg-gray-200 border border-gray-300 rounded-t-lg p-2 font-bold"
+      >
+        Details
+      </div>
+      @for(transfer of completedTransfers(); track transfer.id) {
+      <div
+        class="grid grid-cols-2 items-center border border-t-0 border-gray-300 last:rounded-b-lg p-2 hover:bg-slate-100"
+        [ngClass]="{
+          'line-through text-gray-500': transfer.status === 'declined'
+        }"
+      >
+        <div>
+          <div class="text-xs text-gray-500">
+            {{ transfer.status | titlecase }} by
+            {{ transfer.updated_by?.first_name | titlecase }}
+            {{ transfer.updated_by?.last_name | titlecase }}
+          </div>
+          <div>{{ transfer.description }}</div>
+          <div class="text-xs text-gray-500">
+            {{ transfer.created_at | date : "MMMM dd, yyyy 'at' h:mma" }}
+          </div>
+        </div>
+        <div class="flex flex-col items-end">
+          <div
+            class="font-bold"
+            [ngClass]="{
+              deposit: transfer.amount >= 0 && transfer.status !== 'declined',
+              withdraw: transfer.amount < 0 && transfer.status !== 'declined'
+            }"
+          >
+            {{ transfer.amount | currency }}
+          </div>
+          <div class="text-xs text-gray-500">
+            {{ transfer.current_balance | currency }}
+          </div>
+        </div>
+      </div>
+      }
+    </div>
   </section>
+  }
 </section>

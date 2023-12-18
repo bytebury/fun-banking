@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, filter, first } from 'rxjs';
+import { BehaviorSubject, Observable, filter, first, switchMap } from 'rxjs';
 import { BankAccount } from '../models/bank-account.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { Transfer } from '../models/transfer.model';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +32,26 @@ export class AccountsService {
       .subscribe((account) => {
         this.account.next(account);
       });
+  }
+
+  get pendingTransfers$(): Observable<Transfer[]> {
+    return this.account$.pipe(
+      switchMap((account) => {
+        return this.http.get<Transfer[]>(
+          `${environment.apiUrl}/accounts/${account.id}/money-transfers?status=pending`
+        );
+      })
+    );
+  }
+
+  get completedTransfers$(): Observable<Transfer[]> {
+    return this.account$.pipe(
+      switchMap((account) => {
+        return this.http.get<Transfer[]>(
+          `${environment.apiUrl}/accounts/${account.id}/money-transfers?status=approved&status=declined`
+        );
+      })
+    );
   }
 
   get account$(): Observable<BankAccount> {

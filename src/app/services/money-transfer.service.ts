@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { first } from 'rxjs';
+import { Observable, first } from 'rxjs';
 
 interface TransferRequest {
   amount: number;
@@ -28,5 +28,19 @@ export class MoneyTransferService {
       .post(`${environment.apiUrl}/money-transfers`, transferDetails)
       .pipe(first())
       .subscribe();
+  }
+
+  approve(transferId: number): Observable<void> {
+    return this.http.put<void>(
+      `${environment.apiUrl}/money-transfers/${transferId}/approve`,
+      {}
+    );
+  }
+
+  decline(transferId: number): Observable<void> {
+    return this.http.put<void>(
+      `${environment.apiUrl}/money-transfers/${transferId}/decline`,
+      {}
+    );
   }
 }
