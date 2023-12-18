@@ -13,7 +13,7 @@
       class="grid grid-cols-2 items-center border border-gray-300 border-t-0 last:rounded-b-lg p-2 cursor-pointer hover:bg-slate-100"
       (click)="openAccount(bankAccount.id)"
     >
-      <div>{{ bankAccount.name }}</div>
+      <div>{{ bankAccount.name | titlecase }}</div>
       <div class="flex justify-end items-center gap-1 font-bold">
         {{ bankAccount.balance | currency }}
         <svg

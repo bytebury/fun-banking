@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { SecuredLayoutComponent } from '../../../layouts/secured-layout/secured-layout.component';
 import {
   FormControl,
@@ -7,6 +7,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { AccountsService } from '../../../services/accounts.service';
+import { ActivatedRoute } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BankAccount } from '../../../models/bank-account.model';
+import { MoneyTransferService } from '../../../services/money-transfer.service';
 
 @Component({
   selector: 'app-money-transfer',
@@ -32,11 +37,42 @@ export class MoneyTransferComponent {
     ]),
   });
 
+  account = signal<BankAccount | null>(null);
+
+  constructor(
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly accountsService: AccountsService,
+    private readonly moneyTransferService: MoneyTransferService
+  ) {
+    this.activatedRoute.paramMap
+      .pipe(takeUntilDestroyed())
+      .subscribe((params) => {
+        const customerId = params.get('id');
+        accountsService.loadAccountsFor(Number(customerId));
+      });
+
+    this.accountsService.accounts$.subscribe((accounts) => {
+      this.account.set(accounts.at(0) ?? null);
+    });
+  }
+
   deposit(): void {
-    console.log('deposit cash');
+    if (this.account()?.id) {
+      this.moneyTransferService.depositInto({
+        amount: Number(this.form.get('amount')?.value),
+        description: this.form.get('description')?.value ?? '',
+        account_id: this.account()!.id,
+      });
+    }
   }
 
   withdraw(): void {
-    console.log('withdraw cash');
+    if (this.account()?.id) {
+      this.moneyTransferService.withdrawFrom({
+        amount: Number(this.form.get('amount')?.value),
+        description: this.form.get('description')?.value ?? '',
+        account_id: this.account()!.id,
+      });
+    }
   }
 }

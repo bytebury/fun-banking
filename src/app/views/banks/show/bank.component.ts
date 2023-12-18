@@ -62,7 +62,8 @@ export class BankComponent implements AfterViewInit {
 
   bank$ = this.bankService.bank$;
   customers$ = this.bankService.customers$;
-  account$: Observable<BankAccount> = of();
+  account$ = this.accountService.account$;
+
   hasCopiedBankUrl = signal(false);
 
   tabs = signal<Tab[]>([]);
@@ -114,9 +115,9 @@ export class BankComponent implements AfterViewInit {
     }, 3_000);
   }
 
-  openAccount(accountId: string): void {
+  openAccount(accountId: number): void {
+    this.accountService.getAccountInfo(accountId);
     this.showCustomerModal.close();
-    this.account$ = this.accountService.getAccount(accountId);
     this.showAccountModal.open();
   }
 

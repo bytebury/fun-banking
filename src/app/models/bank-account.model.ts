@@ -1,5 +1,8 @@
 export interface BankAccount {
-  id: string;
+  id: number;
   name: string;
   balance: number;
+  customer_id: number;
+  updated_at: Date;
+  created_at: Date;
 }

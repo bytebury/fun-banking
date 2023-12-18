@@ -8,12 +8,10 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { BankAccount } from '../../../models/bank-account.model';
 import { Severity } from '../../../models/severity.enum';
-import { CustomerService } from '../../../services/customer.service';
 import { Customer } from '../../../models/customer.model';
 import { BannerComponent } from '../../../components/banner/banner.component';
+import { AccountsService } from '../../../services/accounts.service';
 
 @Component({
   selector: 'app-accounts',
@@ -25,22 +23,20 @@ import { BannerComponent } from '../../../components/banner/banner.component';
 })
 export class AccountsComponent implements OnChanges {
   @Input({ required: true }) customer: Customer | null = null;
-  @Output() opened = new EventEmitter<string>();
+  @Output() opened = new EventEmitter<number>();
 
-  bankAccounts$: Observable<BankAccount[]> = of([]);
+  bankAccounts$ = this.accountService.accounts$;
   severity = Severity.Info;
 
-  constructor(private readonly customerService: CustomerService) {}
+  constructor(private readonly accountService: AccountsService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['customer'] && this.customer) {
-      // this.bankAccounts$ = this.customerService.getBankAccounts(
-      //   this.customer!.id
-      // );
+      this.accountService.loadAccountsFor(this.customer.id);
     }
   }
 
-  openAccount(accountId: string): void {
+  openAccount(accountId: number): void {
     this.opened.emit(accountId);
   }
 }
