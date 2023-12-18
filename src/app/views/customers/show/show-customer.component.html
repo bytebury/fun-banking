@@ -19,7 +19,7 @@
         </svg>
       </div>
       <div class="font-bold">Balance:</div>
-      {{ totalBalance$ | async | currency }}
+      {{ customer?.bankBalance | currency }}
     </div>
     <div
       class="inline-flex items-center gap-1 rounded-lg bg-gray-100 py-2 px-3"

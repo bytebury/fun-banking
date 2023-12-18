@@ -9,7 +9,6 @@ import {
 import { Customer } from '../../../models/customer.model';
 import { RouterModule } from '@angular/router';
 import { AccountsComponent } from '../../accounts/index/accounts.component';
-import { AccountsService } from '../../../services/accounts.service';
 
 @Component({
   selector: 'app-show-customer',
@@ -22,8 +21,4 @@ import { AccountsService } from '../../../services/accounts.service';
 export class ShowCustomerComponent {
   @Input({ required: true }) customer: Customer | null = null;
   @Output() openedAccount = new EventEmitter<number>();
-
-  totalBalance$ = this.accountsService.totalBalance$;
-
-  constructor(private readonly accountsService: AccountsService) {}
 }

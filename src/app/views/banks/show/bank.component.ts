@@ -11,7 +11,6 @@ import {
 import { ResourceLayoutComponent } from '../../../layouts/resource-layout/resource-layout.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BankService } from '../../../services/bank.service';
-import { Observable, of } from 'rxjs';
 import { CopyToClipboardDirective } from '../../../directives/copy-to-clipboard.directive';
 import { Tab, TabsComponent } from '../../../components/tabs/tabs.component';
 import { Customer } from '../../../models/customer.model';
@@ -21,7 +20,6 @@ import { ModalComponent } from '../../../components/modal/modal.component';
 import { EditCustomerFormComponent } from '../../customers/edit-customer-form/edit-customer-form.component';
 import { ShowCustomerComponent } from '../../customers/show/show-customer.component';
 import { AccountsService } from '../../../services/accounts.service';
-import { BankAccount } from '../../../models/bank-account.model';
 import { ShowAccountComponent } from '../../accounts/show/show-account.component';
 import { BannerComponent } from '../../../components/banner/banner.component';
 import { EditBankComponent } from '../edit/edit-bank.component';
@@ -63,7 +61,6 @@ export class BankComponent implements AfterViewInit {
   bank$ = this.bankService.bank$;
   customers$ = this.bankService.customers$;
   account$ = this.accountService.account$;
-
   hasCopiedBankUrl = signal(false);
 
   tabs = signal<Tab[]>([]);

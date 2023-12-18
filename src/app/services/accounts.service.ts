@@ -10,7 +10,6 @@ import { environment } from '../../environments/environment';
 export class AccountsService {
   private readonly account = new BehaviorSubject<BankAccount | null>(null);
   private readonly accounts = new BehaviorSubject<BankAccount[]>([]);
-  private readonly totalBalance = new BehaviorSubject<number>(0);
 
   constructor(private readonly http: HttpClient) {}
 
@@ -22,7 +21,6 @@ export class AccountsService {
       .pipe(first())
       .subscribe((accounts) => {
         this.accounts.next(accounts);
-        this.totalBalance.next(accounts.reduce((a, b) => a + b.balance, 0));
       });
   }
 
@@ -41,9 +39,5 @@ export class AccountsService {
 
   get accounts$(): Observable<BankAccount[]> {
     return this.accounts.asObservable();
-  }
-
-  get totalBalance$(): Observable<number> {
-    return this.totalBalance.asObservable();
   }
 }

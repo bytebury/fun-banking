@@ -103,14 +103,16 @@
       <a
         [routerLink]="['/banks', (bank$ | async)?.id, 'customers', 'new']"
         class="btn btn-success py-1 px-3"
-        >New Customer</a
       >
+        New Customer
+      </a>
     </div>
     <div>
       <div
-        class="grid bg-gray-200 text-gray-800 rounded-t-lg p-2 border border-b-0 border-gray-300 font-bold"
+        class="grid grid-cols-2 bg-gray-200 text-gray-800 rounded-t-lg p-2 border border-b-0 border-gray-300 font-bold"
       >
         <div>Customer</div>
+        <div class="text-right mr-14">Balance</div>
       </div>
       <div class="border border-gray-300 last:rounded-b-lg">
         @for(customer of customers$ | async; track customer.id) {
@@ -124,13 +126,10 @@
             </div>
             <div class="text-xs text-gray-600">PIN-{{ customer.pin }}</div>
           </div>
-          <div class="flex gap-2 justify-end">
-            <button
-              class="btn btn-default px-2.5 py-1"
-              (click)="openViewCustomer(customer)"
-            >
-              View
-            </button>
+          <div class="flex gap-2 items-center justify-end">
+            <div class="mr-3">
+              {{ customer.bankBalance | currency }}
+            </div>
             <ng-container
               *ngTemplateOutlet="
                 customerActions;
@@ -203,6 +202,24 @@
     </div>
     <div ngProjectAs="menu">
       <ul class="flex flex-col gap-1 p-2">
+        <li class="block whitespace-nowrap">
+          <button
+            class="flex gap-2 items-center hover:bg-slate-100 p-1 px-2 rounded-lg text-inherit w-full"
+            (click)="openViewCustomer(customer)"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M12 6.5a9.77 9.77 0 0 1 8.82 5.5c-1.65 3.37-5.02 5.5-8.82 5.5S4.83 15.37 3.18 12A9.77 9.77 0 0 1 12 6.5m0-2C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5m0 5a2.5 2.5 0 0 1 0 5a2.5 2.5 0 0 1 0-5m0-2c-2.48 0-4.5 2.02-4.5 4.5s2.02 4.5 4.5 4.5s4.5-2.02 4.5-4.5s-2.02-4.5-4.5-4.5"
+              />
+            </svg>
+            View {{ customer.first_name | titlecase }}
+          </button>
+        </li>
         <li class="block whitespace-nowrap">
           <a
             [routerLink]="['/customers', customer.id, 'transfer']"

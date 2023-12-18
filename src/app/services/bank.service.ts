@@ -4,6 +4,7 @@ import {
   Observable,
   filter,
   first,
+  map,
   switchMap,
   tap,
 } from 'rxjs';
@@ -85,7 +86,16 @@ export class BankService {
   }
 
   get customers$(): Observable<Customer[]> {
-    return this.customers.asObservable();
+    return this.customers.asObservable().pipe(
+      map((customers) =>
+        customers.map((customer) => {
+          return {
+            ...customer,
+            bankBalance: customer.accounts.reduce((a, b) => a + b.balance, 0),
+          };
+        })
+      )
+    );
   }
 
   private loadBanks(): void {
