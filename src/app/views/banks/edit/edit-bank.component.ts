@@ -10,6 +10,8 @@ import { BankService } from '../../../services/bank.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BannerComponent } from '../../../components/banner/banner.component';
 import { Severity } from '../../../models/severity.enum';
+import { Bank } from '../../../models/bank.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-bank',
@@ -47,10 +49,16 @@ export class EditBankComponent {
     ]),
   });
 
-  constructor(private readonly bankService: BankService) {
+  bank = signal<Bank | null>(null);
+
+  constructor(
+    private readonly bankService: BankService,
+    private readonly router: Router
+  ) {
     this.bankService.bank$.pipe(takeUntilDestroyed()).subscribe((bank) => {
       this.form.get('name')?.setValue(bank?.name ?? '');
       this.form.get('description')?.setValue(bank?.description ?? '');
+      this.bank.set(bank);
     });
   }
 
@@ -70,7 +78,7 @@ export class EditBankComponent {
           });
           setTimeout(() => {
             this.errorMessage.update((value) => ({ ...value, message: '' }));
-          }, 3_000);
+          }, 5_000);
         },
         error: (error) => {
           this.errorMessage.set({
@@ -80,5 +88,17 @@ export class EditBankComponent {
           });
         },
       });
+  }
+
+  destroy(): void {
+    if (
+      confirm(
+        'Are you sure you wish to delete this bank? You will not be able to undo this action.'
+      )
+    ) {
+      this.bankService.destroy(Number(this.bank()?.id)).subscribe(() => {
+        this.router.navigate(['/', 'dashboard']);
+      });
+    }
   }
 }

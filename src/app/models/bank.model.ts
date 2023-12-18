@@ -1,7 +1,7 @@
 import { User } from './user.model';
 
 export interface Bank {
-  id: string;
+  id: number;
   name: string;
   slug: string;
   description: string;

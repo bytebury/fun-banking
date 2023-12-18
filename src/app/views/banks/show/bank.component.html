@@ -236,7 +236,7 @@
                 d="m14.06 9.02l.92.92L5.92 19H5v-.92zM17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83l3.75 3.75l1.83-1.83a.996.996 0 0 0 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94z"
               />
             </svg>
-            Edit {{ customer.first_name }}
+            Edit {{ customer.first_name | titlecase }}
           </button>
         </li>
         <!-- COMING SOON -->
@@ -258,9 +258,9 @@
           </button>
         </li> -->
         <li class="whitespace-nowrap">
-          <a
-            class="flex gap-2 items-center hover:bg-pink-50 p-1 px-2 rounded-lg no-underline text-pink-600"
-            routerLink="/"
+          <button
+            class="flex gap-2 items-center hover:bg-pink-50 p-1 px-2 w-full rounded-lg text-pink-600"
+            (click)="destroyCustomer(customer)"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -272,8 +272,8 @@
                 d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM8 9h8v10H8zm7.5-5l-1-1h-5l-1 1H5v2h14V4z"
               />
             </svg>
-            Delete {{ customer.first_name }}
-          </a>
+            Delete {{ customer.first_name | titlecase }}
+          </button>
         </li>
       </ul>
     </div>

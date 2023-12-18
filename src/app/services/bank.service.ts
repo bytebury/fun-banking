@@ -31,7 +31,7 @@ export class BankService {
     }
   }
 
-  setBank(bankId: string): void {
+  setBank(bankId: number): void {
     this.http
       .get<Bank>(`${environment.apiUrl}/banks/${bankId}`)
       .pipe(
@@ -48,6 +48,13 @@ export class BankService {
       });
   }
 
+  removeCustomer(customerId: number): void {
+    const customers = this.customers.value.filter(
+      (customer) => customer.id !== customerId
+    );
+    this.customers.next(customers);
+  }
+
   create(bankInfo: BankInfo): Observable<Bank> {
     const request = { ...bankInfo, slug: this.generateSlug(bankInfo.name) };
     return this.http.post<Bank>(`${environment.apiUrl}/banks`, request);
@@ -58,6 +65,15 @@ export class BankService {
     return this.http
       .put<Bank>(`${environment.apiUrl}/banks/${this.bank.value?.id}`, request)
       .pipe(tap(() => this.loadBanks()));
+  }
+
+  destroy(bankId: number): Observable<unknown> {
+    return this.http.delete(`${environment.apiUrl}/banks/${bankId}`).pipe(
+      tap(() => {
+        const keepBanks = this.banks.value.filter((bank) => bank.id !== bankId);
+        this.banks.next(keepBanks);
+      })
+    );
   }
 
   get banks$(): Observable<Bank[]> {

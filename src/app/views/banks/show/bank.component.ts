@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   AfterViewInit,
@@ -11,7 +11,7 @@ import {
 import { ResourceLayoutComponent } from '../../../layouts/resource-layout/resource-layout.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BankService } from '../../../services/bank.service';
-import { Observable, of, take } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { CopyToClipboardDirective } from '../../../directives/copy-to-clipboard.directive';
 import { Tab, TabsComponent } from '../../../components/tabs/tabs.component';
 import { Customer } from '../../../models/customer.model';
@@ -48,6 +48,8 @@ import { EditBankComponent } from '../edit/edit-bank.component';
   ],
 })
 export class BankComponent implements AfterViewInit {
+  static readonly TITLE_PIPE = new TitleCasePipe();
+
   @ViewChild('customersTitle') customersTitle!: TemplateRef<unknown>;
   @ViewChild('customersContent') customersContent!: TemplateRef<unknown>;
   @ViewChild('settingsTitle') settingsTitle!: TemplateRef<unknown>;
@@ -69,10 +71,11 @@ export class BankComponent implements AfterViewInit {
   constructor(
     private readonly route: ActivatedRoute,
     private readonly bankService: BankService,
-    private readonly accountService: AccountsService
+    private readonly accountService: AccountsService,
+    private readonly customerService: CustomerService
   ) {
     this.route.paramMap.pipe(takeUntilDestroyed()).subscribe((params) => {
-      this.bankService.setBank(params.get('id')!);
+      this.bankService.setBank(Number(params.get('id')!));
     });
   }
 
@@ -87,8 +90,21 @@ export class BankComponent implements AfterViewInit {
   }
 
   updateCustomer(customer: Customer): void {
-    this.bankService.setBank(customer.bank_id.toString());
+    this.bankService.setBank(customer.bank_id);
     this.editCustomerModal.close();
+  }
+
+  destroyCustomer(customer: Customer): void {
+    if (
+      confirm(
+        `Are you sure you want to delete ${BankComponent.TITLE_PIPE.transform(
+          customer.first_name
+        )}? This is a permanent action and will delete all data associated with them.`
+      )
+    )
+      this.customerService.destroy(customer.id).subscribe(() => {
+        this.bankService.removeCustomer(customer.id);
+      });
   }
 
   copiedBankUrl(): void {

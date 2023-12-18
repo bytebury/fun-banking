@@ -30,4 +30,10 @@ export class CustomerService {
       customerInfo
     );
   }
+
+  destroy(customerId: number): Observable<unknown> {
+    return this.http.delete<unknown>(
+      `${environment.apiUrl}/customers/${customerId}`
+    );
+  }
 }
