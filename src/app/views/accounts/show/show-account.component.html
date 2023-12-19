@@ -86,7 +86,15 @@
   </section>
   } @if (completedTransfers().length > 0) {
   <section class="flex flex-col gap-4">
-    <h2 class="text-lg font-extrabold">Recent Transactions</h2>
+    <div class="flex justify-between items-center">
+      <h2 class="text-lg font-extrabold">Recent Transactions</h2>
+      <a
+        class="btn btn-success no-underline px-3 py-1"
+        [routerLink]="['/', 'customers', account?.customer_id, 'transfer']"
+      >
+        New
+      </a>
+    </div>
     <div>
       <div
         class="grid grid-cols-1 bg-gray-200 border border-gray-300 rounded-t-lg p-2 font-bold"

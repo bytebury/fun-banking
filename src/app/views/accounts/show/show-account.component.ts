@@ -13,11 +13,12 @@ import { Transfer } from '../../../models/transfer.model';
 import { MoneyTransferService } from '../../../services/money-transfer.service';
 import { BankService } from '../../../services/bank.service';
 import { Bank } from '../../../models/bank.model';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-show-account',
   standalone: true,
-  imports: [CommonModule, BannerComponent],
+  imports: [CommonModule, BannerComponent, RouterModule],
   templateUrl: './show-account.component.html',
   styleUrl: './show-account.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
