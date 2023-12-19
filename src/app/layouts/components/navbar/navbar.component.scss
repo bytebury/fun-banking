@@ -83,6 +83,14 @@ nav {
 
     li a {
       @apply w-full py-2 block no-underline hover:underline;
+
+      &.icon-link {
+        @apply flex gap-2 items-center;
+
+        svg {
+          @apply text-gray-600;
+        }
+      }
     }
   }
 }
