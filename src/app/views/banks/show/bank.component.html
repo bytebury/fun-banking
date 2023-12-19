@@ -13,11 +13,11 @@
           <div class="flex items-center gap-2">
             <button
               appCopyToClipboard
-              value="
-              https://fun-banking.com/{{ bank.owner.username }}/{{ bank.slug }}
-            "
+              value="https://fun-banking.com/{{ bank.owner.username }}/{{
+                bank.slug
+              }}"
               (copied)="copiedBankUrl()"
-              class="flex gap-2 items-center text-left text-sm underline text-primary-link"
+              class="flex gap-2 items-center text-left underline text-primary-link"
             >
               @if (hasCopiedBankUrl()) {
               <svg
