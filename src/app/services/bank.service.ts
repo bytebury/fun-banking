@@ -58,7 +58,9 @@ export class BankService {
 
   create(bankInfo: BankInfo): Observable<Bank> {
     const request = { ...bankInfo, slug: this.generateSlug(bankInfo.name) };
-    return this.http.post<Bank>(`${environment.apiUrl}/banks`, request);
+    return this.http
+      .post<Bank>(`${environment.apiUrl}/banks`, request)
+      .pipe(tap(() => this.loadBanks()));
   }
 
   update(bankInfo: BankInfo): Observable<Bank> {
