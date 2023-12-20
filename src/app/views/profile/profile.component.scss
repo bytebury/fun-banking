@@ -1,0 +1,11 @@
+:host {
+  @apply flex flex-col h-screen;
+}
+
+main {
+  @apply bg-gray-100 py-6;
+}
+
+.card {
+  @apply p-3 block bg-white rounded-lg border border-gray-300;
+}

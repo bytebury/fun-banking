@@ -3,6 +3,8 @@ import { HomepageComponent } from './views/homepage/homepage.component';
 import { signedInGuard } from './guards/signed-in.guard';
 import { notSignedInGuard } from './guards/not-signed-in.guard';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
+import { ProfileSettingsComponent } from './views/settings/profile-settings/profile-settings.component';
+import { SettingsComponent } from './views/settings/settings.component';
 
 export const routes: Routes = [
   {
@@ -64,6 +66,43 @@ export const routes: Routes = [
           import(
             './views/customers/money-transfer/money-transfer.component'
           ).then((m) => m.MoneyTransferComponent),
+      },
+    ],
+    canActivateChild: [signedInGuard],
+  },
+  {
+    path: 'profile',
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () =>
+          import('./views/profile/profile.component').then(
+            (m) => m.ProfileComponent
+          ),
+        canActivate: [signedInGuard],
+      },
+      {
+        path: ':username',
+        loadComponent: () =>
+          import('./views/profile/profile.component').then(
+            (m) => m.ProfileComponent
+          ),
+      },
+    ],
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'profile',
+        pathMatch: 'full',
+      },
+      {
+        path: 'profile',
+        component: ProfileSettingsComponent,
       },
     ],
     canActivateChild: [signedInGuard],

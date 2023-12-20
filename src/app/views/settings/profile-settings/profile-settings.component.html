@@ -1,0 +1,71 @@
+<section class="flex flex-col gap-4">
+  <div>
+    <h1 class="text-2xl font-extrabold">Profile Information</h1>
+    <p>Here, you'll be able to update your profile and account information.</p>
+  </div>
+  <form class="flex flex-col gap-4" [formGroup]="form">
+    @if (errorMessage$ | async) {
+    <app-banner exclamation="❌">{{ errorMessage$ | async }}</app-banner>
+    }
+    <div class="flex flex-col md:flex-row gap-4">
+      <div class="form-input">
+        <input
+          formControlName="first_name"
+          id="first_name"
+          type="text"
+          autocomplete="given-name"
+          class="capitalize"
+          maxlength="12"
+          required
+        />
+        <label for="first_name">First Name</label>
+      </div>
+      <div class="form-input">
+        <input
+          formControlName="last_name"
+          id="last_name"
+          type="text"
+          autocomplete="family-name"
+          maxlength="15"
+          required
+          class="capitalize"
+        />
+        <label for="last_name">Last Name</label>
+      </div>
+    </div>
+    <div class="form-input">
+      <input
+        formControlName="username"
+        id="username"
+        type="text"
+        maxlength="12"
+        autocomplete="username"
+        class="lowercase"
+        required
+      />
+      <label for="username">Username</label>
+    </div>
+    <div class="form-input">
+      <span class="text-gray-500 text-xs">
+        {{ 500 - aboutMe().length }} characters remaining
+      </span>
+      <textarea
+        formControlName="about"
+        maxlength="500"
+        autocomplete="off"
+        id="about"
+        class="h-32"
+        placeholder="Let the world know something about yourself"
+      >
+      </textarea>
+      <label for="about">About Me</label>
+    </div>
+    <div>
+      <input
+        type="submit"
+        value="Update Profile Information"
+        [disabled]="form.invalid"
+      />
+    </div>
+  </form>
+</section>

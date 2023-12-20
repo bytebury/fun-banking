@@ -50,6 +50,12 @@ export class UserService {
       });
   }
 
+  getUser$(username: string): Observable<User> {
+    return this.http
+      .get<User>(`${environment.apiUrl}/users/${username.toLowerCase()}`)
+      .pipe(first());
+  }
+
   get currentUser$(): Observable<User> {
     return this.currentUser.asObservable().pipe(filter(Boolean));
   }

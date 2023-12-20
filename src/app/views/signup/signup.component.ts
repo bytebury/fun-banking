@@ -29,11 +29,18 @@ export class SignupComponent {
   errorMessage$ = this.user.errorMessage$;
 
   signupForm = new FormGroup({
-    firstName: new FormControl('', [Validators.required]),
-    lastName: new FormControl('', [Validators.required]),
+    firstName: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(12),
+    ]),
+    lastName: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(15),
+    ]),
     username: new FormControl('', [
       Validators.required,
       Validators.maxLength(12),
+      Validators.pattern('[a-zA-Z0-9]*'),
     ]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [

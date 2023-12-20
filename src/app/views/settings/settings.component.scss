@@ -1,0 +1,24 @@
+:host {
+  @apply flex flex-col h-screen;
+}
+
+.wrapper {
+  @apply h-full pt-16;
+}
+
+aside {
+  a {
+    @apply flex items-center gap-2 px-2 py-1 rounded-lg no-underline;
+    @apply duration-300 transition-colors ease-linear;
+    @apply text-gray-800;
+
+    svg {
+      @apply text-gray-500;
+    }
+  }
+
+  a.active {
+    @apply bg-slate-100 font-semibold;
+    @apply hover:bg-slate-200;
+  }
+}

@@ -1,0 +1,28 @@
+<app-navbar></app-navbar>
+<div class="wrapper">
+  <div class="flex gap-8 container">
+    <aside class="w-64">
+      <ul>
+        <li>
+          <a [routerLink]="['/settings/profile']" routerLinkActive="active">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2s-2-.9-2-2s.9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4s4-1.79 4-4s-1.79-4-4-4m0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4"
+              />
+            </svg>
+            Profile
+          </a>
+        </li>
+      </ul>
+    </aside>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
+<app-footer></app-footer>
