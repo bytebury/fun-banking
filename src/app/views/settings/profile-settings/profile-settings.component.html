@@ -3,10 +3,46 @@
     <h1 class="text-2xl font-extrabold">Profile Information</h1>
     <p>Here, you'll be able to update your profile and account information.</p>
   </div>
-  <form class="flex flex-col gap-4" [formGroup]="form">
+  <form class="flex flex-col gap-4" [formGroup]="form" (ngSubmit)="submit()">
     @if (errorMessage$ | async) {
-    <app-banner exclamation="❌">{{ errorMessage$ | async }}</app-banner>
+    <app-banner [fullWidth]="true" exclamation="❌">{{
+      errorMessage$ | async
+    }}</app-banner>
     }
+    <div class="form-input">
+      <div class="flex items-end gap-4 relative w-24">
+        <img
+          [src]="imageUrl() ? imageUrl() : currentUser()?.avatar"
+          alt="image preview"
+          class="w-24 h-24 rounded-full"
+        />
+        <div class="absolute -right-5 -bottom-4">
+          <input
+            type="file"
+            id="file-upload"
+            type="file"
+            (change)="onProfileImageSelected($event)"
+            accept="image/*"
+            hidden
+          />
+          <label
+            for="file-upload"
+            class="btn btn-success border-[6px] border-white cursor-pointer p-3 rounded-full flex items-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="m14.06 9.02l.92.92L5.92 19H5v-.92zM17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83l3.75 3.75l1.83-1.83a.996.996 0 0 0 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94z"
+              />
+            </svg>
+          </label>
+        </div>
+      </div>
+    </div>
     <div class="flex flex-col md:flex-row gap-4">
       <div class="form-input">
         <input
@@ -34,6 +70,9 @@
       </div>
     </div>
     <div class="form-input">
+      <div class="text-xs text-gray-500">
+        Be careful! Changing your username can have unintended side-effects.
+      </div>
       <input
         formControlName="username"
         id="username"

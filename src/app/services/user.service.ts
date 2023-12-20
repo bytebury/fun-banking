@@ -1,5 +1,13 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, filter, first } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  filter,
+  first,
+  tap,
+  throwError,
+} from 'rxjs';
 import { User } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -12,6 +20,14 @@ interface UserSignUpRequest {
   email: string;
   password: string;
   password_confirmation: string;
+}
+
+interface UpdateUserRequest {
+  first_name: string;
+  last_name: string;
+  username: string;
+  avatar?: string;
+  about?: string;
 }
 
 @Injectable({
@@ -39,6 +55,19 @@ export class UserService {
           this.errorMessage.next(error.error.message);
         },
       });
+  }
+
+  update(userId: number, userInfo: UpdateUserRequest): Observable<User> {
+    return this.http
+      .put<User>(`${environment.apiUrl}/users/${userId}`, userInfo)
+      .pipe(
+        first(),
+        catchError((error) => {
+          this.errorMessage.next(error.error.message);
+          return throwError(() => error);
+        }),
+        tap(() => this.loadCurrentUser())
+      );
   }
 
   loadCurrentUser(): void {

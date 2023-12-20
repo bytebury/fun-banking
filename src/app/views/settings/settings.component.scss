@@ -1,5 +1,5 @@
 :host {
-  @apply flex flex-col h-screen;
+  @apply flex flex-col min-h-screen grow;
 }
 
 .wrapper {
@@ -7,10 +7,14 @@
 }
 
 aside {
+  ul {
+    @apply flex flex-col gap-2;
+  }
+
   a {
     @apply flex items-center gap-2 px-2 py-1 rounded-lg no-underline;
     @apply duration-300 transition-colors ease-linear;
-    @apply text-gray-800;
+    @apply text-gray-800 hover:bg-slate-200;
 
     svg {
       @apply text-gray-500;
@@ -21,4 +25,8 @@ aside {
     @apply bg-slate-100 font-semibold;
     @apply hover:bg-slate-200;
   }
+}
+
+main {
+  @apply w-full pb-10;
 }

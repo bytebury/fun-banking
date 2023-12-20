@@ -42,6 +42,7 @@
     (click)="openMobileNavigation()"
   >
     <img
+      class="w-10 h-10"
       height="40"
       width="40"
       [src]="currentUser.avatar"
@@ -85,7 +86,7 @@
     *ngIf="currentUser$ | async as currentUser"
   >
     <img
-      class="rounded-full"
+      class="rounded-full w-16 h-16"
       [src]="currentUser.avatar"
       alt="profile image"
       width="64"
