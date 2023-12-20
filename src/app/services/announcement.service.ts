@@ -1,27 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, first } from 'rxjs';
 import { Announcement } from '../models/announcement.model';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AnnouncementService {
-  getAnnouncements(): Observable<Announcement[]> {
-    return of([
-      {
-        id: '123',
-        title: 'New Fun Banking',
-        description: '',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        id: '123',
-        title: 'New Fun Banking this one is going to be longer than most',
-        description: '',
-        created_at: new Date('2023-10-16'),
-        updated_at: new Date(),
-      },
-    ]);
+  constructor(private readonly http: HttpClient) {}
+
+  get announcements$(): Observable<Announcement[]> {
+    return this.http
+      .get<Announcement[]>(`${environment.apiUrl}/announcements`)
+      .pipe(first());
   }
 }

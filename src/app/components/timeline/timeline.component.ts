@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimelineComponent {
-  announcements$ = defer(() => this.announcementService.getAnnouncements());
+  announcements$ = this.announcementService.announcements$;
 
   constructor(private announcementService: AnnouncementService) {}
 }
