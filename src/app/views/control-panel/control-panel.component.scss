@@ -3,7 +3,7 @@
 }
 
 .wrapper {
-  @apply h-full pt-[72px];
+  @apply flex flex-col grow h-full pt-[72px];
 }
 
 aside {

@@ -5,6 +5,11 @@ import { notSignedInGuard } from './guards/not-signed-in.guard';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { ProfileSettingsComponent } from './views/settings/profile-settings/profile-settings.component';
 import { SettingsComponent } from './views/settings/settings.component';
+import { ControlPanelComponent } from './views/control-panel/control-panel.component';
+import { adminGuard } from './guards/admin.guard';
+import { ControlPanelOverviewComponent } from './views/control-panel/control-panel-overview/control-panel-overview.component';
+import { ControlPanelAnnouncementsComponent } from './views/control-panel/control-panel-announcements/control-panel-announcements.component';
+import { ControlPanelAlertsComponent } from './views/control-panel/control-panel-alerts/control-panel-alerts.component';
 
 export const routes: Routes = [
   {
@@ -106,5 +111,30 @@ export const routes: Routes = [
       },
     ],
     canActivateChild: [signedInGuard],
+  },
+  {
+    path: 'control-panel',
+    component: ControlPanelComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'overview',
+        pathMatch: 'full',
+      },
+      {
+        path: 'overview',
+        component: ControlPanelOverviewComponent,
+      },
+      {
+        path: 'alerts',
+        component: ControlPanelAlertsComponent,
+      },
+      {
+        path: 'announcements',
+        component: ControlPanelAnnouncementsComponent,
+      },
+    ],
+    canActivate: [signedInGuard, adminGuard],
+    canActivateChild: [signedInGuard, adminGuard],
   },
 ];

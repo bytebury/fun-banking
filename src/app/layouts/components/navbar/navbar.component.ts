@@ -5,7 +5,7 @@ import { ModalComponent } from '../../../components/modal/modal.component';
 import { AuthService } from '../../../services/auth.service';
 import { Observable } from 'rxjs';
 import { UserService } from '../../../services/user.service';
-import { User } from '../../../models/user.model';
+import { User, UserRole } from '../../../models/user.model';
 
 @Component({
   selector: 'app-navbar',
@@ -17,6 +17,8 @@ import { User } from '../../../models/user.model';
 })
 export class NavbarComponent {
   @ViewChild('mobileNavigation') mobileNavigationModal!: ModalComponent;
+
+  readonly userRole = UserRole;
 
   constructor(
     private readonly auth: AuthService,
