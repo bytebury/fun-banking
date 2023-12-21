@@ -22,19 +22,19 @@ export const routes: Routes = [
   {
     path: '',
     component: HomepageComponent,
-    canActivate: [notSignedInGuard],
+    canActivate: [notSignedInGuard, noCustomerGuard],
   },
   {
     path: 'signup',
     loadComponent: () =>
       import('./views/signup/signup.component').then((m) => m.SignupComponent),
-    canActivate: [notSignedInGuard],
+    canActivate: [notSignedInGuard, noCustomerGuard],
   },
   {
     path: 'signin',
     loadComponent: () =>
       import('./views/signin/signin.component').then((m) => m.SigninComponent),
-    canActivate: [notSignedInGuard],
+    canActivate: [notSignedInGuard, noCustomerGuard],
   },
   {
     path: 'dashboard',
