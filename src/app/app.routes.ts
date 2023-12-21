@@ -10,6 +10,9 @@ import { adminGuard } from './guards/admin.guard';
 import { ControlPanelOverviewComponent } from './views/control-panel/control-panel-overview/control-panel-overview.component';
 import { ControlPanelAnnouncementsComponent } from './views/control-panel/control-panel-announcements/control-panel-announcements.component';
 import { ControlPanelAlertsComponent } from './views/control-panel/control-panel-alerts/control-panel-alerts.component';
+import { AnnouncementsComponent } from './views/announcements/index/announcements.component';
+import { AnnouncementComponent } from './views/announcements/show/announcement.component';
+import { AnnouncementLayoutComponent } from './views/announcements/layout/layout.component';
 
 export const routes: Routes = [
   {
@@ -136,5 +139,20 @@ export const routes: Routes = [
     ],
     canActivate: [signedInGuard, adminGuard],
     canActivateChild: [signedInGuard, adminGuard],
+  },
+  {
+    path: 'announcements',
+    component: AnnouncementLayoutComponent,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        component: AnnouncementsComponent,
+      },
+      {
+        path: ':id',
+        component: AnnouncementComponent,
+      },
+    ],
   },
 ];

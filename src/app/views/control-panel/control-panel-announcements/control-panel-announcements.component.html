@@ -1,7 +1,46 @@
-<section>
-  <h1 class="text-2xl font-extrabold">Announcements</h1>
-  <p>
-    Announcements are similar to blogs. They aren't high priority, but they're
-    useful for informing users of updates or general knowledge sharing.
-  </p>
-</section>
+<div class="flex flex-col gap-4">
+  <section>
+    <h1 class="text-2xl font-extrabold">Announcements</h1>
+    <p>
+      Announcements are similar to blogs. They aren't high priority, but they're
+      useful for informing users of updates or general knowledge sharing.
+    </p>
+  </section>
+  <section>
+    <h1 class="text-xl font-extrabold">Create an Announcement</h1>
+    <form
+      class="flex flex-col gap-4 mt-2"
+      [formGroup]="form"
+      (ngSubmit)="createAnnouncement()"
+    >
+      <div class="form-input">
+        <input
+          formControlName="title"
+          id="title"
+          type="text"
+          autocomplete="off"
+          maxlength="255"
+          required
+        />
+        <label for="title">Title</label>
+      </div>
+      <div class="form-input">
+        <textarea
+          id="description"
+          formControlName="description"
+          class="h-48"
+          required
+        >
+        </textarea>
+        <label for="description">Description</label>
+      </div>
+      <div>
+        <input
+          type="submit"
+          value="Create Announcement"
+          [disabled]="form.invalid"
+        />
+      </div>
+    </form>
+  </section>
+</div>

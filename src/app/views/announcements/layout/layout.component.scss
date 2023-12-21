@@ -1,0 +1,11 @@
+:host {
+  @apply flex flex-col min-h-screen grow;
+}
+
+.wrapper {
+  @apply flex flex-col grow h-full pt-[72px];
+}
+
+main {
+  @apply flex flex-col md:flex-row gap-8 w-full pb-10;
+}
