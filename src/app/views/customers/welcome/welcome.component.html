@@ -30,3 +30,24 @@
   </section>
   <button class="btn sign-out-btn" (click)="signout()">Signout</button>
 </nav>
+<main class="container">
+  <div class="flex flex-col gap-4 pt-20 pb-10">
+    <section>
+      <h1 class="text-2xl font-extrabold">
+        Welcome Back, {{ customer()?.first_name | titlecase }}
+      </h1>
+      This is your customer dashboard page. You'll be able to check your
+      balances and manage your account with us.
+    </section>
+    <section class="card">
+      <app-money-transfer-form
+        [customerId]="customer()?.id ?? 0"
+      ></app-money-transfer-form>
+    </section>
+    <section class="flex flex-col gap-4 card">
+      <h1 class="text-xl font-extrabold">Recent Transactions</h1>
+      <app-recent-transactions></app-recent-transactions>
+    </section>
+  </div>
+</main>
+<app-footer></app-footer>

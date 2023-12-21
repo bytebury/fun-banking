@@ -14,20 +14,25 @@ import { MoneyTransferService } from '../../../services/money-transfer.service';
 import { BankService } from '../../../services/bank.service';
 import { Bank } from '../../../models/bank.model';
 import { RouterModule } from '@angular/router';
+import { RecentTransactionsComponent } from '../recent-transactions/recent-transactions.component';
 
 @Component({
   selector: 'app-show-account',
   standalone: true,
-  imports: [CommonModule, BannerComponent, RouterModule],
   templateUrl: './show-account.component.html',
   styleUrl: './show-account.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    BannerComponent,
+    RouterModule,
+    RecentTransactionsComponent,
+  ],
 })
 export class ShowAccountComponent {
   @Input({ required: true }) account: BankAccount | null = null;
 
   pendingTransfers = signal<Transfer[]>([]);
-  completedTransfers = signal<Transfer[]>([]);
   bank = signal<Bank | null>(null);
 
   constructor(
@@ -39,12 +44,6 @@ export class ShowAccountComponent {
       .pipe(takeUntilDestroyed())
       .subscribe((pendingTransfers) => {
         this.pendingTransfers.set(pendingTransfers);
-      });
-
-    this.accountsService.completedTransfers$
-      .pipe(takeUntilDestroyed())
-      .subscribe((transfers) => {
-        this.completedTransfers.set(transfers);
       });
 
     this.bankService.bank$.pipe(takeUntilDestroyed()).subscribe((bank) => {

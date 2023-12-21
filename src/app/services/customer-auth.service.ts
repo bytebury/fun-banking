@@ -5,7 +5,6 @@ import { Customer } from '../models/customer.model';
 import { HttpClient } from '@angular/common/http';
 import { Severity } from '../models/severity.enum';
 import { Router } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',

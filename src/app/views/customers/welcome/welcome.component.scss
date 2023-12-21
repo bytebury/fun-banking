@@ -2,6 +2,12 @@
   display: block;
 }
 
+::ng-deep {
+  body {
+    @apply bg-gray-100;
+  }
+}
+
 nav {
   display: flex;
   align-items: center;
@@ -33,7 +39,12 @@ nav {
   }
 
   button.sign-out-btn {
-    @apply hover:bg-pink-100 px-3 py-1;
+    @apply hover:bg-pink-100 px-2 py-1;
     @apply hover:text-pink-700;
   }
+}
+
+.card {
+  @apply border border-gray-300 bg-white rounded-lg;
+  @apply p-4;
 }

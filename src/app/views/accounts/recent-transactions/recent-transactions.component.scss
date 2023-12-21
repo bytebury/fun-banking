@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+.deposit {
+  @apply text-primary-link;
+}
+
+.withdraw {
+  @apply text-pink-600;
+}

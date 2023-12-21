@@ -1,5 +1,11 @@
-:host {
-  @apply min-h-screen block m-0 py-8 bg-gray-100;
+::ng-deep {
+  body {
+    @apply bg-gray-100 pt-8;
+  }
+}
+
+main {
+  @apply h-full;
 }
 
 .card {

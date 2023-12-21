@@ -2,14 +2,6 @@
   display: block;
 }
 
-.deposit {
-  @apply text-primary-link;
-}
-
-.withdraw {
-  @apply text-pink-600;
-}
-
 button.approve {
   @apply rounded-full border border-primary-link text-primary-link p-2;
   @apply duration-300 transition-colors ease-linear;

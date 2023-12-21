@@ -84,7 +84,7 @@
       }
     </div>
   </section>
-  } @if (completedTransfers().length > 0) {
+  }
   <section class="flex flex-col gap-4">
     <div class="flex justify-between items-center">
       <h2 class="text-lg font-extrabold">Recent Transactions</h2>
@@ -95,47 +95,6 @@
         New
       </a>
     </div>
-    <div>
-      <div
-        class="grid grid-cols-1 bg-gray-200 border border-gray-300 rounded-t-lg p-2 font-bold"
-      >
-        Details
-      </div>
-      @for(transfer of completedTransfers(); track transfer.id) {
-      <div
-        class="grid grid-cols-2 items-center border border-t-0 border-gray-300 last:rounded-b-lg p-2 hover:bg-slate-100"
-        [ngClass]="{
-          'line-through text-gray-500': transfer.status === 'declined'
-        }"
-      >
-        <div>
-          <div class="text-xs text-gray-500">
-            {{ transfer.status | titlecase }} by
-            {{ transfer.updated_by?.first_name | titlecase }}
-            {{ transfer.updated_by?.last_name | titlecase }}
-          </div>
-          <div>{{ transfer.description }}</div>
-          <div class="text-xs text-gray-500">
-            {{ transfer.created_at | date : "MMMM dd, yyyy 'at' h:mma" }}
-          </div>
-        </div>
-        <div class="flex flex-col items-end">
-          <div
-            class="font-bold"
-            [ngClass]="{
-              deposit: transfer.amount >= 0 && transfer.status !== 'declined',
-              withdraw: transfer.amount < 0 && transfer.status !== 'declined'
-            }"
-          >
-            {{ transfer.amount | currency }}
-          </div>
-          <div class="text-xs text-gray-500">
-            {{ transfer.current_balance | currency }}
-          </div>
-        </div>
-      </div>
-      }
-    </div>
+    <app-recent-transactions></app-recent-transactions>
   </section>
-  }
 </section>
