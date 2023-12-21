@@ -12,6 +12,7 @@ import { Bank } from '../models/bank.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Customer } from '../models/customer.model';
+import { AuthService } from './auth.service';
 
 interface BankInfo {
   name: string;
@@ -26,10 +27,24 @@ export class BankService {
   private readonly bank = new BehaviorSubject<Bank | null>(null);
   private readonly customers = new BehaviorSubject<Customer[]>([]);
 
-  constructor(private readonly http: HttpClient) {
-    if (this.banks.value.length === 0) {
-      this.loadBanks();
-    }
+  constructor(
+    private readonly http: HttpClient,
+    private readonly auth: AuthService
+  ) {
+    this.auth.isLoggedIn$.pipe(filter(Boolean)).subscribe(() => {
+      if (this.banks.value.length === 0) {
+        this.loadBanks();
+      }
+    });
+  }
+
+  findBankByUsernameAndSlug(username: string, slug: string): void {
+    this.http
+      .get<Bank>(`${environment.apiUrl}/${username}/${slug}`)
+      .pipe(first())
+      .subscribe((bank) => {
+        this.bank.next(bank);
+      });
   }
 
   setBank(bankId: number): void {

@@ -1,0 +1,30 @@
+<app-secured-layout>
+  @if (bank$ | async; as bank) {
+  <ng-container ngProjectAs="title">{{ bank.name }}</ng-container>
+  } @if (bank$ | async; as bank) {
+  <form [formGroup]="form" (ngSubmit)="login()" class="flex flex-col gap-4">
+    <app-banner
+      *ngIf="errorMessage().message"
+      [exclamation]="errorMessage().exclamation"
+      [fullWidth]="true"
+    >
+      {{ errorMessage().message }}
+    </app-banner>
+    <div class="form-input">
+      <input
+        formControlName="pin"
+        id="pin"
+        type="text"
+        autocomplete="pin"
+        maxlength="6"
+        placeholder="000000"
+        required
+      />
+      <label for="pin">PIN</label>
+    </div>
+    <div>
+      <input type="submit" value="Sign in" [disabled]="form.invalid" />
+    </div>
+  </form>
+  }
+</app-secured-layout>

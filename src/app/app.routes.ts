@@ -13,6 +13,10 @@ import { ControlPanelAlertsComponent } from './views/control-panel/control-panel
 import { AnnouncementsComponent } from './views/announcements/index/announcements.component';
 import { AnnouncementComponent } from './views/announcements/show/announcement.component';
 import { AnnouncementLayoutComponent } from './views/announcements/layout/layout.component';
+import { BankSigninComponent } from './views/banks/bank-signin/bank-signin.component';
+import { WelcomeComponent } from './views/customers/welcome/welcome.component';
+import { customerGuard } from './guards/customer.guard';
+import { noCustomerGuard } from './guards/no-customer.guard';
 
 export const routes: Routes = [
   {
@@ -74,9 +78,14 @@ export const routes: Routes = [
           import(
             './views/customers/money-transfer/money-transfer.component'
           ).then((m) => m.MoneyTransferComponent),
+        canActivate: [signedInGuard],
+      },
+      {
+        path: 'welcome',
+        component: WelcomeComponent,
+        canActivate: [customerGuard],
       },
     ],
-    canActivateChild: [signedInGuard],
   },
   {
     path: 'profile',
@@ -154,5 +163,11 @@ export const routes: Routes = [
         component: AnnouncementComponent,
       },
     ],
+  },
+  {
+    path: ':username/:slug',
+    component: BankSigninComponent,
+    pathMatch: 'full',
+    canActivate: [notSignedInGuard, noCustomerGuard],
   },
 ];
