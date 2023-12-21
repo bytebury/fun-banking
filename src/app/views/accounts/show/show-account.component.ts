@@ -15,6 +15,7 @@ import { BankService } from '../../../services/bank.service';
 import { Bank } from '../../../models/bank.model';
 import { RouterModule } from '@angular/router';
 import { RecentTransactionsComponent } from '../recent-transactions/recent-transactions.component';
+import { CustomerService } from '../../../services/customer.service';
 
 @Component({
   selector: 'app-show-account',
@@ -32,13 +33,16 @@ import { RecentTransactionsComponent } from '../recent-transactions/recent-trans
 export class ShowAccountComponent {
   @Input({ required: true }) account: BankAccount | null = null;
 
+  customer$ = this.customerService.customer$;
+
   pendingTransfers = signal<Transfer[]>([]);
   bank = signal<Bank | null>(null);
 
   constructor(
     private readonly bankService: BankService,
     private readonly accountsService: AccountsService,
-    private readonly moneyTransferService: MoneyTransferService
+    private readonly moneyTransferService: MoneyTransferService,
+    private readonly customerService: CustomerService
   ) {
     this.accountsService.pendingTransfers$
       .pipe(takeUntilDestroyed())

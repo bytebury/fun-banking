@@ -3,7 +3,7 @@
 }
 
 .wrapper {
-  @apply h-full pt-[72px];
+  @apply grow h-full pt-[72px];
 }
 
 aside {
@@ -28,5 +28,5 @@ aside {
 }
 
 main {
-  @apply w-full pb-10;
+  @apply w-full pb-10 h-full;
 }

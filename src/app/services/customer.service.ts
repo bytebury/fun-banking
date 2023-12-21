@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, filter } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Customer } from '../models/customer.model';
 
@@ -18,6 +18,8 @@ interface CreateCustomerRequest extends CustomerInfo {
   providedIn: 'root',
 })
 export class CustomerService {
+  private readonly customer = new BehaviorSubject<Customer | null>(null);
+
   constructor(private readonly http: HttpClient) {}
 
   create(request: CreateCustomerRequest): Observable<Customer> {
@@ -35,5 +37,13 @@ export class CustomerService {
     return this.http.delete<unknown>(
       `${environment.apiUrl}/customers/${customerId}`
     );
+  }
+
+  setCustomer(customer: Customer): void {
+    this.customer.next(customer);
+  }
+
+  get customer$(): Observable<Customer> {
+    return this.customer.asObservable().pipe(filter(Boolean));
   }
 }

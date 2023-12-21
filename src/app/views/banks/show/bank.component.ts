@@ -85,6 +85,7 @@ export class BankComponent implements AfterViewInit {
   openViewCustomer(customer: Customer): void {
     this.showCustomerModal.open();
     this.currentCustomer.set(customer);
+    this.customerService.setCustomer(customer);
   }
 
   updateCustomer(customer: Customer): void {

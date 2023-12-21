@@ -1,5 +1,6 @@
 <section class="flex flex-col gap-4">
   <h1 class="text-xl font-extrabold">
+    {{ (customer$ | async)?.first_name | titlecase }}'s
     {{ account?.name | titlecase }}
   </h1>
   <div
