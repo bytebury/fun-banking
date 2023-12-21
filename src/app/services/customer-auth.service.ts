@@ -5,12 +5,16 @@ import { Customer } from '../models/customer.model';
 import { HttpClient } from '@angular/common/http';
 import { Severity } from '../models/severity.enum';
 import { Router } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CustomerAuthService {
   private readonly customer = new BehaviorSubject<Customer | null>(null);
+
+  bank = signal<{ username: string; slug: string } | null>(null);
+
   readonly customer$ = this.customer.asObservable();
   readonly isLoggedIn$ = this.customer$.pipe(map((customer) => !!customer));
 
@@ -25,9 +29,14 @@ export class CustomerAuthService {
     private readonly router: Router
   ) {
     const customer = sessionStorage.getItem('customer');
+    const bank = sessionStorage.getItem('bank');
 
     if (customer) {
       this.customer.next(JSON.parse(customer));
+    }
+
+    if (bank) {
+      this.bank.set(JSON.parse(bank));
     }
   }
 
@@ -56,5 +65,12 @@ export class CustomerAuthService {
 
   logout(): void {
     sessionStorage.removeItem('customer');
+    this.customer.next(null);
+    this.router.navigate(['/', this.bank()?.username, this.bank()?.slug]);
+  }
+
+  setCurrentBank(bankInfo: { username: string; slug: string }): void {
+    this.bank.set(bankInfo);
+    sessionStorage.setItem('bank', JSON.stringify(bankInfo));
   }
 }

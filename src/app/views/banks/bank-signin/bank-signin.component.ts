@@ -51,6 +51,7 @@ export class BankSigninComponent {
         const slug = params.get('slug') ?? '';
 
         this.bankService.findBankByUsernameAndSlug(username, slug);
+        this.customerAuth.setCurrentBank({ username, slug });
       });
   }
 
