@@ -38,9 +38,11 @@ export class UserService {
   private readonly errorMessage = new BehaviorSubject('');
 
   constructor(private http: HttpClient, private auth: AuthService) {
-    if (!this.currentUser.value) {
-      this.loadCurrentUser();
-    }
+    this.auth.isLoggedIn$.pipe(filter(Boolean)).subscribe(() => {
+      if (!this.currentUser.value) {
+        this.loadCurrentUser();
+      }
+    });
   }
 
   signUp(userInfo: UserSignUpRequest): void {

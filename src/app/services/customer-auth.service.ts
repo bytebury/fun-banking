@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class CustomerAuthService {
   private readonly customer = new BehaviorSubject<Customer | null>(null);
-  readonly customer$ = this.customer.asObservable().pipe(filter(Boolean));
+  readonly customer$ = this.customer.asObservable();
   readonly isLoggedIn$ = this.customer$.pipe(map((customer) => !!customer));
 
   errorMessage = signal({
