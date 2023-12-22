@@ -74,10 +74,10 @@ export class ProfileSettingsComponent {
   onProfileImageSelected(event: Event): void {
     const element = event.currentTarget as HTMLInputElement;
     const fileList: FileList | null = element.files;
-    const maxSize = 1 * 1024 * 1024; // 1MB
+    const maxSize = 100 * 1024; // 100KB
 
     if (fileList && fileList[0].size > maxSize) {
-      alert('File is too large. Maximum size is 1MB.');
+      alert('File is too large. Maximum size is 100KB.');
       return; // Exit the function if the file is too large
     }
 
