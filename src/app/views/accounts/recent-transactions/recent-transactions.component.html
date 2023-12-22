@@ -1,4 +1,5 @@
 <div>
+  @if (!(isLoading$ | async)) {
   <div
     class="grid grid-cols-1 bg-gray-200 border border-gray-300 rounded-t-lg p-2 font-bold"
   >
@@ -41,5 +42,5 @@
   <div class="border border-t-0 rounded-b-lg p-2 text-gray-500">
     There haven't been any transactions yet for this account.
   </div>
-  }
+  } } @else { Loading }
 </div>

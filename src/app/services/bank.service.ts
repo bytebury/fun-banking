@@ -23,6 +23,7 @@ interface BankInfo {
   providedIn: 'root',
 })
 export class BankService {
+  private readonly isLoading = new BehaviorSubject(true);
   private readonly banks = new BehaviorSubject<Bank[]>([]);
   private readonly bank = new BehaviorSubject<Bank | null>(null);
   private readonly customers = new BehaviorSubject<Customer[]>([]);
@@ -48,6 +49,10 @@ export class BankService {
   }
 
   setBank(bankId: number): void {
+    if (this.bank.value?.id === bankId) {
+      return;
+    }
+    this.bank.next(null);
     this.http
       .get<Bank>(`${environment.apiUrl}/banks/${bankId}`)
       .pipe(
@@ -94,6 +99,10 @@ export class BankService {
     );
   }
 
+  clear(): void {
+    this.bank.next(null);
+  }
+
   get banks$(): Observable<Bank[]> {
     return this.banks.asObservable();
   }
@@ -115,12 +124,23 @@ export class BankService {
     );
   }
 
+  get isLoading$(): Observable<boolean> {
+    return this.isLoading.asObservable();
+  }
+
   private loadBanks(): void {
+    this.isLoading.next(true);
     this.http
       .get<Bank[]>(`${environment.apiUrl}/banks`)
       .pipe(first())
-      .subscribe((banks) => {
-        this.banks.next(banks);
+      .subscribe({
+        next: (banks) => {
+          this.banks.next(banks);
+          this.isLoading.next(false);
+        },
+        error: () => {
+          this.isLoading.next(false);
+        },
       });
   }
 

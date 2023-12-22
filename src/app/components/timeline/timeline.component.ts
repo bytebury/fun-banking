@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { AnnouncementService } from '../../services/announcement.service';
-import { defer } from 'rxjs';
 import { RouterModule } from '@angular/router';
+import { Announcement } from '../../models/announcement.model';
 
 @Component({
   selector: 'app-timeline',
@@ -13,7 +13,11 @@ import { RouterModule } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimelineComponent {
-  announcements$ = this.announcementService.announcements$;
+  announcements = signal<Announcement[]>([]);
 
-  constructor(private announcementService: AnnouncementService) {}
+  constructor(private announcementService: AnnouncementService) {
+    this.announcementService.announcements$.subscribe((announcements) => {
+      this.announcements.set(announcements);
+    });
+  }
 }

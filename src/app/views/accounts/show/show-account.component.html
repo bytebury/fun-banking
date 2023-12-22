@@ -1,4 +1,5 @@
 <section class="flex flex-col gap-4">
+  @defer (when !(isLoadingAccount$ | async)) {
   <h1 class="text-xl font-extrabold">
     {{ (customer$ | async)?.first_name | titlecase }}'s
     {{ account?.name | titlecase }}
@@ -21,6 +22,7 @@
     <div class="font-bold">Balance:</div>
     {{ account?.balance | currency }}
   </div>
+  } @placeholder {Loading...}
   <section class="flex flex-col gap-4">
     <h2 class="text-lg font-extrabold">Insights</h2>
     <app-banner [fullWidth]="true" severity="info" exclamation="🧠">

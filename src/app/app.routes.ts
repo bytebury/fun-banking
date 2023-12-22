@@ -17,6 +17,7 @@ import { BankSigninComponent } from './views/banks/bank-signin/bank-signin.compo
 import { WelcomeComponent } from './views/customers/welcome/welcome.component';
 import { customerGuard } from './guards/customer.guard';
 import { noCustomerGuard } from './guards/no-customer.guard';
+import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 
 export const routes: Routes = [
   {
@@ -169,5 +170,9 @@ export const routes: Routes = [
     component: BankSigninComponent,
     pathMatch: 'full',
     canActivate: [notSignedInGuard, noCustomerGuard],
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent,
   },
 ];

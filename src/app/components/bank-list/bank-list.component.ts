@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 })
 export class BankListComponent {
   banks$ = this.bank.banks$;
+  isLoading$ = this.bank.isLoading$;
 
   constructor(private bank: BankService) {}
 }

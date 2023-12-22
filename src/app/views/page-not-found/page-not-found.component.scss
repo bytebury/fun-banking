@@ -1,0 +1,7 @@
+:host {
+  @apply flex flex-col grow min-h-screen;
+}
+
+main {
+  @apply flex flex-col gap-4 grow py-20;
+}

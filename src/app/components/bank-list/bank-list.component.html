@@ -6,7 +6,8 @@
     </a>
   </header>
   <ul>
-    @for(bank of banks$ | async; track bank.id) {
+    @defer (when !(isLoading$ | async)) { @for(bank of banks$ | async; track
+    bank.id) {
     <li>
       <a
         [routerLink]="['/banks', bank.id]"
@@ -20,6 +21,21 @@
     <div class="text-gray-500 text-sm">
       Looks like you don't have or belong to any banks yet.
       <a [routerLink]="['/', 'banks', 'new']">Create one</a> to get started.
+    </div>
+    } } @placeholder (minimum 1s) {
+    <div class="flex flex-col gap-2">
+      <div class="flex gap-2">
+        <div class="shimmer w-5 h-5 rounded-full bg-gray-100 shrink-0"></div>
+        <div class="shimmer w-full h-5 rounded-lg bg-gray-100"></div>
+      </div>
+      <div class="flex gap-2">
+        <div class="shimmer w-5 h-5 rounded-full bg-gray-100 shrink-0"></div>
+        <div class="shimmer w-full h-5 rounded-lg bg-gray-100"></div>
+      </div>
+      <div class="flex gap-2">
+        <div class="shimmer w-5 h-5 rounded-full bg-gray-100 shrink-0"></div>
+        <div class="shimmer w-full h-5 rounded-lg bg-gray-100"></div>
+      </div>
     </div>
     }
   </ul>

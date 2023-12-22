@@ -34,6 +34,7 @@ export class ShowAccountComponent {
   @Input({ required: true }) account: BankAccount | null = null;
 
   customer$ = this.customerService.customer$;
+  isLoadingAccount$ = this.accountsService.isLoadingAccount$;
 
   pendingTransfers = signal<Transfer[]>([]);
   bank = signal<Bank | null>(null);

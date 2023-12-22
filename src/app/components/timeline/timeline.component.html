@@ -1,5 +1,6 @@
+@defer (when announcements().length > 0) {
 <ol class="relative flex flex-col gap-0 border-l border-gray-300 pl-4">
-  <li class="text-sm py-1" *ngFor="let announcement of announcements$ | async">
+  <li class="text-sm py-1" *ngFor="let announcement of announcements()">
     <div
       class="absolute -left-1.5 bg-gray-300 rounded-full w-[11px] h-[11px] border-2 mt-1 border-white"
     ></div>
@@ -19,3 +20,11 @@
     <ng-content select="view-more"></ng-content>
   </li>
 </ol>
+} @placeholder (minimum 1s) {
+<div class="flex flex-col gap-3 w-full">
+  <div class="shimmer w-full h-5 bg-gray-100 rounded-lg"></div>
+  <div class="shimmer w-full h-5 bg-gray-100 rounded-lg"></div>
+  <div class="shimmer w-full h-5 bg-gray-100 rounded-lg"></div>
+  <div class="shimmer w-full h-5 bg-gray-100 rounded-lg"></div>
+</div>
+}

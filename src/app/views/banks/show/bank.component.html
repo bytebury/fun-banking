@@ -1,5 +1,10 @@
 <app-resource-layout>
+  @defer (when bank$ | async) {
   <div *ngIf="bank$ | async as bank" class="flex flex-col gap-4">
+    <app-banner severity="info" exclamation="💸" [fullWidth]="true">
+      Click on the link below with the clipboard icon to share the link with
+      your customers. It will automatically copy it to your clipboard.
+    </app-banner>
     <section class="flex flex-col gap-2">
       <h1 class="text-2xl font-extrabold">
         <a [routerLink]="['/banks', bank.id]">{{ bank.owner.username }}</a> /
@@ -68,6 +73,18 @@
     </section>
     <app-tabs [tabs]="tabs"></app-tabs>
   </div>
+  } @placeholder (minimum 1s) {
+  <div class="flex flex-col gap-4">
+    <div class="shimmer h-14 w-full bg-gray-100 rounded-lg"></div>
+    <div class="shimmer h-8 w-1/2 bg-gray-100 rounded-lg"></div>
+    <div class="shimmer h-10 w-3/4 bg-gray-100 rounded-lg"></div>
+    <div class="shimmer h-14 w-full bg-gray-100 rounded-lg"></div>
+    <div class="flex w-full justify-end">
+      <div class="shimmer h-8 w-48 bg-gray-100 rounded-lg"></div>
+    </div>
+    <div class="shimmer h-32 w-full bg-gray-100 rounded-lg"></div>
+  </div>
+  }
   <ng-container *ngIf="bank$ | async as bank" ngProjectAs="drawer">
     <section class="flex flex-col gap-2">
       <h1>Employees</h1>

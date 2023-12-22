@@ -11,8 +11,11 @@ export class AnnouncementService {
   private readonly announcement = new BehaviorSubject<Announcement | null>(
     null
   );
+  private readonly announcements = new BehaviorSubject<Announcement[]>([]);
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {
+    this.loadAnnouncements();
+  }
 
   loadAnnouncement(announcementId: number): void {
     this.http
@@ -26,6 +29,13 @@ export class AnnouncementService {
       .subscribe();
   }
 
+  loadAnnouncements(): void {
+    this.http
+      .get<Announcement[]>(`${environment.apiUrl}/announcements`)
+      .pipe(first())
+      .subscribe((announcements) => this.announcements.next(announcements));
+  }
+
   create(request: { title: string; description: string }): Observable<unknown> {
     return this.http
       .post(`${environment.apiUrl}/announcements`, request)
@@ -33,9 +43,7 @@ export class AnnouncementService {
   }
 
   get announcements$(): Observable<Announcement[]> {
-    return this.http
-      .get<Announcement[]>(`${environment.apiUrl}/announcements`)
-      .pipe(first());
+    return this.announcements.asObservable();
   }
 
   get announcement$(): Observable<Announcement> {

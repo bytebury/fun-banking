@@ -13,6 +13,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecentTransactionsComponent {
+  isLoading$ = this.accountsService.isLoading$;
   completedTransfers = signal<Transfer[]>([]);
 
   constructor(private readonly accountsService: AccountsService) {
