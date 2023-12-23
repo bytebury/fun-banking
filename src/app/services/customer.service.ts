@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, filter } from 'rxjs';
+import { BehaviorSubject, Observable, filter, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Customer } from '../models/customer.model';
+import { BankService } from './bank.service';
 
 interface CustomerInfo {
   first_name: string;
@@ -20,23 +21,36 @@ interface CreateCustomerRequest extends CustomerInfo {
 export class CustomerService {
   private readonly customer = new BehaviorSubject<Customer | null>(null);
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(
+    private readonly http: HttpClient,
+    private readonly bankService: BankService
+  ) {}
 
   create(request: CreateCustomerRequest): Observable<Customer> {
     return this.http.post<Customer>(`${environment.apiUrl}/customers`, request);
   }
 
   update(customerId: number, customerInfo: CustomerInfo): Observable<Customer> {
-    return this.http.put<Customer>(
-      `${environment.apiUrl}/customers/${customerId}`,
-      customerInfo
-    );
+    return this.http
+      .put<Customer>(
+        `${environment.apiUrl}/customers/${customerId}`,
+        customerInfo
+      )
+      .pipe(
+        tap(() => {
+          this.bankService.reload();
+        })
+      );
   }
 
   destroy(customerId: number): Observable<unknown> {
-    return this.http.delete<unknown>(
-      `${environment.apiUrl}/customers/${customerId}`
-    );
+    return this.http
+      .delete<unknown>(`${environment.apiUrl}/customers/${customerId}`)
+      .pipe(
+        tap(() => {
+          this.bankService.reload();
+        })
+      );
   }
 
   setCustomer(customer: Customer): void {

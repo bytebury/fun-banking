@@ -49,9 +49,33 @@ export class BankService {
   }
 
   setBank(bankId: number): void {
+    if (this.bank.value?.id === bankId) {
+      return;
+    }
     this.bank.next(null);
     this.http
       .get<Bank>(`${environment.apiUrl}/banks/${bankId}`)
+      .pipe(
+        first(),
+        tap((bank) => this.bank.next(bank)),
+        switchMap((bank) => {
+          return this.http.get<Customer[]>(
+            `${environment.apiUrl}/banks/${bank.id}/customers`
+          );
+        })
+      )
+      .subscribe((customers) => {
+        this.customers.next(customers);
+      });
+  }
+
+  reload(): void {
+    if (!this.bank.value) {
+      return;
+    }
+    this.bank.next(null);
+    this.http
+      .get<Bank>(`${environment.apiUrl}/banks/${this.bank.value?.id}`)
       .pipe(
         first(),
         tap((bank) => this.bank.next(bank)),
