@@ -1,11 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  signal,
-} from '@angular/core';
-import { BankAccount } from '../../../models/bank-account.model';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { BannerComponent } from '../../../components/banner/banner.component';
 import { AccountsService } from '../../../services/accounts.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -31,9 +25,8 @@ import { CustomerService } from '../../../services/customer.service';
   ],
 })
 export class ShowAccountComponent {
-  @Input({ required: true }) account: BankAccount | null = null;
-
   customer$ = this.customerService.customer$;
+  account$ = this.accountsService.account$;
   isLoadingAccount$ = this.accountsService.isLoadingAccount$;
 
   pendingTransfers = signal<Transfer[]>([]);
@@ -58,14 +51,12 @@ export class ShowAccountComponent {
 
   approve(transferId: number): void {
     this.moneyTransferService.approve(transferId).subscribe(() => {
-      this.accountsService.getAccountInfo(this.account!.id);
       this.bankService.setBank(this.bank()!.id);
     });
   }
 
   decline(transferId: number): void {
     this.moneyTransferService.decline(transferId).subscribe(() => {
-      this.accountsService.getAccountInfo(this.account!.id);
       this.bankService.setBank(this.bank()!.id);
     });
   }

@@ -60,7 +60,6 @@ export class BankComponent implements AfterViewInit {
 
   bank$ = this.bankService.bank$;
   customers$ = this.bankService.customers$;
-  account$ = this.accountService.account$;
   hasCopiedBankUrl = signal(false);
 
   tabs = signal<Tab[]>([]);

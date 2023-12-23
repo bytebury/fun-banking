@@ -96,6 +96,7 @@ form {
 .shimmer {
   position: relative;
   overflow: hidden;
+  @apply rounded-lg;
 
   &:before {
     content: "";

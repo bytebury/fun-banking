@@ -49,9 +49,6 @@ export class BankService {
   }
 
   setBank(bankId: number): void {
-    if (this.bank.value?.id === bankId) {
-      return;
-    }
     this.bank.next(null);
     this.http
       .get<Bank>(`${environment.apiUrl}/banks/${bankId}`)
