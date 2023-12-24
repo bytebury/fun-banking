@@ -26,7 +26,9 @@ export class NotificationService {
             .pipe(takeUntilDestroyed())
         )
       )
-      .subscribe();
+      .subscribe((notifications) => {
+        this.notificationsSubject.next(notifications);
+      });
   }
 
   reload(): void {

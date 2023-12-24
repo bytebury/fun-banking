@@ -11,7 +11,11 @@
         >
           <div>
             <h3 class="text-xs text-gray-500">
-              {{ notification.description }}
+              {{ notification.account.customer.first_name | titlecase }}
+              {{ notification.account.customer.last_name | titlecase }}
+              into
+              {{ notification.account.name | lowercase }} for
+              {{ notification.description | lowercase }}
             </h3>
             <div
               class="font-bold"

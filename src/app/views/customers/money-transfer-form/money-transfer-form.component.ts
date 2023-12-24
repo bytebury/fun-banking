@@ -34,7 +34,7 @@ export class MoneyTransferFormComponent {
       validators: [
         Validators.required,
         Validators.min(0.01),
-        Validators.max(10_000),
+        Validators.max(1_000_000),
       ],
     }),
     description: new FormControl('', [

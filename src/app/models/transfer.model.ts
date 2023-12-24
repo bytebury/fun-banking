@@ -1,3 +1,4 @@
+import { BankAccount } from './bank-account.model';
 import { User } from './user.model';
 
 export enum TransferStatus {
@@ -13,6 +14,7 @@ export interface Transfer {
   current_balance: number;
   status: TransferStatus;
   account_id: number;
+  account: BankAccount;
   user_id?: number;
   created_at?: Date;
   updated_at?: Date;
