@@ -1,7 +1,8 @@
 @if (announcement$ | async; as announcement) {
 <article class="flex flex-col gap-2">
   <header>
-    <div class="flex items-center gap-1 mb-1">
+    <h1 class="text-3xl font-extrabold">{{ announcement.title }}</h1>
+    <div class="flex items-center gap-1 my-1">
       <a
         class="inline-flex gap-1.5 items-center text-xs"
         [routerLink]="['/', 'profile', announcement.user.username]"
@@ -18,7 +19,6 @@
         on {{ announcement.created_at | date : "MMMM dd, YYYY 'at' h:mm a" }}
       </time>
     </div>
-    <h1 class="text-3xl font-extrabold">{{ announcement.title }}</h1>
   </header>
   <main
     class="announcement-description"

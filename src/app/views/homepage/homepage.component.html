@@ -2,9 +2,9 @@
   <div class="flex flex-col gap-16 pb-8">
     <header>
       <div class="container py-8">
-        <app-banner exclamation="👨‍🍳">
-          We're cooking up something big! Stay tuned for the new release of Fun
-          Banking!
+        <app-banner exclamation="🧼">
+          Fun Banking got some upgrades over the break! It's the same
+          application, with new look.
         </app-banner>
       </div>
       <div class="container">
@@ -24,6 +24,43 @@
       </div>
     </header>
     <!-- Highlights -->
+    <div class="flex flex-col gap-8">
+      <div class="container">
+        <h1 class="text-4xl font-extrabold text-primary-link text-center">
+          Trusted & Serving
+        </h1>
+      </div>
+      <div class="container flex gap-8 justify-center">
+        <div class="flex flex-col md:flex-row gap-8">
+          <div class="flex flex-col text-center">
+            <div class="font-extrabold text-4xl">
+              {{ numberOfUsers() | formattedNumber }}
+            </div>
+            <div class="font-semibold">Users</div>
+          </div>
+          <div class="flex flex-col text-center">
+            <div class="font-extrabold text-4xl">
+              {{ numberOfBanks() | formattedNumber }}
+            </div>
+            <div class="font-semibold">Banks</div>
+          </div>
+        </div>
+        <div class="flex flex-col md:flex-row gap-8">
+          <div class="flex flex-col text-center">
+            <div class="font-extrabold text-4xl">
+              {{ numberOfCustomers() | formattedNumber }}
+            </div>
+            <div class="font-semibold">Customers</div>
+          </div>
+          <div class="flex flex-col text-center">
+            <div class="font-extrabold text-4xl">
+              {{ numberOfTransactions() | formattedNumber }}
+            </div>
+            <div class="font-semibold">Transfers</div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container highlights">
       <section class="card">
         <h1>🐷 Create Banks</h1>
@@ -64,18 +101,32 @@
       financial simulations anytime, anywhere. Whether you're on a smartphone,
       tablet, or computer, our platform ensures a seamless learning experience
       across all devices. Empower financial education on your terms - be it at
-      home, in the classroom, or on the move!
+      home, in the classroom, or on the move! Try it for yourself on your mobile
+      phone, tablet, or desktop.
     </section>
     <!-- How it works -->
     <section class="how-it-works">
       <div class="container">
         <h1>How it Works</h1>
-        Fun Banking provides a comprehensive and engaging approach to financial
-        education. By creating virtual banks, managing transactions, and gaining
-        insights into learners' financial journeys, Fun Banking equips families
-        and organizations with a powerful tool to raise financially savvy
-        individuals. With Fun Banking, learning about money management becomes
-        interactive, practical, and fun!
+        <p>
+          Fun Banking provides a comprehensive and engaging approach to
+          financial education. By creating virtual banks, managing transactions,
+          and gaining insights into learners' financial journeys, Fun Banking
+          equips families and organizations with a powerful tool to raise
+          financially savvy individuals. With Fun Banking, learning about money
+          management becomes interactive, practical, and fun!
+        </p>
+        <p>
+          Users create banks and they can add customers to those banks. Once you
+          have customers, you can share the link to your bank to them and they
+          can sign in using their PINs that you setup. The interface is easy to
+          navigate on any device.
+        </p>
+        <p>
+          We're working on adding some guides to help new users out, but we
+          recommend you play around first with some mock data before sharing the
+          link out.
+        </p>
       </div>
     </section>
     <!-- Partnership -->
