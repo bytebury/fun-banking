@@ -58,10 +58,9 @@ export class ResetPasswordFormComponent {
           });
           this.form.reset();
         },
-        error: () => {
+        error: (error) => {
           this.message.set({
-            message:
-              'Invalid token, send yourself an e-mail again and try again.',
+            message: error.error.message,
             exclamation: '❌',
             severity: Severity.Default,
           });
