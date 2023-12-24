@@ -27,15 +27,18 @@ import { BannerComponent } from '../../components/banner/banner.component';
 })
 export class SignupComponent {
   errorMessage$ = this.user.errorMessage$;
+  readonly VALID_NAME = /^[a-zA-Z]+(?:-[a-zA-Z]+)?(?:'[a-zA-Z]+)?$/;
 
   signupForm = new FormGroup({
     firstName: new FormControl('', [
       Validators.required,
       Validators.maxLength(12),
+      Validators.pattern(this.VALID_NAME),
     ]),
     lastName: new FormControl('', [
       Validators.required,
       Validators.maxLength(15),
+      Validators.pattern(this.VALID_NAME),
     ]),
     username: new FormControl('', [
       Validators.required,

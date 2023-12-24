@@ -28,7 +28,7 @@ import { BannerComponent } from '../../../components/banner/banner.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewCustomerComponent {
-  readonly VALID_NAME = /^[A-Za-z]+$/;
+  readonly VALID_NAME = /^[a-zA-Z]+(?:-[a-zA-Z]+)?(?:'[a-zA-Z]+)?$/;
   readonly VALID_PIN = /^\d{4,6}$/;
 
   bankId = '';
