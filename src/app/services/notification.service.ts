@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, first } from 'rxjs';
+import { BehaviorSubject, Observable, filter, first, switchMap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Transfer } from '../models/transfer.model';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,13 +12,21 @@ import { Transfer } from '../models/transfer.model';
 export class NotificationService {
   private readonly notificationsSubject = new BehaviorSubject<Transfer[]>([]);
 
-  constructor(private readonly http: HttpClient) {
-    this.http
-      .get<Transfer[]>(`${environment.apiUrl}/notifications`)
-      .pipe(takeUntilDestroyed())
-      .subscribe((notifications) => {
-        this.notificationsSubject.next(notifications);
-      });
+  constructor(
+    private readonly http: HttpClient,
+    private readonly auth: AuthService
+  ) {
+    this.auth.isLoggedIn$
+      .pipe(
+        filter(Boolean),
+        takeUntilDestroyed(),
+        switchMap(() =>
+          this.http
+            .get<Transfer[]>(`${environment.apiUrl}/notifications`)
+            .pipe(takeUntilDestroyed())
+        )
+      )
+      .subscribe();
   }
 
   reload(): void {
