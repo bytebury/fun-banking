@@ -1,0 +1,67 @@
+<app-navbar></app-navbar>
+<div class="flex flex-col grow">
+  <main class="container">
+    <div class="card">
+      <h1 class="text-xl font-extrabold mb-2">Notifications</h1>
+      <div class="flex flex-col">
+        @if ((notifications$ | async)!.length > 0) { @for (notification of
+        notifications$ | async; track notification.id) {
+        <div
+          class="grid grid-cols-2 items-center border-gray-300 border-t py-2"
+        >
+          <div>
+            <h3 class="text-xs text-gray-500">
+              {{ notification.description }}
+            </h3>
+            <div
+              class="font-bold"
+              [ngClass]="{
+                deposit: notification.amount >= 0,
+                withdraw: notification.amount < 0
+              }"
+            >
+              {{ notification.amount | currency }}
+            </div>
+            <div class="text-xs text-gray-500">
+              {{ notification.created_at | date : "MMMM dd, yyyy 'at' h:mma" }}
+            </div>
+          </div>
+          <div class="flex gap-2 justify-end">
+            <button class="approve" (click)="approve(notification.id)">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="currentColor"
+                  d="M9 16.17L4.83 12l-1.42 1.41L9 19L21 7l-1.41-1.41z"
+                />
+              </svg>
+            </button>
+            <button class="decline" (click)="decline(notification.id)">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="currentColor"
+                  d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        } @empty {
+        <div class="text-gray-500">You have no new notifications! 🎉</div>
+        }
+        <div></div>
+        } @else {
+        <div class="text-gray-500">You have no new notifications! 🎉</div>
+        }
+      </div>
+    </div>
+  </main>
+</div>
+<app-footer></app-footer>

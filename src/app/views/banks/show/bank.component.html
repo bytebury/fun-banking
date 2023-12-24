@@ -319,12 +319,12 @@
     (saved)="updateCustomer($event)"
   ></app-edit-customer-form>
 </app-modal>
-<app-modal #showCustomerModal>
+<app-modal #showCustomerModal [dismissable]="false">
   <app-show-customer
     (openedAccount)="openAccount($event)"
     [customer]="currentCustomer()"
   ></app-show-customer>
 </app-modal>
-<app-modal #showAccountModal>
+<app-modal #showAccountModal [dismissable]="false">
   <app-show-account></app-show-account>
 </app-modal>

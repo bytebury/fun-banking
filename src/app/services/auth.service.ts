@@ -50,6 +50,12 @@ export class AuthService {
     this.router.navigate(['/']);
   }
 
+  sendForgotPasswordEmail(email: string): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}/passwords/forgot`, {
+      email,
+    });
+  }
+
   getAuthToken(): string {
     return this.authToken;
   }

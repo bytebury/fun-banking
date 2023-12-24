@@ -1,0 +1,23 @@
+:host {
+  @apply flex flex-col h-screen bg-gray-100;
+}
+
+main {
+  @apply h-full grow pt-16;
+}
+
+.card {
+  @apply rounded-lg border border-gray-300 p-3 bg-white;
+}
+
+button.approve {
+  @apply rounded-full border border-primary-link text-primary-link p-2;
+  @apply duration-300 transition-colors ease-linear;
+  @apply hover:bg-green-100;
+}
+
+button.decline {
+  @apply rounded-full border border-pink-600 text-pink-600 p-2;
+  @apply duration-300 transition-colors ease-linear;
+  @apply hover:bg-pink-100;
+}

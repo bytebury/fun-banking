@@ -1,9 +1,17 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, filter, first, switchMap } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
+import {
+  BehaviorSubject,
+  Observable,
+  filter,
+  first,
+  map,
+  switchMap,
+} from 'rxjs';
 import { BankAccount } from '../models/bank-account.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Transfer } from '../models/transfer.model';
+import { PaginatedResponse } from '../models/pagination.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +20,7 @@ export class AccountsService {
   private readonly isLoadingAccount = new BehaviorSubject(true);
   private readonly account = new BehaviorSubject<BankAccount | null>(null);
   private readonly accounts = new BehaviorSubject<BankAccount[]>([]);
+  private readonly completedTransferPage = signal(1);
 
   constructor(private readonly http: HttpClient) {}
 
@@ -26,6 +35,11 @@ export class AccountsService {
       });
   }
 
+  setCompletedTransferPage(page: number): void {
+    this.completedTransferPage.set(page);
+    this.account.next(this.account.value);
+  }
+
   getAccountInfo(accountId: number): void {
     this.isLoadingAccount.next(true);
     this.http
@@ -37,21 +51,23 @@ export class AccountsService {
       });
   }
 
-  get pendingTransfers$(): Observable<Transfer[]> {
+  get pendingTransfers$(): Observable<PaginatedResponse<Transfer>> {
     return this.account$.pipe(
       switchMap((account) => {
-        return this.http.get<Transfer[]>(
+        return this.http.get<PaginatedResponse<Transfer>>(
           `${environment.apiUrl}/accounts/${account.id}/money-transfers?status=pending`
         );
       })
     );
   }
 
-  get completedTransfers$(): Observable<Transfer[]> {
+  get completedTransfers$(): Observable<PaginatedResponse<Transfer>> {
     return this.account$.pipe(
       switchMap((account) => {
-        return this.http.get<Transfer[]>(
-          `${environment.apiUrl}/accounts/${account.id}/money-transfers?status=approved&status=declined`
+        return this.http.get<PaginatedResponse<Transfer>>(
+          `${environment.apiUrl}/accounts/${
+            account.id
+          }/money-transfers?status=approved&status=declined&limit=5&page=${this.completedTransferPage()}`
         );
       })
     );

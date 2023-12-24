@@ -18,6 +18,8 @@ import { WelcomeComponent } from './views/customers/welcome/welcome.component';
 import { customerGuard } from './guards/customer.guard';
 import { noCustomerGuard } from './guards/no-customer.guard';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
+import { NotificationsComponent } from './views/notifications/notifications.component';
+import { AccountSecurityComponent } from './views/settings/account-security/account-security.component';
 
 export const routes: Routes = [
   {
@@ -36,6 +38,21 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./views/signin/signin.component').then((m) => m.SigninComponent),
     canActivate: [notSignedInGuard, noCustomerGuard],
+  },
+  {
+    path: 'forgot-password',
+    loadComponent: () =>
+      import('./views/forgot-password/forgot-password.component').then(
+        (m) => m.ForgotPasswordComponent
+      ),
+    canActivate: [notSignedInGuard, noCustomerGuard],
+  },
+  {
+    path: 'reset-password',
+    loadComponent: () =>
+      import('./views/reset-password/reset-password.component').then(
+        (m) => m.ResetPasswordComponent
+      ),
   },
   {
     path: 'dashboard',
@@ -122,6 +139,10 @@ export const routes: Routes = [
         path: 'profile',
         component: ProfileSettingsComponent,
       },
+      {
+        path: 'security',
+        component: AccountSecurityComponent,
+      },
     ],
     canActivateChild: [signedInGuard],
   },
@@ -170,6 +191,12 @@ export const routes: Routes = [
     component: BankSigninComponent,
     pathMatch: 'full',
     canActivate: [notSignedInGuard, noCustomerGuard],
+  },
+  {
+    path: 'notifications',
+    component: NotificationsComponent,
+    pathMatch: 'full',
+    canActivate: [signedInGuard, noCustomerGuard],
   },
   {
     path: '**',

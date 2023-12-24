@@ -40,8 +40,8 @@ export class ShowAccountComponent {
   ) {
     this.accountsService.pendingTransfers$
       .pipe(takeUntilDestroyed())
-      .subscribe((pendingTransfers) => {
-        this.pendingTransfers.set(pendingTransfers);
+      .subscribe((response) => {
+        this.pendingTransfers.set(response.items);
       });
 
     this.bankService.bank$.pipe(takeUntilDestroyed()).subscribe((bank) => {

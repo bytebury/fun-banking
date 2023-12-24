@@ -6,6 +6,7 @@ import { AuthService } from '../../../services/auth.service';
 import { Observable } from 'rxjs';
 import { UserService } from '../../../services/user.service';
 import { User, UserRole } from '../../../models/user.model';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-navbar',
@@ -20,9 +21,12 @@ export class NavbarComponent {
 
   readonly userRole = UserRole;
 
+  readonly notifications$ = this.notificationService.notifications$;
+
   constructor(
     private readonly auth: AuthService,
-    private readonly user: UserService
+    private readonly user: UserService,
+    private readonly notificationService: NotificationService
   ) {}
 
   logout(): void {
