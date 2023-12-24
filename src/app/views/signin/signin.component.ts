@@ -27,7 +27,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class SigninComponent {
   signinForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
   });
 
