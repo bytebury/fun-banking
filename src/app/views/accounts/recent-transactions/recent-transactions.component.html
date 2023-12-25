@@ -7,7 +7,7 @@
   </div>
   @for(transfer of completedTransfers(); track transfer.id) {
   <div
-    class="grid grid-cols-2 items-center border border-t-0 border-gray-300 last:rounded-b-lg p-2 hover:bg-slate-100"
+    class="flex justify-between items-center border border-t-0 border-gray-300 last:rounded-b-lg p-2 hover:bg-slate-100"
     [ngClass]="{
       'line-through text-gray-500': transfer.status === 'declined'
     }"
