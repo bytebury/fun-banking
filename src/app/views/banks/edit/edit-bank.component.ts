@@ -12,6 +12,8 @@ import { BannerComponent } from '../../../components/banner/banner.component';
 import { Severity } from '../../../models/severity.enum';
 import { Bank } from '../../../models/bank.model';
 import { Router } from '@angular/router';
+import { EmployeeService } from '../../../services/employee.service';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-edit-bank',
@@ -49,11 +51,18 @@ export class EditBankComponent {
     ]),
   });
 
+  employeeForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+  });
+
   bank = signal<Bank | null>(null);
+
+  employees$ = this.employeeService.employees$;
 
   constructor(
     private readonly bankService: BankService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly employeeService: EmployeeService
   ) {
     this.bankService.bank$.pipe(takeUntilDestroyed()).subscribe((bank) => {
       this.form.get('name')?.setValue(bank?.name ?? '');
@@ -100,5 +109,20 @@ export class EditBankComponent {
         this.router.navigate(['/', 'dashboard']);
       });
     }
+  }
+
+  addEmployee(): void {
+    this.employeeService
+      .create({
+        email: this.employeeForm.get('email')?.value ?? '',
+        bank_id: this.bank()?.id ?? 0,
+      })
+      .pipe(first())
+      .subscribe({
+        next: () => {},
+        error: (error) => {
+          console.error(error.error.message);
+        },
+      });
   }
 }

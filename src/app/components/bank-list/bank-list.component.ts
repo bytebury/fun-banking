@@ -20,7 +20,5 @@ export class BankListComponent {
   constructor(
     private bank: BankService,
     private readonly employeeService: EmployeeService
-  ) {
-    employeeService.loadBanks();
-  }
+  ) {}
 }

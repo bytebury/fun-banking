@@ -46,6 +46,37 @@
       [disabled]="form.invalid"
     />
   </form>
+  <section class="flex flex-col gap-4">
+    <div>
+    <h1 class="text-lg font-extrabold">Add Employees</h1>
+    You can add employees to help you with managing your bank. They'll have all the
+    access that you do, except they will not be able to update or delete bank settings.
+  </div>
+  <ul class="flex gap-4 flex-wrap">
+    <li><img class="w-14 h-14 rounded-full shrink-0" [src]="bank()?.owner?.avatar" /></li>
+    @for (employee of employees$ | async; track employee.id) {
+      <li>
+        <img class="w-14 h-14 rounded-full shrink-0" [src]="employee.user.avatar" />
+      </li>
+    }
+  </ul>
+  <form class="flex flex-col gap-4" [formGroup]="employeeForm" (ngSubmit)="addEmployee()">
+    <div class="form-input">
+      <input
+        id="employee_email"
+        type="email"
+        formControlName="email"
+        required
+        maxlength="255"
+        placeholder="Email of the employee you'd like to add"
+      />
+      <label for="employee_email">Employee Email</label>
+    </div>
+    <div>
+      <input type="submit" value="Add Employee" [disabled]="employeeForm.invalid" />
+    </div>
+  </form>
+  </section>
   <section
     class="flex flex-col gap-4 w-full bg-pink-50 border-dashed border border-pink-500 rounded-lg p-3"
   >

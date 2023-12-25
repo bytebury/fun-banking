@@ -23,6 +23,7 @@ import { AccountsService } from '../../../services/accounts.service';
 import { ShowAccountComponent } from '../../accounts/show/show-account.component';
 import { BannerComponent } from '../../../components/banner/banner.component';
 import { EditBankComponent } from '../edit/edit-bank.component';
+import { EmployeeService } from '../../../services/employee.service';
 
 @Component({
   selector: 'app-bank',
@@ -60,6 +61,7 @@ export class BankComponent implements AfterViewInit {
 
   bank$ = this.bankService.bank$;
   customers$ = this.bankService.customers$;
+  employees$ = this.employeeService.employees$;
   hasCopiedBankUrl = signal(false);
 
   tabs = signal<Tab[]>([]);
@@ -69,7 +71,8 @@ export class BankComponent implements AfterViewInit {
     private readonly route: ActivatedRoute,
     private readonly bankService: BankService,
     private readonly accountService: AccountsService,
-    private readonly customerService: CustomerService
+    private readonly customerService: CustomerService,
+    private readonly employeeService: EmployeeService
   ) {
     this.route.paramMap.pipe(takeUntilDestroyed()).subscribe((params) => {
       this.bankService.setBank(Number(params.get('id')!));
