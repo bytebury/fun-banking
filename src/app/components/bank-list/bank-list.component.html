@@ -22,7 +22,19 @@
       Looks like you don't have or belong to any banks yet.
       <a [routerLink]="['/', 'banks', 'new']">Create one</a> to get started.
     </div>
-    } } @placeholder (minimum 1s) {
+    }
+    @for(employee of partOfBanks$ | async; track employee.bank_id) {
+      <li>
+        <a
+          [routerLink]="['/banks', employee.bank_id]"
+          class="inline-flex items-center gap-2 text-sm"
+        >
+          <img class="profile" [src]="employee.bank.owner.avatar" alt="profile picture" />
+          {{ employee.bank.owner.username }}/{{ employee.bank.slug }}
+        </a>
+      </li>
+    }
+  } @placeholder (minimum 1s) {
     <div class="flex flex-col gap-2">
       <div class="flex gap-2">
         <div class="shimmer w-5 h-5 rounded-full bg-gray-100 shrink-0"></div>
