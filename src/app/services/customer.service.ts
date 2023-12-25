@@ -4,6 +4,8 @@ import { BehaviorSubject, Observable, filter, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Customer } from '../models/customer.model';
 import { BankService } from './bank.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AccountsService } from './accounts.service';
 
 interface CustomerInfo {
   first_name: string;
@@ -23,7 +25,8 @@ export class CustomerService {
 
   constructor(
     private readonly http: HttpClient,
-    private readonly bankService: BankService
+    private readonly bankService: BankService,
+    private readonly accountsService: AccountsService
   ) {}
 
   create(request: CreateCustomerRequest): Observable<Customer> {

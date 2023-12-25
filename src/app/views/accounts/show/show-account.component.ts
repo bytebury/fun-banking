@@ -10,6 +10,7 @@ import { Bank } from '../../../models/bank.model';
 import { RouterModule } from '@angular/router';
 import { RecentTransactionsComponent } from '../recent-transactions/recent-transactions.component';
 import { CustomerService } from '../../../services/customer.service';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-show-account',
@@ -52,12 +53,18 @@ export class ShowAccountComponent {
   approve(transferId: number): void {
     this.moneyTransferService.approve(transferId).subscribe(() => {
       this.bankService.setBank(this.bank()!.id);
+      this.accountsService.account$.pipe(first()).subscribe((account) => {
+        this.accountsService.getAccountInfo(account.id);
+      });
     });
   }
 
   decline(transferId: number): void {
     this.moneyTransferService.decline(transferId).subscribe(() => {
       this.bankService.setBank(this.bank()!.id);
+      this.accountsService.account$.pipe(first()).subscribe((account) => {
+        this.accountsService.getAccountInfo(account.id);
+      });
     });
   }
 }
