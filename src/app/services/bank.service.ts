@@ -73,9 +73,10 @@ export class BankService {
     if (!this.bank.value) {
       return;
     }
+    const bankId = this.bank.value.id;
     this.bank.next(null);
     this.http
-      .get<Bank>(`${environment.apiUrl}/banks/${this.bank.value?.id}`)
+      .get<Bank>(`${environment.apiUrl}/banks/${bankId}`)
       .pipe(
         first(),
         tap((bank) => this.bank.next(bank)),

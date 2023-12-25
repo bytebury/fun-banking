@@ -16,14 +16,16 @@ import { ActivatedRoute } from '@angular/router';
 import { BankAccount } from '../../../models/bank-account.model';
 import { AccountsService } from '../../../services/accounts.service';
 import { MoneyTransferService } from '../../../services/money-transfer.service';
+import { Severity } from '../../../models/severity.enum';
+import { BannerComponent } from '../../../components/banner/banner.component';
 
 @Component({
   selector: 'app-money-transfer-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './money-transfer-form.component.html',
   styleUrl: './money-transfer-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule, ReactiveFormsModule, BannerComponent],
 })
 export class MoneyTransferFormComponent {
   @Input() customerId = 0;
@@ -44,6 +46,12 @@ export class MoneyTransferFormComponent {
   });
 
   account = signal<BankAccount | null>(null);
+
+  message = signal<{
+    message: string;
+    exclamation: string;
+    severity: Severity;
+  } | null>(null);
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
@@ -73,23 +81,59 @@ export class MoneyTransferFormComponent {
 
   deposit(): void {
     if (this.account()?.id) {
-      this.moneyTransferService.depositInto({
-        amount: Number(this.form.get('amount')?.value),
-        description: this.form.get('description')?.value ?? '',
-        account_id: this.account()!.id,
-      });
-      this.form.reset();
+      this.moneyTransferService
+        .depositInto({
+          amount: Number(this.form.get('amount')?.value),
+          description: this.form.get('description')?.value ?? '',
+          account_id: this.account()!.id,
+        })
+        .subscribe({
+          next: () => {
+            this.form.reset();
+            this.message.set({
+              message: 'Successfully submitted the deposit transfer',
+              severity: Severity.Success,
+              exclamation: '✅',
+            });
+          },
+          error: (error) => {
+            this.form.reset();
+            this.message.set({
+              message: error.error.message,
+              severity: Severity.Default,
+              exclamation: '❌',
+            });
+          },
+        });
     }
   }
 
   withdraw(): void {
     if (this.account()?.id) {
-      this.moneyTransferService.withdrawFrom({
-        amount: Number(this.form.get('amount')?.value),
-        description: this.form.get('description')?.value ?? '',
-        account_id: this.account()!.id,
-      });
-      this.form.reset();
+      this.moneyTransferService
+        .withdrawFrom({
+          amount: Number(this.form.get('amount')?.value),
+          description: this.form.get('description')?.value ?? '',
+          account_id: this.account()!.id,
+        })
+        .subscribe({
+          next: () => {
+            this.form.reset();
+            this.message.set({
+              message: 'Successfully submitted the withdraw transfer',
+              severity: Severity.Success,
+              exclamation: '✅',
+            });
+          },
+          error: (error) => {
+            this.form.reset();
+            this.message.set({
+              message: error.error.message,
+              severity: Severity.Default,
+              exclamation: '❌',
+            });
+          },
+        });
     }
   }
 }

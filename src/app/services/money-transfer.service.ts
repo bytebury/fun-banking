@@ -19,29 +19,27 @@ export class MoneyTransferService {
     private readonly bankService: BankService
   ) {}
 
-  withdrawFrom(transferDetails: TransferRequest): void {
+  withdrawFrom(transferDetails: TransferRequest): Observable<void> {
     transferDetails.amount *= -1;
-    this.http
-      .post(`${environment.apiUrl}/money-transfers`, transferDetails)
+    return this.http
+      .post<void>(`${environment.apiUrl}/money-transfers`, transferDetails)
       .pipe(
         first(),
         tap(() => {
           this.bankService.reload();
         })
-      )
-      .subscribe();
+      );
   }
 
-  depositInto(transferDetails: TransferRequest): void {
-    this.http
-      .post(`${environment.apiUrl}/money-transfers`, transferDetails)
+  depositInto(transferDetails: TransferRequest): Observable<void> {
+    return this.http
+      .post<void>(`${environment.apiUrl}/money-transfers`, transferDetails)
       .pipe(
         first(),
         tap(() => {
           this.bankService.reload();
         })
-      )
-      .subscribe();
+      );
   }
 
   approve(transferId: number): Observable<void> {

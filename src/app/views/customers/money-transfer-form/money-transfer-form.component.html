@@ -22,6 +22,9 @@
   </div>
 </section>
 <form [formGroup]="form" class="flex flex-col gap-4">
+  <app-banner class="mt-4" *ngIf="!!message()" [fullWidth]="true" [exclamation]="message()?.exclamation!" [severity]="message()?.severity!">
+    {{message()?.message}}
+  </app-banner>
   <div class="form-input">
     @if (form.controls.amount.errors?.['min'] ||
     form.controls.amount.errors?.['max']) {
