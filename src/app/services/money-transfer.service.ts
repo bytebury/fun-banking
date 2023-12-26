@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable, first, pipe, tap } from 'rxjs';
 import { BankService } from './bank.service';
+import { AccountsService } from './accounts.service';
 
 interface TransferRequest {
   amount: number;
@@ -16,7 +17,8 @@ interface TransferRequest {
 export class MoneyTransferService {
   constructor(
     private readonly http: HttpClient,
-    private readonly bankService: BankService
+    private readonly bankService: BankService,
+    private readonly accountService: AccountsService
   ) {}
 
   withdrawFrom(transferDetails: TransferRequest): Observable<void> {
@@ -27,6 +29,7 @@ export class MoneyTransferService {
         first(),
         tap(() => {
           this.bankService.reload();
+          this.accountService.getAccountInfo(transferDetails.account_id);
         })
       );
   }

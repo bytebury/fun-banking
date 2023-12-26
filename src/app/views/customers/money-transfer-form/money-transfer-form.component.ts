@@ -65,6 +65,7 @@ export class MoneyTransferFormComponent {
 
         if (customerId) {
           accountsService.loadAccountsFor(customerId);
+          this.customerId = customerId;
         }
       });
 
@@ -95,6 +96,7 @@ export class MoneyTransferFormComponent {
               severity: Severity.Success,
               exclamation: '✅',
             });
+            this.accountsService.loadAccountsFor(this.customerId);
           },
           error: (error) => {
             this.form.reset();
@@ -124,6 +126,7 @@ export class MoneyTransferFormComponent {
               severity: Severity.Success,
               exclamation: '✅',
             });
+            this.accountsService.loadAccountsFor(this.customerId);
           },
           error: (error) => {
             this.form.reset();
