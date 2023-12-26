@@ -59,6 +59,8 @@ export class EditBankComponent {
 
   employees$ = this.employeeService.employees$;
 
+  message = signal('');
+
   constructor(
     private readonly bankService: BankService,
     private readonly router: Router,
@@ -119,9 +121,12 @@ export class EditBankComponent {
       })
       .pipe(first())
       .subscribe({
-        next: () => {},
+        next: () => {
+          this.bankService.reload();
+          this.message.set('');
+        },
         error: (error) => {
-          console.error(error.error.message);
+          this.message.set(error.error.message);
         },
       });
   }

@@ -61,6 +61,7 @@
     }
   </ul>
   <form class="flex flex-col gap-4" [formGroup]="employeeForm" (ngSubmit)="addEmployee()">
+    <app-banner *ngIf="message()" [fullWidth]="true" exclamation="❌">{{message()}}</app-banner>
     <div class="form-input">
       <input
         id="employee_email"

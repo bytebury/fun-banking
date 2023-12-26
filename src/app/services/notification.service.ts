@@ -1,6 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, filter, first, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  filter,
+  first,
+  interval,
+  startWith,
+  switchMap,
+} from 'rxjs';
 import { environment } from '../../environments/environment';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Transfer } from '../models/transfer.model';
@@ -20,10 +28,12 @@ export class NotificationService {
       .pipe(
         filter(Boolean),
         takeUntilDestroyed(),
+        switchMap(() => interval(30_000)),
+        startWith(0),
         switchMap(() =>
           this.http
             .get<Transfer[]>(`${environment.apiUrl}/notifications`)
-            .pipe(takeUntilDestroyed())
+            .pipe(first())
         )
       )
       .subscribe((notifications) => {
