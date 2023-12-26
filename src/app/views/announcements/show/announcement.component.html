@@ -1,28 +1,35 @@
 @if (announcement$ | async; as announcement) {
-<article class="flex flex-col gap-2">
-  <header>
-    <h1 class="text-3xl font-extrabold">{{ announcement.title }}</h1>
-    <div class="flex items-center gap-1 my-1">
-      <a
-        class="inline-flex gap-1.5 items-center text-xs"
-        [routerLink]="['/', 'profile', announcement.user.username]"
-      >
-        <img
-          [src]="announcement.user.avatar"
-          alt="profile image"
-          class="rounded-full w-4 h-4"
-        />
-        {{ announcement.user.first_name | titlecase }}
-        {{ announcement.user.last_name | titlecase }}
-      </a>
-      <time class="text-xs text-gray-500">
-        on {{ announcement.created_at | date : "MMMM dd, YYYY 'at' h:mm a" }}
-      </time>
-    </div>
-  </header>
-  <main
-    class="announcement-description"
-    [innerHTML]="announcement.description | markdown"
-  ></main>
-</article>
+<div class="flex flex-col gap-4">
+  <article class="flex flex-col gap-2">
+    <header>
+      <h1 class="text-3xl font-extrabold">{{ announcement.title }}</h1>
+      <div class="flex items-center gap-1 my-1">
+        <a
+          class="inline-flex gap-1.5 items-center text-xs"
+          [routerLink]="['/', 'profile', announcement.user.username]"
+        >
+          <img
+            [src]="announcement.user.avatar"
+            alt="profile image"
+            class="rounded-full w-4 h-4"
+          />
+          {{ announcement.user.first_name | titlecase }}
+          {{ announcement.user.last_name | titlecase }}
+        </a>
+        <time class="text-xs text-gray-500">
+          on {{ announcement.created_at | date : "MMMM dd, YYYY 'at' h:mm a" }}
+        </time>
+      </div>
+    </header>
+    <main
+      class="announcement-description"
+      [innerHTML]="announcement.description | markdown"
+    ></main>
+  </article>
+  <div *ngIf="(currentUser$ | async)?.role === userRole.Admin">
+    <a [routerLink]="['/', 'announcements', announcement.id, 'edit']">
+      Edit Announcement
+    </a>
+  </div>
+</div>
 }

@@ -20,6 +20,7 @@ import { noCustomerGuard } from './guards/no-customer.guard';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { NotificationsComponent } from './views/notifications/notifications.component';
 import { AccountSecurityComponent } from './views/settings/account-security/account-security.component';
+import { EditAnnouncementComponent } from './views/announcements/edit/edit-announcement.component';
 
 export const routes: Routes = [
   {
@@ -183,6 +184,12 @@ export const routes: Routes = [
       {
         path: ':id',
         component: AnnouncementComponent,
+        pathMatch: 'full',
+      },
+      {
+        path: ':id/edit',
+        component: EditAnnouncementComponent,
+        canActivate: [adminGuard],
       },
     ],
   },

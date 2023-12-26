@@ -42,6 +42,18 @@ export class AnnouncementService {
       .pipe(first());
   }
 
+  update(request: { title: string; description: string }): Observable<void> {
+    return this.http
+      .put<void>(
+        `${environment.apiUrl}/announcements/${this.announcement.value?.id}`,
+        request
+      )
+      .pipe(
+        first(),
+        tap(() => this.loadAnnouncement(this.announcement.value?.id ?? 0))
+      );
+  }
+
   get announcements$(): Observable<Announcement[]> {
     return this.announcements.asObservable();
   }

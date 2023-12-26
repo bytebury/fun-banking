@@ -8,6 +8,8 @@ import { AnnouncementService } from '../../../services/announcement.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MarkdownPipe } from '../../../pipes/markdown.pipe';
+import { UserService } from '../../../services/user.service';
+import { UserRole } from '../../../models/user.model';
 
 @Component({
   selector: 'app-announcement',
@@ -19,11 +21,14 @@ import { MarkdownPipe } from '../../../pipes/markdown.pipe';
   imports: [CommonModule, RouterModule, MarkdownPipe],
 })
 export class AnnouncementComponent {
+  readonly userRole = UserRole;
   announcement$ = this.announcementService.announcement$;
+  currentUser$ = this.userService.currentUser$;
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
-    private readonly announcementService: AnnouncementService
+    private readonly announcementService: AnnouncementService,
+    private readonly userService: UserService
   ) {
     this.activatedRoute.paramMap
       .pipe(takeUntilDestroyed())

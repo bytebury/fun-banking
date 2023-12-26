@@ -1,0 +1,7 @@
+<section class="flex flex-col gap-4">
+<h1 class="font-extrabold text-3xl">Edit Announcement</h1>
+<app-edit-announcement-form [announcementId]="announcementId()"></app-edit-announcement-form>
+<div>
+    <a [routerLink]="['/', 'announcements', announcementId()]">Go back to Announcement</a>
+</div>
+</section>

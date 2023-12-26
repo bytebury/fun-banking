@@ -113,3 +113,35 @@ form {
     animation: shimmerAnimation 1s infinite linear;
   }
 }
+
+.announcement-description {
+  h1,
+  h2,
+  h3 {
+    @apply font-extrabold;
+  }
+
+  h1 {
+    @apply text-2xl;
+  }
+
+  h2 {
+    @apply text-xl;
+  }
+
+  h3 {
+    @apply text-lg;
+  }
+
+  p {
+    @apply my-3;
+  }
+
+  ul {
+    @apply list-disc ml-8 pl-0;
+
+    li {
+      @apply pl-0;
+    }
+  }
+}

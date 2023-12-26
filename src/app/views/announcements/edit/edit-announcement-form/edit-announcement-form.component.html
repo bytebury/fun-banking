@@ -1,0 +1,36 @@
+<div class="flex flex-col gap-4">
+<form [formGroup]="form" class="flex flex-col gap-4" (ngSubmit)="updateAnnouncement()">
+    <div class="form-input">
+        <input
+          formControlName="title"
+          id="title"
+          type="text"
+          autocomplete="off"
+          maxlength="255"
+          required
+        />
+        <label for="title">Title</label>
+      </div>
+      <div class="form-input">
+        <textarea
+          id="description"
+          formControlName="description"
+          class="h-48"
+          required
+        >
+        </textarea>
+        <label for="description">Description</label>
+      </div>
+      <div>
+        <input
+          type="submit"
+          value="Update Announcement"
+          [disabled]="form.invalid"
+        />
+      </div>
+</form>
+<section>
+    <h1 class="text-2xl font-extrabold">Preview</h1>
+    <div class="announcement-description" [innerHTML]="preview() | markdown"></div>
+</section>
+</div>
