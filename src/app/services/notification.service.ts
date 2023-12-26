@@ -6,6 +6,7 @@ import {
   filter,
   first,
   interval,
+  of,
   startWith,
   switchMap,
 } from 'rxjs';
@@ -27,14 +28,21 @@ export class NotificationService {
     this.auth.isLoggedIn$
       .pipe(
         filter(Boolean),
-        takeUntilDestroyed(),
-        switchMap(() => interval(30_000)),
-        startWith(0),
-        switchMap(() =>
-          this.http
-            .get<Transfer[]>(`${environment.apiUrl}/notifications`)
-            .pipe(first())
-        )
+        switchMap((isLoggedIn) => {
+          if (isLoggedIn) {
+            return interval(30_000).pipe(
+              startWith(0),
+              switchMap(() =>
+                this.http
+                  .get<Transfer[]>(`${environment.apiUrl}/notifications`)
+                  .pipe(first())
+              )
+            );
+          } else {
+            return of([]);
+          }
+        }),
+        takeUntilDestroyed()
       )
       .subscribe((notifications) => {
         this.notificationsSubject.next(notifications);
