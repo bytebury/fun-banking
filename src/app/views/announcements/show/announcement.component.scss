@@ -16,4 +16,16 @@
   h3 {
     @apply text-lg;
   }
+
+  p {
+    @apply my-1;
+  }
+
+  ul {
+    @apply list-disc ml-8 pl-0;
+
+    li {
+      @apply pl-0;
+    }
+  }
 }
