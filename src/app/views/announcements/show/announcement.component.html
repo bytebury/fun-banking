@@ -22,7 +22,7 @@
   </header>
   <main
     class="announcement-description"
-    [innerHTML]="announcement.description"
+    [innerHTML]="announcement.description | markdown"
   ></main>
 </article>
 }

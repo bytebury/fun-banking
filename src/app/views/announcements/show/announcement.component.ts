@@ -7,15 +7,16 @@ import {
 import { AnnouncementService } from '../../../services/announcement.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MarkdownPipe } from '../../../pipes/markdown.pipe';
 
 @Component({
   selector: 'app-announcement',
   standalone: true,
-  imports: [CommonModule, RouterModule],
   templateUrl: './announcement.component.html',
   styleUrl: './announcement.component.scss',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule, RouterModule, MarkdownPipe],
 })
 export class AnnouncementComponent {
   announcement$ = this.announcementService.announcement$;
