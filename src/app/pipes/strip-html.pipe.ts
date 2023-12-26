@@ -10,6 +10,7 @@ export class StripHtmlPipe implements PipeTransform {
       return '';
     }
     // Use a regular expression to remove HTML tags
-    return value.replace(/<[^>]*>/g, '');
+    value = value.replace(/<[^>]*>/g, '');
+    return value.replace(/\*|\#|\_|\[|\]/g, '');
   }
 }
