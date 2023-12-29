@@ -12,4 +12,8 @@ export class HealthService {
   get health$(): Observable<any> {
     return this.http.get(`${environment.apiUrl}/health`).pipe(first());
   }
+
+  get users$(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/health/users`).pipe(first());
+  }
 }

@@ -4,4 +4,8 @@
 </section>
 <section>
   {{ siteStats$ | async | json }}
+  <canvas baseChart
+          [data]="lineChartData"
+          [type]="lineChartType">
+  </canvas>
 </section>
