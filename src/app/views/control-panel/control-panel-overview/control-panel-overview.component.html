@@ -1,11 +1,41 @@
-<section>
-  <h1 class="text-2xl font-extrabold">Fun Banking Overview</h1>
-  <p>Find out information about the application.</p>
-</section>
-<section>
-  {{ siteStats$ | async | json }}
-  <canvas baseChart
-          [data]="lineChartData"
-          [type]="lineChartType">
-  </canvas>
-</section>
+<div class="flex flex-col gap-4">
+  <section>
+    <h1 class="text-2xl font-extrabold">Fun Banking Overview</h1>
+    <p>Find out information about the application.</p>
+  </section>
+  <section>
+    <div *ngIf="siteStats$ | async as siteStats" class="flex flex-wrap gap-4">
+      <div class="border border-gray-300 rounded-lg p-3 grow">
+        <h1>Users</h1>
+        <div class="text-2xl font-extrabold">
+          {{ siteStats.number_of_users | number }}
+        </div>
+      </div>
+      <div class="border border-gray-300 rounded-lg p-3 grow">
+        <h1>Banks</h1>
+        <div class="text-2xl font-extrabold">
+          {{ siteStats.number_of_banks | number }}
+        </div>
+      </div>
+      <div class="border border-gray-300 rounded-lg p-3 grow">
+        <h1>Customers</h1>
+        <div class="text-2xl font-extrabold">
+          {{ siteStats.number_of_customers | number }}
+        </div>
+      </div>
+      <div class="border border-gray-300 rounded-lg p-3 grow">
+        <h1>Transfers</h1>
+        <div class="text-2xl font-extrabold">
+          {{ siteStats.number_of_transfers | number }}
+        </div>
+      </div>
+    </div>
+    <canvas
+      *ngIf="!isLoading()"
+      baseChart
+      [data]="lineChartData"
+      [type]="lineChartType"
+    >
+    </canvas>
+  </section>
+</div>

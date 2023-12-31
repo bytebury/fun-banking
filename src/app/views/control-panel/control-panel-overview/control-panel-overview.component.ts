@@ -1,8 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  signal,
+} from '@angular/core';
 import { HealthService } from '../../../services/health.service';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-control-panel-overview',
@@ -14,21 +21,25 @@ import { NgChartsModule } from 'ng2-charts';
 })
 export class ControlPanelOverviewComponent {
   siteStats$ = this.healthService.health$;
+  isLoading = signal(true);
 
   public lineChartData!: ChartConfiguration['data'];
   public lineChartType: ChartType = 'line';
 
   constructor(private readonly healthService: HealthService) {
-    this.healthService.users$.subscribe((data) => {
+    this.healthService.users$.pipe(takeUntilDestroyed()).subscribe((data) => {
       this.lineChartData = {
         datasets: [
           {
             data: data.map((item: any) => item.count),
-            label: 'Customer Count',
+            pointRadius: 7,
+            pointHoverRadius: 10,
+            label: 'Number of Users',
           },
         ],
         labels: data.map((item: any) => `Week ${item.week}`),
       };
+      this.isLoading.set(false);
     });
   }
 }
