@@ -3,7 +3,7 @@
     <h1 class="text-2xl font-extrabold">Fun Banking Overview</h1>
     <p>Find out information about the application.</p>
   </section>
-  <section>
+  <section class="flex flex-col gap-4">
     <div *ngIf="siteStats$ | async as siteStats" class="flex flex-wrap gap-4">
       <div class="border border-gray-300 rounded-lg p-3 grow">
         <h1>Users</h1>
@@ -30,12 +30,14 @@
         </div>
       </div>
     </div>
-    <canvas
-      *ngIf="!isLoading()"
-      baseChart
-      [data]="lineChartData"
-      [type]="lineChartType"
-    >
-    </canvas>
+    <div class="border border-gray-300 rounded-lg p-3 grow">
+      <canvas
+        *ngIf="!isLoading()"
+        baseChart
+        [data]="lineChartData"
+        [type]="lineChartType"
+      >
+      </canvas>
+    </div>
   </section>
 </div>
