@@ -30,7 +30,13 @@ export class CustomerService {
   ) {}
 
   create(request: CreateCustomerRequest): Observable<Customer> {
-    return this.http.post<Customer>(`${environment.apiUrl}/customers`, request);
+    return this.http
+      .post<Customer>(`${environment.apiUrl}/customers`, request)
+      .pipe(
+        tap(() => {
+          this.bankService.reload();
+        })
+      );
   }
 
   update(customerId: number, customerInfo: CustomerInfo): Observable<Customer> {

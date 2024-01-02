@@ -70,6 +70,7 @@ export class BankComponent implements AfterViewInit {
 
   tabs = signal<Tab[]>([]);
   currentCustomer = signal<Customer | null>(null);
+  totalBankWorth = 0;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -80,6 +81,17 @@ export class BankComponent implements AfterViewInit {
   ) {
     this.route.paramMap.pipe(takeUntilDestroyed()).subscribe((params) => {
       this.bankService.setBank(Number(params.get('id')!));
+    });
+
+    this.customers$.pipe(takeUntilDestroyed()).subscribe((customers) => {
+      this.totalBankWorth = customers.reduce((previous, current) => {
+        return (
+          previous +
+          current.accounts.reduce((a, b) => {
+            return a + b.balance;
+          }, 0)
+        );
+      }, 0);
     });
   }
 

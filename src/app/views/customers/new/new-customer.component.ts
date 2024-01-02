@@ -7,12 +7,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { CustomerService } from '../../../services/customer.service';
-import { take } from 'rxjs';
+import { first } from 'rxjs';
 import { SecuredLayoutComponent } from '../../../layouts/secured-layout/secured-layout.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Customer } from '../../../models/customer.model';
 import { BannerComponent } from '../../../components/banner/banner.component';
+import { PopoverDirective } from '../../../directives/popover.directive';
 
 @Component({
   selector: 'app-new-customer',
@@ -22,6 +23,7 @@ import { BannerComponent } from '../../../components/banner/banner.component';
     ReactiveFormsModule,
     SecuredLayoutComponent,
     BannerComponent,
+    PopoverDirective,
   ],
   templateUrl: './new-customer.component.html',
   styleUrl: './new-customer.component.scss',
@@ -73,10 +75,11 @@ export class NewCustomerComponent {
           last_name: this.form.get('last_name')?.value,
           pin: this.form.get('pin')?.value,
         })
-        .pipe(take(1))
+        .pipe(first())
         .subscribe({
-          next: (customer: Customer) =>
-            this.router.navigate(['/', 'banks', customer.bank_id]),
+          next: (customer: Customer) => {
+            this.router.navigate(['/', 'banks', customer.bank_id]);
+          },
           error: (error) => {
             this.errorMessage.set(error.error.message);
           },
