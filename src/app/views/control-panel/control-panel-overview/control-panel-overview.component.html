@@ -30,14 +30,11 @@
         </div>
       </div>
     </div>
-    <div class="border border-gray-300 rounded-lg p-3 grow">
-      <canvas
-        *ngIf="!isLoading()"
-        baseChart
-        [data]="lineChartData"
-        [type]="lineChartType"
-      >
-      </canvas>
+    <div
+      *ngIf="!isLoading()"
+      class="border border-gray-300 rounded-lg p-3 grow"
+    >
+      <canvas baseChart [data]="lineChartData" [type]="lineChartType"> </canvas>
     </div>
   </section>
 </div>
