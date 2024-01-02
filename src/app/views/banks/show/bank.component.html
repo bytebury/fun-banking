@@ -89,13 +89,21 @@
     <section class="flex flex-col gap-2">
       <h1>Employees</h1>
       <ul class="flex gap-2 flex-wrap">
-        <li>
-          <img class="rounded-full h-8 w-8 shrink-0" [src]="bank.owner.avatar" alt="profile image" />
+        <li [appPopover]="bank.owner | name" class="capitalize">
+          <img
+            class="rounded-full h-8 w-8 shrink-0"
+            [src]="bank.owner.avatar"
+            alt="profile image"
+          />
         </li>
         @for (employee of employees$ | async; track employee.id) {
-          <li>
-            <img class="rounded-full h-8 w-8 shrink-0" [src]="employee.user.avatar" alt="profile image" />
-          </li>
+        <li [appPopover]="employee.user | name" class="capitalize">
+          <img
+            class="rounded-full h-8 w-8 shrink-0"
+            [src]="employee.user.avatar"
+            alt="profile image"
+          />
+        </li>
         }
       </ul>
     </section>

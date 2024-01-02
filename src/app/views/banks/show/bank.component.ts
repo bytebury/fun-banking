@@ -24,6 +24,8 @@ import { ShowAccountComponent } from '../../accounts/show/show-account.component
 import { BannerComponent } from '../../../components/banner/banner.component';
 import { EditBankComponent } from '../edit/edit-bank.component';
 import { EmployeeService } from '../../../services/employee.service';
+import { PopoverDirective } from '../../../directives/popover.directive';
+import { NamePipe } from '../../../pipes/name.pipe';
 
 @Component({
   selector: 'app-bank',
@@ -44,6 +46,8 @@ import { EmployeeService } from '../../../services/employee.service';
     ShowAccountComponent,
     BannerComponent,
     EditBankComponent,
+    PopoverDirective,
+    NamePipe,
   ],
 })
 export class BankComponent implements AfterViewInit {

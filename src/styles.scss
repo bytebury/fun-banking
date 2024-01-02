@@ -145,3 +145,19 @@ form {
     }
   }
 }
+
+.popover {
+  @apply relative;
+
+  > div {
+    @apply absolute translate-x-1/2 right-1/2 -bottom-8 z-50 h-fit;
+    @apply bg-gray-800 text-white rounded-lg text-sm px-2 py-1 whitespace-nowrap;
+  }
+
+  &.right {
+    > div {
+      @apply absolute -translate-y-1/2 top-1/2 -right-1 translate-x-full z-50 h-fit;
+      @apply bg-gray-800 text-white rounded-lg text-sm px-2 py-1 whitespace-nowrap;
+    }
+  }
+}

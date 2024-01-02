@@ -14,14 +14,22 @@ import { Bank } from '../../../models/bank.model';
 import { Router } from '@angular/router';
 import { EmployeeService } from '../../../services/employee.service';
 import { first } from 'rxjs';
+import { PopoverDirective } from '../../../directives/popover.directive';
+import { NamePipe } from '../../../pipes/name.pipe';
 
 @Component({
   selector: 'app-edit-bank',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, BannerComponent],
   templateUrl: './edit-bank.component.html',
   styleUrl: './edit-bank.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    BannerComponent,
+    PopoverDirective,
+    NamePipe,
+  ],
 })
 export class EditBankComponent {
   readonly LETTERS_NUMBERS_AND_SPACES = /^[A-Za-z0-9]+(?:\s[A-Za-z0-9]+)*$/;
