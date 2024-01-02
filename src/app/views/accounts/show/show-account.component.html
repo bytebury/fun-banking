@@ -30,9 +30,7 @@
   }
   <section class="flex flex-col gap-4">
     <h2 class="text-lg font-extrabold">Insights</h2>
-    <app-banner [fullWidth]="true" severity="info" exclamation="🧠">
-      Coming soon!
-    </app-banner>
+    <app-account-insights></app-account-insights>
   </section>
   @if (pendingTransfers().length > 0) {
   <section class="flex flex-col gap-4">

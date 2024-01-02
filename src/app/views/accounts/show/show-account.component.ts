@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { RecentTransactionsComponent } from '../recent-transactions/recent-transactions.component';
 import { CustomerService } from '../../../services/customer.service';
 import { first } from 'rxjs';
+import { AccountInsightsComponent } from '../account-insights/account-insights.component';
 
 @Component({
   selector: 'app-show-account',
@@ -23,6 +24,7 @@ import { first } from 'rxjs';
     BannerComponent,
     RouterModule,
     RecentTransactionsComponent,
+    AccountInsightsComponent,
   ],
 })
 export class ShowAccountComponent {

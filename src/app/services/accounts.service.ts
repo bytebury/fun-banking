@@ -61,6 +61,19 @@ export class AccountsService {
     );
   }
 
+  get thirtyDaysRollingTransfers$(): Observable<
+    { date: Date; total_balance: number }[]
+  > {
+    return this.account$.pipe(
+      switchMap((account) => {
+        return this.http.get<{ date: Date; total_balance: number }[]>(
+          `${environment.apiUrl}/accounts/${account.id}/insights/transfers`,
+          { params: { 'days-ago': 365 } }
+        );
+      })
+    );
+  }
+
   get completedTransfers$(): Observable<PaginatedResponse<Transfer>> {
     return this.account$.pipe(
       switchMap((account) => {
