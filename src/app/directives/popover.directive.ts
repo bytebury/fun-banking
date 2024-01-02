@@ -22,9 +22,15 @@ export class PopoverDirective {
 
     if (
       this.element.nativeElement.offsetLeft <
-      this.popoverElement.clientWidth / 3
+      this.popoverElement.clientWidth / 2
     ) {
       this.placement = 'right';
+    } else {
+      this.popoverElement.style.top =
+        this.element.nativeElement.clientTop +
+        this.element.nativeElement.clientHeight +
+        6 +
+        'px';
     }
 
     this.element.nativeElement.classList.add(this.placement);
