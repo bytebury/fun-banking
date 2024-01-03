@@ -3,7 +3,8 @@
     <h1 class="text-2xl font-extrabold">Recent Announcements</h1>
     <p>Some announcements that have happened for Fun Banking recently.</p>
   </section>
-  @for (announcement of announcements$ | async; track announcement.id) {
+  @for (announcement of (announcements$ | async)?.items; track announcement.id)
+  {
   <article
     class="flex flex-col gap-4 border-b border-gray-300 last:border-b-0 pb-6"
   >

@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, filter, first, tap } from 'rxjs';
 import { Announcement } from '../models/announcement.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { PaginatedResponse } from '../models/pagination.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,8 @@ export class AnnouncementService {
   private readonly announcement = new BehaviorSubject<Announcement | null>(
     null
   );
-  private readonly announcements = new BehaviorSubject<Announcement[]>([]);
+  private readonly announcements =
+    new BehaviorSubject<PaginatedResponse<Announcement> | null>(null);
 
   constructor(private readonly http: HttpClient) {
     this.loadAnnouncements();
@@ -29,9 +31,17 @@ export class AnnouncementService {
       .subscribe();
   }
 
-  loadAnnouncements(): void {
+  loadAnnouncements(limit = 5, page = 1): void {
     this.http
-      .get<Announcement[]>(`${environment.apiUrl}/announcements`)
+      .get<PaginatedResponse<Announcement>>(
+        `${environment.apiUrl}/announcements`,
+        {
+          params: {
+            limit,
+            page,
+          },
+        }
+      )
       .pipe(first())
       .subscribe((announcements) => this.announcements.next(announcements));
   }
@@ -54,8 +64,8 @@ export class AnnouncementService {
       );
   }
 
-  get announcements$(): Observable<Announcement[]> {
-    return this.announcements.asObservable();
+  get announcements$(): Observable<PaginatedResponse<Announcement> | null> {
+    return this.announcements.asObservable().pipe(filter(Boolean));
   }
 
   get announcement$(): Observable<Announcement> {

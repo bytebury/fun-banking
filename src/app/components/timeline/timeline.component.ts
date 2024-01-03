@@ -17,7 +17,7 @@ export class TimelineComponent {
 
   constructor(private announcementService: AnnouncementService) {
     this.announcementService.announcements$.subscribe((announcements) => {
-      this.announcements.set(announcements);
+      this.announcements.set(announcements?.items ?? []);
     });
   }
 }
