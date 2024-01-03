@@ -68,7 +68,7 @@ export class AccountsService {
       switchMap((account) => {
         return this.http.get<{ date: Date; total_balance: number }[]>(
           `${environment.apiUrl}/accounts/${account.id}/insights/transfers`,
-          { params: { 'days-ago': 365 } }
+          { params: { 'days-ago': 30 } }
         );
       })
     );
