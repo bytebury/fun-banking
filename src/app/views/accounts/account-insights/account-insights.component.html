@@ -1,5 +1,7 @@
 @if (isLoading()) {
 <div>Loading...</div>
+} @else if (hasNoData()) {
+<div>There has been no activity in the last 30 days.</div>
 } @else {
 <div class="rounded-lg border border-gray-300 p-2">
   <canvas baseChart [data]="lineChartData" [type]="lineChartType"> </canvas>

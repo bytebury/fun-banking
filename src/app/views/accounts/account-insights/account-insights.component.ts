@@ -17,6 +17,7 @@ import { CustomerService } from '../../../services/customer.service';
 })
 export class AccountInsightsComponent {
   isLoading = signal(true);
+  hasNoData = signal(false);
 
   lineChartData!: ChartConfiguration['data'];
   lineChartType: ChartType = 'line';
@@ -38,6 +39,11 @@ export class AccountInsightsComponent {
       )
       .subscribe({
         next: (summary) => {
+          if (!summary) {
+            this.isLoading.set(false);
+            this.hasNoData.set(true);
+            return;
+          }
           this.lineChartData = {
             datasets: [
               {
@@ -55,6 +61,7 @@ export class AccountInsightsComponent {
               (day) => `${this.DATE_PIPE.transform(day.date, 'mediumDate')}`
             ),
           };
+          this.hasNoData.set(false);
           this.isLoading.set(false);
         },
         error: (error) => {
