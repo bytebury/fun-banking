@@ -44,10 +44,18 @@
         [customerId]="customer()?.id ?? 0"
       ></app-money-transfer-form>
     </section>
-    <section class="flex flex-col gap-4 card">
-      <h1 class="text-xl font-extrabold">Recent Transactions</h1>
-      <app-recent-transactions></app-recent-transactions>
-    </section>
+    <div class="flex gap-4 flex-wrap">
+      <div class="grow max-w-full">
+        <section class="flex flex-col gap-4 card">
+          <h1 class="text-xl font-extrabold">Account Value Over Time</h1>
+          <app-account-insights></app-account-insights>
+        </section>
+      </div>
+      <section class="flex flex-col gap-4 card grow w-1/2">
+        <h1 class="text-xl font-extrabold">Recent Transactions</h1>
+        <app-recent-transactions></app-recent-transactions>
+      </section>
+    </div>
   </div>
 </main>
 <app-footer></app-footer>

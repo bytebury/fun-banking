@@ -9,6 +9,7 @@ import { ShowAccountComponent } from '../../accounts/show/show-account.component
 import { AccountsService } from '../../../services/accounts.service';
 import { BankAccount } from '../../../models/bank-account.model';
 import { FooterComponent } from '../../../layouts/components/footer/footer.component';
+import { AccountInsightsComponent } from '../../accounts/account-insights/account-insights.component';
 import { RecentTransactionsComponent } from '../../accounts/recent-transactions/recent-transactions.component';
 
 @Component({
@@ -23,6 +24,7 @@ import { RecentTransactionsComponent } from '../../accounts/recent-transactions/
     MoneyTransferFormComponent,
     ShowAccountComponent,
     FooterComponent,
+    AccountInsightsComponent,
     RecentTransactionsComponent,
   ],
 })

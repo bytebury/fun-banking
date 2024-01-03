@@ -28,6 +28,11 @@ export class ControlPanelOverviewComponent {
 
   constructor(private readonly healthService: HealthService) {
     this.healthService.users$.pipe(takeUntilDestroyed()).subscribe((data) => {
+      if (data.at(-1).week === 52) {
+        const olderIndex = data.findIndex((d: any) => d.week > 40);
+        data = data.slice(olderIndex).concat(data.slice(0, olderIndex));
+      }
+
       this.lineChartData = {
         datasets: [
           {
