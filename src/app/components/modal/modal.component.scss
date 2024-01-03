@@ -6,15 +6,18 @@
   @apply relative z-30;
 
   .card {
-    @apply relative w-full transform overflow-y-auto;
-    @apply sm:rounded-lg sm:h-fit bg-white text-left;
-    @apply shadow-xl transition-all sm:my-8 sm:max-w-lg;
-    @apply p-4 max-h-screen h-screen sm:max-h-full;
+    min-height: 100svh;
+    min-height: -webkit-fill-available;
+    overflow-y: auto;
   }
 }
 
 .backdrop {
   @apply fixed inset-0 bg-gray-400 bg-opacity-75 backdrop-blur-sm transition-opacity;
+}
+
+.body {
+  @apply bg-white p-4;
 }
 
 .footer {
