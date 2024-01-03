@@ -7,35 +7,28 @@
   (click)="dismiss($event)"
 >
   <div class="backdrop"></div>
-  <div class="fixed inset-0 z-10 w-full overflow-y-auto">
+  <div class="fixed inset-0 z-10 w-full sm:overflow-y-auto">
     <div class="flex items-start justify-center text-center">
-      <div
-        #modal
-        class="card relative w-full transform overflow-y-auto sm:rounded-lg h-screen sm:h-fit bg-white text-left shadow-xl transition-all sm:my-8 sm:max-w-lg"
-      >
-        <div class="body">
-          <div class="sm:flex sm:items-start">
-            <button (click)="close()" type="button" class="cancel">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fill="currentColor"
-                  d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12z"
-                />
-              </svg>
-            </button>
-            <div class="flex w-full flex-col gap-4 text-left">
-              <h3>
-                <ng-content select="modal-title"></ng-content>
-              </h3>
-              <div class="content">
-                <ng-content></ng-content>
-              </div>
-            </div>
+      <div #modal class="card">
+        <button (click)="close()" type="button" class="cancel">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="currentColor"
+              d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12z"
+            />
+          </svg>
+        </button>
+        <div class="flex w-full flex-col gap-4 text-left">
+          <h3>
+            <ng-content select="modal-title"></ng-content>
+          </h3>
+          <div class="content">
+            <ng-content></ng-content>
           </div>
         </div>
       </div>
