@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Output,
+  EventEmitter,
+  signal,
+} from '@angular/core';
 import { BannerComponent } from '../../../components/banner/banner.component';
 import { AccountsService } from '../../../services/accounts.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -28,6 +34,8 @@ import { AccountInsightsComponent } from '../account-insights/account-insights.c
   ],
 })
 export class ShowAccountComponent {
+  @Output() closeModal = new EventEmitter<void>();
+
   customer$ = this.customerService.customer$;
   account$ = this.accountsService.account$;
   isLoadingAccount$ = this.accountsService.isLoadingAccount$;

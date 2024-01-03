@@ -385,5 +385,5 @@
   ></app-show-customer>
 </app-modal>
 <app-modal #showAccountModal [dismissable]="false">
-  <app-show-account></app-show-account>
+  <app-show-account (closeModal)="showAccountModal.close()"></app-show-account>
 </app-modal>
