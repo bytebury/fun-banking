@@ -1,13 +1,16 @@
 import { MatIcon } from "./components/mat-icon/MatIcon";
+import { Notice } from "./components/notice/Notice";
 
 export default function Home() {
   return (
     <main>
+      <Notice>
+        We are currently in the middle of developing... But wait what if they are very long/ ?
+      </Notice>
       <button className="common filled">
         <MatIcon icon="add" />
         Go Home
       </button>
-      <button className="common filled-tonal">Hello World!</button>
       <button className="common filled-tertiary">Hello World!</button>
       <button className="common filled-error">Hello World!</button>
 

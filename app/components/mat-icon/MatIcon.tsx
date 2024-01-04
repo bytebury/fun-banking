@@ -1,5 +1,7 @@
+export type Icon = "menu" | "home" | "add";
+
 type MatIconParams = {
-  icon: "menu" | "home" | "add";
+  icon: Icon;
 };
 
 export function MatIcon({ icon }: MatIconParams) {

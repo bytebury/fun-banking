@@ -1,0 +1,32 @@
+.snackbar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 16px;
+  width: 100%;
+  padding: 4px 16px;
+
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--tonal);
+    color: var(--body-text);
+    border-radius: 20px;
+    padding: 12px 16px;
+    width: 100%;
+    @apply shadow max-w-xl;
+
+    button {
+      padding: 4px 8px;
+      color: var(--primary-pressed);
+      border-radius: 10px;
+
+      &:hover {
+        background: var(--tonal-hover);
+      }
+    }
+  }
+}

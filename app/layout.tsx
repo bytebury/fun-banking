@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.scss";
 import "./global_icons.css";
 import { TopAppBar } from "./components/top-app-bar/TopAppBar";
+import { Snackbar } from "./components/snackbar/Snackbar";
 
 export const metadata: Metadata = {
   title: "Fun Banking | Your Online Banking Simulator",
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </div>
         <footer>This is a footer!</footer>
+        <Snackbar />
       </body>
     </html>
   );

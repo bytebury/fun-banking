@@ -9,14 +9,14 @@
   --tonal: #bfd1be;
   --tonal-hover: #a7baa6;
   --tonal-pressed: #9eb39d;
-  --tertiary: #83b4bb;
-  --tertiary-hover: #6d9aa0;
-  --tertiary-pressed: #72a0a7;
+  --tertiary: #9dccd2;
+  --tertiary-hover: #86bbc2;
+  --tertiary-pressed: #73a9b0;
   --error: #c7463c;
   --error-hover: #bd4037;
   --error-pressed: #a7362e;
   --primary-text: white;
-  --tonal-text: #222222;
+  --body-text: #222222;
   --neutral: #8f918c45;
   --neutral-varient: #8c938988;
 }
@@ -28,7 +28,7 @@ body {
   padding: 0;
   min-height: 100vh;
   min-height: 100dvh;
-  color: var(--tonal-text);
+  color: var(--body-text);
   background: var(--neutral);
 }
 
@@ -75,7 +75,7 @@ body {
 
   button.common.filled-tonal {
     background: var(--tonal);
-    color: var(--tonal-text);
+    color: var(--body-text);
 
     &:hover {
       background: var(--tonal-hover);
