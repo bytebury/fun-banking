@@ -55,7 +55,7 @@ export class AccountsService {
     return this.account$.pipe(
       switchMap((account) => {
         return this.http.get<PaginatedResponse<Transfer>>(
-          `${environment.apiUrl}/accounts/${account.id}/money-transfers?status=pending`
+          `${environment.apiUrl}/accounts/${account.id}/transactions?status=pending`
         );
       })
     );
@@ -67,7 +67,7 @@ export class AccountsService {
     return this.account$.pipe(
       switchMap((account) => {
         return this.http.get<{ date: Date; total_balance: number }[]>(
-          `${environment.apiUrl}/accounts/${account.id}/insights/transfers`,
+          `${environment.apiUrl}/accounts/${account.id}/insights/transactions`,
           { params: { 'days-ago': 30 } }
         );
       })
@@ -80,7 +80,7 @@ export class AccountsService {
         return this.http.get<PaginatedResponse<Transfer>>(
           `${environment.apiUrl}/accounts/${
             account.id
-          }/money-transfers?status=approved&status=declined&limit=5&page=${this.completedTransferPage()}`
+          }/transactions?status=approved&status=declined&limit=5&page=${this.completedTransferPage()}`
         );
       })
     );

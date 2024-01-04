@@ -24,7 +24,7 @@ export class MoneyTransferService {
   withdrawFrom(transferDetails: TransferRequest): Observable<void> {
     transferDetails.amount *= -1;
     return this.http
-      .post<void>(`${environment.apiUrl}/money-transfers`, transferDetails)
+      .post<void>(`${environment.apiUrl}/transactions`, transferDetails)
       .pipe(
         first(),
         tap(() => {
@@ -36,7 +36,7 @@ export class MoneyTransferService {
 
   depositInto(transferDetails: TransferRequest): Observable<void> {
     return this.http
-      .post<void>(`${environment.apiUrl}/money-transfers`, transferDetails)
+      .post<void>(`${environment.apiUrl}/transactions`, transferDetails)
       .pipe(
         first(),
         tap(() => {
@@ -47,14 +47,14 @@ export class MoneyTransferService {
 
   approve(transferId: number): Observable<void> {
     return this.http.put<void>(
-      `${environment.apiUrl}/money-transfers/${transferId}/approve`,
+      `${environment.apiUrl}/transactions/${transferId}/approve`,
       {}
     );
   }
 
   decline(transferId: number): Observable<void> {
     return this.http.put<void>(
-      `${environment.apiUrl}/money-transfers/${transferId}/decline`,
+      `${environment.apiUrl}/transactions/${transferId}/decline`,
       {}
     );
   }
