@@ -1,0 +1,21 @@
+.top-bar-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 16px;
+  height: 64px;
+  gap: 24px;
+}
+
+.headline {
+  @apply font-extrabold;
+  @apply text-xl;
+  text-align: center;
+  width: 100%;
+}
+
+.trailing-icon,
+.leading-icon {
+  width: 40px;
+  height: 40px;
+}

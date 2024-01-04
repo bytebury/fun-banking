@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "./globals.scss";
+import "./global_icons.css";
+import { TopAppBar } from "./components/top-app-bar/TopAppBar";
 
 export const metadata: Metadata = {
   title: "Fun Banking | Your Online Banking Simulator",
@@ -11,7 +13,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <div>{children}</div>
+        <div>
+          <nav>
+            <TopAppBar />
+          </nav>
+          {children}
+        </div>
         <footer>This is a footer!</footer>
       </body>
     </html>

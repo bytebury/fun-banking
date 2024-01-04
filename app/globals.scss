@@ -1,0 +1,165 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #1d692f;
+  --primary-hover: #176028;
+  --primary-pressed: #135523;
+  --tonal: #bfd1be;
+  --tonal-hover: #a7baa6;
+  --tonal-pressed: #9eb39d;
+  --tertiary: #83b4bb;
+  --tertiary-hover: #6d9aa0;
+  --tertiary-pressed: #72a0a7;
+  --error: #c7463c;
+  --error-hover: #bd4037;
+  --error-pressed: #a7362e;
+  --primary-text: white;
+  --tonal-text: #222222;
+  --neutral: #8f918c45;
+  --neutral-varient: #8c938988;
+}
+
+body {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  color: var(--tonal-text);
+  background: var(--neutral);
+}
+
+@layer components {
+  button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    @apply transition-colors duration-300 ease-linear;
+  }
+
+  button.common {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    height: 40px;
+    border-radius: 20px;
+    padding: 0 16px;
+
+    &:has(i) {
+      padding-right: 24px;
+    }
+
+    i {
+      font-size: 20px;
+    }
+  }
+
+  button.common.filled {
+    background: var(--primary);
+    color: var(--primary-text);
+
+    &:hover {
+      background: var(--primary-hover);
+    }
+
+    &:active,
+    &:focus {
+      background: var(--primary-pressed);
+    }
+  }
+
+  button.common.filled-tonal {
+    background: var(--tonal);
+    color: var(--tonal-text);
+
+    &:hover {
+      background: var(--tonal-hover);
+    }
+
+    &:active,
+    &:focus {
+      background: var(--tonal-pressed);
+    }
+  }
+
+  button.common.filled-tertiary {
+    background: var(--tertiary);
+    color: var(--tertiary-text);
+
+    &:hover {
+      background: var(--tertiary-hover);
+    }
+
+    &:active,
+    &:focus {
+      background: var(--tertiary-pressed);
+    }
+  }
+
+  button.common.filled-error {
+    background: var(--error);
+    color: var(--primary-text);
+
+    &:hover {
+      background: var(--error-hover);
+    }
+
+    &:active,
+    &:focus {
+      background: var(--error-pressed);
+    }
+  }
+
+  button.common.outlined {
+    color: var(--primary);
+    border: 1px solid var(--primary);
+
+    &:hover {
+      background: var(--tonal);
+    }
+
+    &:active,
+    &:focus {
+      background: var(--tonal-pressed);
+    }
+  }
+
+  button.icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+
+    &:hover {
+      background: var(--neutral);
+    }
+
+    &:active,
+    &:focus {
+      background: var(--neutral-varient);
+    }
+  }
+
+  button.icon.filled {
+    background: var(--primary);
+    color: var(--primary-text);
+
+    i {
+      width: 24px;
+      height: 24px;
+    }
+
+    &:hover {
+      background: var(--primary-hover);
+    }
+
+    &:focus,
+    &:active {
+      background: var(--primary-pressed);
+    }
+  }
+}
