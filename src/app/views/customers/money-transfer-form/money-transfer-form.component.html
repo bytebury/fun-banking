@@ -22,14 +22,20 @@
   </div>
 </section>
 <form [formGroup]="form" class="flex flex-col gap-4">
-  <app-banner class="mt-4" *ngIf="!!message()" [fullWidth]="true" [exclamation]="message()?.exclamation!" [severity]="message()?.severity!">
-    {{message()?.message}}
+  <app-banner
+    class="mt-4"
+    *ngIf="!!message()"
+    [fullWidth]="true"
+    [exclamation]="message()?.exclamation!"
+    [severity]="message()?.severity!"
+  >
+    {{ message()?.message }}
   </app-banner>
   <div class="form-input">
     @if (form.controls.amount.errors?.['min'] ||
     form.controls.amount.errors?.['max']) {
     <div class="error-message">
-      Amount must greater than $0 and less than $25,000,000.
+      Amount must greater than $0 and less than $250,000,000.
     </div>
     }
     <input

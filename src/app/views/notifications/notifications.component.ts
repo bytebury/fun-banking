@@ -3,9 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FooterComponent } from '../../layouts/components/footer/footer.component';
 import { NavbarComponent } from '../../layouts/components/navbar/navbar.component';
 import { NotificationService } from '../../services/notification.service';
-import { Observable } from 'rxjs';
 import { MoneyTransferService } from '../../services/money-transfer.service';
-import { BankService } from '../../services/bank.service';
 
 @Component({
   selector: 'app-notifications',
