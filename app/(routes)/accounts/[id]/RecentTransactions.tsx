@@ -16,20 +16,21 @@ type RecentTransactionsProps = {
 export function RecentTransactions({ account }: RecentTransactionsProps) {
   const dispatch = useAppDispatch();
   const { data: transactions, status } = useAppSelector(selectCompletedTransactions);
-  const [page, setPage] = useState(1);
+  const [pageNumber, setPageNumber] = useState(1);
+  const itemsPerPage = 8;
 
   useEffect(() => {
     if (account) {
-      dispatch(fetchCompletedTransactions({ account, page, limit: 8 }));
+      dispatch(fetchCompletedTransactions({ account, pageNumber, itemsPerPage }));
     }
-  }, [dispatch, account, page]);
+  }, [dispatch, account, pageNumber]);
 
   function goToNextPage(): void {
-    setPage((page) => (page += 1));
+    setPageNumber((pageNumber) => (pageNumber += 1));
   }
 
   function goToPreviousPage(): void {
-    setPage((page) => (page -= 1));
+    setPageNumber((pageNumber) => (pageNumber -= 1));
   }
 
   if (!transactions.items || status === ThunkStatus.Loading) {
@@ -93,13 +94,13 @@ export function RecentTransactions({ account }: RecentTransactionsProps) {
           })}
       </div>
       <div className="flex justify-between">
-        <button onClick={goToPreviousPage} className="common outlined" disabled={page === 1}>
+        <button onClick={goToPreviousPage} className="common outlined" disabled={pageNumber === 1}>
           Previous
         </button>
         <button
           onClick={goToNextPage}
           className="common outlined"
-          disabled={page * 10 >= transactions.paging_info.total_items}
+          disabled={pageNumber * itemsPerPage >= transactions.total_items}
         >
           Next
         </button>

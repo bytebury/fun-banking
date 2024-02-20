@@ -7,7 +7,7 @@ import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { useAuth } from "@/app/guards/AuthContext";
 import { AMOUNT_TOO_LARGE, hasErrors } from "@/app/utils/form-validators";
 import { formatCurrency } from "@/app/utils/formatters";
-import { POST } from "@/app/utils/http-client";
+import { POST, PUT } from "@/app/utils/http-client";
 import { fetchAccount } from "@/lib/features/accounts/accountsSlice";
 import {
   fetchCustomer,
@@ -99,7 +99,7 @@ export function TransferMoneyDialog() {
     };
 
     try {
-      const response = await POST("/transactions", payload);
+      const response = await PUT("/transactions", payload);
 
       if (response.ok) {
         closeTransferMoneyDialog();

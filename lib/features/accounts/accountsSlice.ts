@@ -53,9 +53,9 @@ export const fetchAccount = createAsyncThunk("accounts/find", async (id: string 
 
 export const fetchCompletedTransactions = createAsyncThunk(
   "transactions/completed",
-  async (payload: { account: any; limit?: number; page?: number }) => {
+  async (payload: { account: any; itemsPerPage?: number; pageNumber?: number }) => {
     const response = await GET(
-      `/accounts/${payload.account.id}/transactions?status=approved&status=declined&limit=${payload.limit}&page=${payload.page}`
+      `/accounts/${payload.account.id}/transactions?status=approved&status=declined&itemsPerPage=${payload.itemsPerPage}&pageNumber=${payload.pageNumber}`
     );
     return response.json();
   }
