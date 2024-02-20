@@ -13,11 +13,11 @@ export default function SignInForm() {
   const { showSnackbar } = useSnackbar();
 
   const [formData, setFormData] = useState({
-    email: "",
+    username_or_email: "",
     password: "",
   });
   const formNameLabelMap = {
-    email: "E-mail or Username",
+    username_or_email: "E-mail or Username",
     password: "Password",
   };
   const [isDisabled, setIsDisabled] = useState(false);
@@ -36,7 +36,7 @@ export default function SignInForm() {
     setIsDisabled(true);
 
     try {
-      const response = await POST(`/login`, formData);
+      const response = await POST(`/sessions/users`, formData);
 
       if (response.ok) {
         const { user, token } = await response.json();
@@ -57,12 +57,12 @@ export default function SignInForm() {
     <form onSubmit={signUserIn} className="flex flex-col gap-2 my-4">
       <div className="flex">
         <div className="form-field">
-          <label htmlFor="email">{formNameLabelMap.email}</label>
+          <label htmlFor="email">{formNameLabelMap.username_or_email}</label>
           <input
-            id="email"
+            id="username_or_email"
             type="text"
-            name="email"
-            placeholder={formNameLabelMap.email}
+            name="username_or_email"
+            placeholder={formNameLabelMap.username_or_email}
             inputMode="email"
             onChange={handleChange}
             autoFocus

@@ -4,7 +4,7 @@ import { Dialog } from "@/app/components/dialog/Dialog";
 import { MatIcon } from "@/app/components/icons/MatIcon";
 import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { INVALID_BANK_NAME_MESSAGE, hasErrors, isValidBankName } from "@/app/utils/form-validators";
-import { POST } from "@/app/utils/http-client";
+import { POST, PUT } from "@/app/utils/http-client";
 import { fetchBanks } from "@/lib/features/banks/banksSlice";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch } from "@/lib/hooks";
@@ -65,7 +65,7 @@ export function CreateBankDialog() {
         // TODO: Move this logic to the backend..
         slug: formData.name.trim().toLowerCase().replaceAll(/\s+/g, "-"),
       };
-      const response = await POST("/banks", payload);
+      const response = await PUT("/banks", payload);
 
       if (response.ok) {
         const { id } = await response.json();

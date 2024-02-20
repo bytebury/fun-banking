@@ -20,6 +20,16 @@ export async function PUT(url: string, payload: unknown): Promise<Response> {
   });
 }
 
+export async function PATCH(url: string, payload: unknown): Promise<Response> {
+  const token = localStorage.getItem("auth_token") ?? sessionStorage.getItem("auth_token");
+  const headers = { Authorization: token ?? "" };
+  return fetch(`${AppConstants.BACKEND_URL}${url}`, {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+    headers,
+  });
+}
+
 export async function DELETE(url: string): Promise<Response> {
   const token = localStorage.getItem("auth_token") ?? sessionStorage.getItem("auth_token");
   const headers = { Authorization: token ?? "" };

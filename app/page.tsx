@@ -9,7 +9,7 @@ import { NoCustomerGuard } from "./guards/NoCustomerGuard";
 import Image from "next/image";
 
 async function getAppInfo() {
-  const response = await fetch(`${AppConstants.BACKEND_URL}/health`, { method: "GET" });
+  const response = await fetch(`${AppConstants.BACKEND_URL}/metrics`, { method: "GET" });
   return response.json();
 }
 
@@ -117,7 +117,9 @@ export default async function Home() {
                 <span className="font-bold">Banks</span>
               </div>
               <div className="flex flex-col items-center grow">
-                <p className="text-3xl font-extrabold">{formatKs(appInfo.number_of_transfers)}</p>
+                <p className="text-3xl font-extrabold">
+                  {formatKs(appInfo.number_of_transactions)}
+                </p>
                 <span className="font-bold">Transactions</span>
               </div>
             </div>

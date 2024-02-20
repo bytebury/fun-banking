@@ -2,7 +2,7 @@
 
 import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { INVALID_BANK_NAME_MESSAGE, hasErrors, isValidBankName } from "@/app/utils/form-validators";
-import { PUT } from "@/app/utils/http-client";
+import { PATCH } from "@/app/utils/http-client";
 import { fetchBank, fetchBanks } from "@/lib/features/banks/banksSlice";
 import { useAppDispatch } from "@/lib/hooks";
 import { useState } from "react";
@@ -66,7 +66,7 @@ export function UpdateBankForm({ bank }: UpdateBankFormProps) {
         // TODO: Move this logic to the backend..
         slug: formData.name.trim().toLowerCase().replaceAll(/\s+/g, "-"),
       };
-      const response = await PUT(`/banks/${bank.id}`, payload);
+      const response = await PATCH(`/banks/${bank.id}`, payload);
 
       if (response.ok) {
         showSnackbar("Successfully updated your bank information");

@@ -8,7 +8,7 @@ import {
   isValidName,
   isValidPin,
 } from "@/app/utils/form-validators";
-import { POST } from "@/app/utils/http-client";
+import { POST, PUT } from "@/app/utils/http-client";
 import { selectCurrentBank } from "@/lib/features/banks/banksSlice";
 import { fetchCustomers } from "@/lib/features/customers/customerSlice";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
@@ -78,7 +78,7 @@ export function AddCustomerDialog() {
         last_name: formData.lastName,
         pin: formData.pin,
       };
-      const response = await POST("/customers", payload);
+      const response = await PUT("/customers", payload);
 
       if (response.ok) {
         closeDialog();

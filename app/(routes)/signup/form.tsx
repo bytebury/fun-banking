@@ -1,8 +1,6 @@
 "use client";
 
-import { Card } from "@/app/components/card/Card";
 import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
-import { AppConstants } from "@/app/constants/app-constants";
 import { ErrorMessages } from "@/app/constants/error-messages";
 import {
   INVALID_EMAIL_MESSAGE,
@@ -16,7 +14,7 @@ import {
   isValidPassword,
   isValidUsername,
 } from "@/app/utils/form-validators";
-import { POST } from "@/app/utils/http-client";
+import { POST, PUT } from "@/app/utils/http-client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
@@ -63,7 +61,7 @@ export default function SignUpForm() {
     }
 
     try {
-      const response = await POST(`/users`, {
+      const response = await PUT(`/users`, {
         username: formData.username,
         first_name: formData.firstName,
         last_name: formData.lastName,
