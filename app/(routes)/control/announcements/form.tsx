@@ -56,7 +56,7 @@ export function NewAnnouncementForm({
     const payload = formData;
 
     try {
-      const response = await POST(`/announcements`, payload);
+      const response = await PUT(`/announcements`, payload);
 
       if (response.ok) {
         const announcement = await response.json();
