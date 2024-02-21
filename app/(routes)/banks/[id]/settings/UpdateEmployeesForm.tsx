@@ -1,7 +1,7 @@
 "use client";
 
 import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
-import { POST } from "@/app/utils/http-client";
+import { POST, PUT } from "@/app/utils/http-client";
 import { fetchEmployees } from "@/lib/features/banks/banksSlice";
 import { useAppDispatch } from "@/lib/hooks";
 import { useState } from "react";
@@ -33,7 +33,7 @@ export function UpdateEmployeesForm({ bank }: UpdateEmployeesFormProps) {
 
     try {
       const payload = { bank_id: bank.id, email: formData.email };
-      const response = await POST(`/employees`, payload);
+      const response = await PUT(`/employees`, payload);
 
       if (response.ok) {
         dispatch(fetchEmployees(bank.id));
