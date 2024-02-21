@@ -5,10 +5,9 @@ import { NonAuthenticatedGuard } from "@/app/guards/NonAuthGuard";
 import { CustomerSignInForm } from "./form";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { GET } from "@/app/utils/http-client";
+import { POST } from "@/app/utils/http-client";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { banksAction, selectCurrentBank } from "@/lib/features/banks/banksSlice";
-import { CustomerGuard } from "@/app/guards/CustomerGuard";
 import { NoCustomerGuard } from "@/app/guards/NoCustomerGuard";
 
 export default function BankSignInPage() {
@@ -24,7 +23,7 @@ export default function BankSignInPage() {
 
     const fetchBank = async () => {
       try {
-        const response = await GET(`/${username}/${slug}`);
+        const response = await POST(`/banks`, { username, slug });
 
         if (response.ok) {
           const bank = await response.json();

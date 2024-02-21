@@ -16,7 +16,7 @@ export function CustomerSignInForm({ bankId }: { bankId: string | number }) {
     event.preventDefault();
 
     try {
-      const response = await POST(`/customers/signin`, {
+      const response = await POST(`/sessions/customers`, {
         bank_id: bankId.toString(),
         pin: formData.pin,
       });
