@@ -7,7 +7,7 @@ import {
   isValidName,
   isValidPin,
 } from "@/app/utils/form-validators";
-import { PUT } from "@/app/utils/http-client";
+import { PATCH, PUT } from "@/app/utils/http-client";
 import { selectCurrentBank } from "@/lib/features/banks/banksSlice";
 import {
   customerAction,
@@ -82,7 +82,7 @@ export function UpdateCustomerDialog() {
     };
 
     try {
-      const response = await PUT(`/customers/${customer?.id}`, payload);
+      const response = await PATCH(`/customers/${customer?.id}`, payload);
 
       if (response.ok) {
         closeDialog();

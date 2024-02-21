@@ -9,7 +9,7 @@ import {
   isValidName,
   isValidUsername,
 } from "@/app/utils/form-validators";
-import { PUT } from "@/app/utils/http-client";
+import { PATCH, PUT } from "@/app/utils/http-client";
 import { fetchCurrentUser, selectCurrentUser } from "@/lib/features/users/usersSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useEffect, useState } from "react";
@@ -121,7 +121,7 @@ export default function ProfileSettingsPage() {
     };
 
     try {
-      const response = await PUT(`/users/${currentUser.id}`, payload);
+      const response = await PATCH(`/users/${currentUser.id}`, payload);
 
       if (response.ok) {
         dispatch(fetchCurrentUser());
