@@ -61,11 +61,8 @@ export function RecentTransactions({ account }: RecentTransactionsProps) {
                 <div className="flex flex-col">
                   <div className={`text-gray-500 text-xs`}>
                     <span className="capitalize">{transaction.status}</span> by{" "}
-                    <Link
-                      href={`/profile/${transaction.updated_by.username}`}
-                      className="capitalize"
-                    >
-                      {transaction.updated_by.first_name} {transaction.updated_by.last_name}
+                    <Link href={`/profile/${transaction.user.username}`} className="capitalize">
+                      {transaction.user.first_name} {transaction.user.last_name}
                     </Link>
                   </div>
                   <p>{transaction.description}</p>
