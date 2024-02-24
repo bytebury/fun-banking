@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { PreviewAnnouncement } from "./PreviewAnnouncement";
-import { POST, PUT } from "@/app/utils/http-client";
+import { PATCH, POST, PUT } from "@/app/utils/http-client";
 import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { useRouter } from "next/navigation";
 
@@ -32,7 +32,7 @@ export function NewAnnouncementForm({
     const payload = { ...formData, id };
 
     try {
-      const response = await PUT(`/announcements/${id}`, payload);
+      const response = await PATCH(`/announcements/${id}`, payload);
 
       if (response.ok) {
         showSnackbar("Successfully updated your announcement");

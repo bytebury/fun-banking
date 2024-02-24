@@ -4,7 +4,7 @@ import { Card } from "@/app/components/card/Card";
 import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { AuthenticatedGuard } from "@/app/guards/AuthGuard";
 import { formatCurrency, formatDate } from "@/app/utils/formatters";
-import { PUT } from "@/app/utils/http-client";
+import { PATCH, PUT } from "@/app/utils/http-client";
 import {
   fetchApprovals,
   selectPendingApprovals,
@@ -20,7 +20,7 @@ export default function ApprovalsPage() {
 
   async function approve(transaction: any): Promise<void> {
     try {
-      const response = await PUT(`/transactions/${transaction.id}/approve`, {});
+      const response = await PATCH(`/transactions/${transaction.id}/approve`, {});
 
       if (response.ok) {
         showSnackbar(`Approved transaction for ${transaction.description}`);
@@ -36,7 +36,7 @@ export default function ApprovalsPage() {
 
   async function decline(transaction: any): Promise<void> {
     try {
-      const response = await PUT(`/transactions/${transaction.id}/decline`, {});
+      const response = await PATCH(`/transactions/${transaction.id}/decline`, {});
 
       if (response.ok) {
         showSnackbar(`Declined transaction for ${transaction.description}`);
