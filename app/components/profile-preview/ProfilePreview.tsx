@@ -1,4 +1,3 @@
-import { AppConstants } from "@/app/constants/app-constants";
 import Link from "next/link";
 
 type ProfilePreviewProps = {
@@ -8,7 +7,7 @@ type ProfilePreviewProps = {
 
 export function ProfilePreview({ className, user }: ProfilePreviewProps) {
   return (
-    <Link href={`${AppConstants.APP_URL}/profile/${user.username}`}>
+    <Link href={`/profile/${user.username}`}>
       {/*eslint-disable-next-line @next/next/no-img-element*/}
       <img
         className={`${className} rounded-full`}
