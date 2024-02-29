@@ -44,6 +44,7 @@ export type Icon =
   | "warning-outline"
   | "terminal"
   | "analytics-outline"
+  | "manage-accounts-outline"
   | "share-windows";
 
 type MatIconParams = {

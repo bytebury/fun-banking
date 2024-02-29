@@ -114,6 +114,18 @@ export function SignedInNavigation({ closeDrawer }: SignedInNavigationProps) {
                 </li>
                 <li>
                   <Link
+                    href={`/control/users`}
+                    className={`${pathname === "/control/users" ? "active" : ""}`}
+                    onClick={closeDrawer}
+                  >
+                    <div>
+                      <MatIcon icon="manage-accounts-outline" />
+                      Manage Users
+                    </div>
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     href={`/control/announcements`}
                     className={`${pathname.includes("/control/announcements") ? "active" : ""}`}
                     onClick={closeDrawer}
