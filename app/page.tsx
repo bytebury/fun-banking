@@ -23,10 +23,10 @@ export default async function Home() {
           <section className="pb-8">
             <div className="flex flex-col gap-8 container items-center">
               <div className="w-fit max-w-2xl">
-                <Notice>
+                <Notice icon="warning-outline">
                   <span className="text-sm">
-                    Fun Banking got some upgrades over the break! It&apos;s the same application,
-                    with a new look.
+                    Fun Banking is an online simulator. Do not enter real banking information into
+                    our website.
                   </span>
                 </Notice>
               </div>

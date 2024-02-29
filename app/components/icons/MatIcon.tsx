@@ -41,6 +41,7 @@ export type Icon =
   | "password"
   | "arrow-back"
   | "brand-awareness-outline"
+  | "warning-outline"
   | "terminal"
   | "analytics-outline"
   | "share-windows";
