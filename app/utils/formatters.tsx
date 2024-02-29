@@ -42,7 +42,7 @@ export const formatNumber = (value: string | number): string => {
   if (typeof value === "string") {
     value = parseInt(value, 10);
   }
-  return value.toLocaleString();
+  return value?.toLocaleString() ?? 0;
 };
 
 export const formatKs = (value: string | number): string => {

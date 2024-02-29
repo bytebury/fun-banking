@@ -16,7 +16,7 @@ export default function ControlPage() {
 
   useEffect(() => {
     const fetchAppInfo = async () => {
-      const response = await fetch(`${AppConstants.BACKEND_URL}/health`, { method: "GET" });
+      const response = await fetch(`${AppConstants.BACKEND_URL}/metrics`, { method: "GET" });
       const data = await response.json();
 
       setAppInfo(data);
@@ -26,7 +26,7 @@ export default function ControlPage() {
 
   useEffect(() => {
     const fetchUsersByWeek = async () => {
-      const response = await GET(`/health/users`);
+      const response = await GET(`/metrics/users`);
       const data = await response.json();
 
       const older = data.filter((d: any) => d.week > 40);
@@ -60,7 +60,7 @@ export default function ControlPage() {
 
   useEffect(() => {
     const fetchVisitors = async () => {
-      const response = await GET(`/health/visitors`);
+      const response = await GET(`/metrics/visitors`);
       const data = await response.json();
 
       setVisitorsByDay({
@@ -119,7 +119,7 @@ export default function ControlPage() {
           <Card type="outlined" className="flex flex-col grow">
             <span>Transactions</span>
             <div className="text-2xl font-extrabold">
-              {formatNumber(appInfo.number_of_transfers)}
+              {formatNumber(appInfo.number_of_transactions)}
             </div>
           </Card>
         </div>
