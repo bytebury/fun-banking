@@ -1,17 +1,9 @@
 "use client";
 
-import { AppConstants } from "@/app/constants/app-constants";
 import { NewAnnouncementForm } from "../../form";
 import { useEffect, useState } from "react";
 import { GET } from "@/app/utils/http-client";
 import { useParams } from "next/navigation";
-
-async function getAnnouncement(id: string) {
-  const response = await fetch(`${AppConstants.BACKEND_URL}/announcements/${id}`, {
-    method: "GET",
-  });
-  return response.json();
-}
 
 export default function EditAnnouncementPage() {
   const { id } = useParams();
