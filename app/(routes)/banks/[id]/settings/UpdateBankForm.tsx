@@ -63,8 +63,6 @@ export function UpdateBankForm({ bank }: UpdateBankFormProps) {
       const payload = {
         name: formData.name,
         description: formData.description,
-        // TODO: Move this logic to the backend..
-        slug: formData.name.trim().toLowerCase().replaceAll(/\s+/g, "-"),
       };
       const response = await PATCH(`/banks/${bank.id}`, payload);
 

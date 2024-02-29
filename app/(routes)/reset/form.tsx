@@ -45,7 +45,7 @@ export default function ResetPasswordForm() {
     try {
       const request = {
         password: formData.password,
-        confirmation: formData.passwordConfirmation,
+        password_confirmation: formData.passwordConfirmation,
         token,
       };
       const response = await POST(`/passwords/reset`, request);
