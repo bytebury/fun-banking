@@ -10,6 +10,7 @@ import { selectCustomer } from "@/lib/features/customers/customerSlice";
 import { TransactionBreakdownChart } from "./TransactionBreakdownChart";
 import { MatIcon } from "@/app/components/icons/MatIcon";
 import { useAuth } from "@/app/guards/AuthContext";
+import { EditAccountNameDialog } from "./EditNameDialog";
 
 type AccountDashboardProps = { account: any };
 
@@ -21,6 +22,10 @@ export function AccountDashboard({ account }: AccountDashboardProps) {
 
   function openTransferMoneyDialog(): void {
     dispatch(dialogsAction.openTransferMoney());
+  }
+
+  function openEditDialog(): void {
+    dispatch(dialogsAction.openEditAccount());
   }
 
   if (!customer || !account) {
@@ -36,10 +41,10 @@ export function AccountDashboard({ account }: AccountDashboardProps) {
               <span className="capitalize">
                 {customer.first_name} {customer.last_name}
               </span>{" "}
-              &mdash; {account.name}{" "}
+              &mdash; <span className="capitalize">{account.name}</span>
             </div>
             {isLoggedIn && (
-              <button className="icon ghost">
+              <button onClick={openEditDialog} className="icon ghost">
                 <MatIcon icon="edit-outline" />
               </button>
             )}
@@ -61,6 +66,7 @@ export function AccountDashboard({ account }: AccountDashboardProps) {
       </Card>
       <RecentTransactions account={account} />
       {dialogs.transferMoney && <TransferMoneyDialog />}
+      {dialogs.editAccount && <EditAccountNameDialog />}
     </div>
   );
 }

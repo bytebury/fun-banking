@@ -10,6 +10,7 @@ const dialogsSlice = createSlice({
     deleteBank: false,
     viewCustomer: false,
     transferMoney: false,
+    editAccount: false,
   },
   reducers: {
     openCreateBankDialog(state) {
@@ -95,6 +96,12 @@ const dialogsSlice = createSlice({
         ...state,
         viewCustomer: false,
       };
+    },
+    openEditAccount(state) {
+      return { ...state, editAccount: true };
+    },
+    closeEditAccount(state) {
+      return { ...state, editAccount: false };
     },
   },
 });
