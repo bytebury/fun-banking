@@ -18,7 +18,7 @@ export function CustomerDashboard() {
     });
   }, [customer]);
 
-  if (customer && customer.accounts.length === 2) {
+  if (customer && customer.accounts.length === 1) {
     return <AccountDashboard account={customer.accounts[0]} />;
   }
 
