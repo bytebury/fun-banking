@@ -8,6 +8,8 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { selectCustomer } from "@/lib/features/customers/customerSlice";
 import { TransactionBreakdownChart } from "./TransactionBreakdownChart";
+import { MatIcon } from "@/app/components/icons/MatIcon";
+import { useAuth } from "@/app/guards/AuthContext";
 
 type AccountDashboardProps = { account: any };
 
@@ -15,6 +17,7 @@ export function AccountDashboard({ account }: AccountDashboardProps) {
   const dispatch = useAppDispatch();
   const customer = useAppSelector(selectCustomer);
   const dialogs = useAppSelector((state) => state.dialogs);
+  const { isLoggedIn } = useAuth();
 
   function openTransferMoneyDialog(): void {
     dispatch(dialogsAction.openTransferMoney());
@@ -28,11 +31,18 @@ export function AccountDashboard({ account }: AccountDashboardProps) {
     <div className="flex flex-col gap-4">
       <Card>
         <div className="flex flex-col gap-2 text-center py-2">
-          <div className="text-xl">
-            <span className="capitalize">
-              {customer.first_name} {customer.last_name}
-            </span>{" "}
-            &mdash; {account.name}
+          <div className="flex items-center justify-center gap-1 text-xl">
+            <div>
+              <span className="capitalize">
+                {customer.first_name} {customer.last_name}
+              </span>{" "}
+              &mdash; {account.name}{" "}
+            </div>
+            {isLoggedIn && (
+              <button className="icon ghost">
+                <MatIcon icon="edit-outline" />
+              </button>
+            )}
           </div>
           <span className="text-3xl font-extrabold">{formatCurrency(account.balance)}</span>
           <div className="flex justify-center">

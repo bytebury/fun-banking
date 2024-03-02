@@ -18,7 +18,11 @@ const accountsSlice = createSlice({
       status: ThunkStatus.Idle,
     },
   },
-  reducers: {},
+  reducers: {
+    setCurrentAccount(state, action) {
+      return { ...state, current: action.payload };
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchAccount.pending, (state, _) => {

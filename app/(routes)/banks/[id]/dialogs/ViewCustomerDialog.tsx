@@ -1,6 +1,10 @@
+"use client";
+
 import { Dialog } from "@/app/components/dialog/Dialog";
 import { MatIcon } from "@/app/components/icons/MatIcon";
+import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { formatCurrency } from "@/app/utils/formatters";
+import { PUT } from "@/app/utils/http-client";
 import {
   customerAction,
   selectCustomer,
@@ -9,15 +13,34 @@ import {
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export function ViewCustomerDialog() {
   const dispatch = useAppDispatch();
   const customer = useAppSelector(selectCustomer);
   const customersTotalBalance = useAppSelector(selectCustomerTotalBalance);
+  const { showSnackbar } = useSnackbar();
+  const router = useRouter();
 
-  function closeDialog() {
+  function closeDialog(): void {
     dispatch(customerAction.setCustomer(null));
     dispatch(dialogsAction.closeViewCustomer());
+  }
+
+  async function openAccount(): Promise<void> {
+    try {
+      const response = await PUT("/accounts", { name: "Checkings#2", customer_id: customer?.id });
+      const data = (await response.json()) as any;
+
+      if (response.ok) {
+        router.push(`/accounts/${data.id}`);
+        showSnackbar("Successfully opened a new account");
+      } else {
+        showSnackbar(data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -64,6 +87,13 @@ export function ViewCustomerDialog() {
               );
             })}
           </div>
+          {(customer?.accounts.length ?? 5) < 2 && (
+            <div>
+              <button onClick={openAccount} className="-mt-2 common sm ghost">
+                + Open Account
+              </button>
+            </div>
+          )}
         </section>
       </main>
       <footer>

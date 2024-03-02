@@ -7,8 +7,8 @@ import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { useAuth } from "@/app/guards/AuthContext";
 import { AMOUNT_TOO_LARGE, hasErrors } from "@/app/utils/form-validators";
 import { formatCurrency } from "@/app/utils/formatters";
-import { POST, PUT } from "@/app/utils/http-client";
-import { fetchAccount } from "@/lib/features/accounts/accountsSlice";
+import { PUT } from "@/app/utils/http-client";
+import { fetchAccount, selectAccount } from "@/lib/features/accounts/accountsSlice";
 import {
   fetchCustomer,
   fetchCustomers,
@@ -23,10 +23,11 @@ export function TransferMoneyDialog() {
   const customer = useAppSelector(selectCustomer);
   const { isLoggedIn } = useAuth();
   const { showSnackbar } = useSnackbar();
+  const currentAccount = useAppSelector(selectAccount);
 
   const [formData, setFormData] = useState({
     transactionType: "",
-    accountId: customer?.accounts[0].id ?? 0,
+    accountId: currentAccount?.id + "",
     amount: "",
     description: "",
   });
@@ -43,6 +44,7 @@ export function TransferMoneyDialog() {
 
   function handleChange(event: any) {
     const { name, value } = event.target;
+
     setFormData({ ...formData, [name]: value });
     validateField(name, value);
   }
@@ -98,7 +100,7 @@ export function TransferMoneyDialog() {
 
     const isWithdraw = formData.transactionType === "withdraw";
     const payload = {
-      account_id: formData.accountId,
+      account_id: parseInt(formData.accountId, 10),
       description: formData.description,
       amount: parseFloat(formData.amount) * (isWithdraw ? -1 : 1),
     };
@@ -163,14 +165,25 @@ export function TransferMoneyDialog() {
               Withdraw
             </label>
           </SegmentedButton>
-          <div className="form-field">
-            <label htmlFor="select_account">Select Account</label>
-            <select id="select_account" name="accountId" disabled>
-              <option value={customer?.accounts[0].id}>
-                {customer?.accounts[0].name} - {formatCurrency(customer?.accounts[0].balance ?? 0)}
-              </option>
-            </select>
-          </div>
+          {!currentAccount && (
+            <div className="form-field">
+              <label htmlFor="select_account">Select Account</label>
+              <select
+                id="select_account"
+                name="accountId"
+                disabled={!customer || customer.accounts.length === 1}
+                onChange={handleChange}
+              >
+                {customer?.accounts.map((account) => {
+                  return (
+                    <option key={account.id} value={account.id}>
+                      {account.name} - {formatCurrency(account.balance ?? 0)}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          )}
           <div className={`form-field ${formErrors.amount && "error"}`}>
             <label htmlFor="transfer_money_dialog_amount">Amount</label>
             <input

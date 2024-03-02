@@ -14,6 +14,7 @@ import { ThunkStatus } from "@/lib/thunk";
 import { TransferMoneyDialog } from "./dialogs/TransferMoneyDialog";
 import { ViewCustomerDialog } from "./dialogs/ViewCustomerDialog";
 import { formatCurrency } from "@/app/utils/formatters";
+import { accountsAction } from "@/lib/features/accounts/accountsSlice";
 
 export function CustomersTable() {
   const dispatch = useAppDispatch();
@@ -36,6 +37,7 @@ export function CustomersTable() {
   }
 
   function openTransferMoneyDialog(customer: any): void {
+    dispatch(accountsAction.setCurrentAccount(null));
     dispatch(customerAction.setCustomer(customer));
     dispatch(dialogsAction.openTransferMoney());
   }
