@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
-import { AccountDashboard } from "../accounts/[id]/AccountDashboard";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { fetchAccount, selectAccount } from "@/lib/features/accounts/accountsSlice";
 import { selectCustomer } from "@/lib/features/customers/customerSlice";
 import { CustomerGuard } from "@/app/guards/CustomerGuard";
+import { CustomerDashboard } from "./dashboard";
 
 export default function CustomerPage() {
   const dispatch = useAppDispatch();
@@ -26,5 +26,5 @@ export default function CustomerPage() {
     );
   }
 
-  return <AccountDashboard account={account}></AccountDashboard>;
+  return <CustomerDashboard />;
 }
