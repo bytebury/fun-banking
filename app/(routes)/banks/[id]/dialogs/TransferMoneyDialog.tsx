@@ -8,7 +8,7 @@ import { useAuth } from "@/app/guards/AuthContext";
 import { AMOUNT_TOO_LARGE, hasErrors } from "@/app/utils/form-validators";
 import { formatCurrency } from "@/app/utils/formatters";
 import { PUT } from "@/app/utils/http-client";
-import { accountsAction, fetchAccount, selectAccount } from "@/lib/features/accounts/accountsSlice";
+import { fetchAccount, selectAccount } from "@/lib/features/accounts/accountsSlice";
 import {
   fetchCustomer,
   fetchCustomers,
@@ -16,18 +16,18 @@ import {
 } from "@/lib/features/customers/customerSlice";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export function TransferMoneyDialog() {
   const dispatch = useAppDispatch();
   const customer = useAppSelector(selectCustomer);
+  const account = useAppSelector(selectAccount);
   const { isLoggedIn } = useAuth();
   const { showSnackbar } = useSnackbar();
-  const currentAccount = useAppSelector(selectAccount);
 
   const [formData, setFormData] = useState({
     transactionType: "",
-    accountId: customer?.accounts[0].id + "",
+    accountId: !!account ? account.id : customer?.accounts[0].id + "",
     amount: "",
     description: "",
   });
@@ -37,12 +37,6 @@ export function TransferMoneyDialog() {
     amount: "",
     description: "",
   });
-
-  useEffect(() => {
-    if ((customer?.accounts.length ?? 0) > 1) {
-      dispatch(accountsAction.setCurrentAccount(null));
-    }
-  }, [customer, dispatch]);
 
   function closeTransferMoneyDialog() {
     dispatch(dialogsAction.closeTransferMoney());
@@ -106,7 +100,7 @@ export function TransferMoneyDialog() {
 
     const isWithdraw = formData.transactionType === "withdraw";
     const payload = {
-      account_id: parseInt(formData.accountId, 10),
+      account_id: parseInt(formData.accountId + "", 10),
       description: formData.description,
       amount: parseFloat(formData.amount) * (isWithdraw ? -1 : 1),
     };
@@ -171,7 +165,7 @@ export function TransferMoneyDialog() {
               Withdraw
             </label>
           </SegmentedButton>
-          {(customer?.accounts.length ?? 1) > 1 && (
+          {(customer?.accounts.length ?? 1) > 1 && !account && (
             <div className="form-field">
               <label htmlFor="select_account">Select Account</label>
               <select
