@@ -5,10 +5,38 @@ import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { CustomersTable } from "./CustomersTable";
 import { AddCustomerDialog } from "./dialogs/AddCustomerDialog";
+import { selectCustomers } from "@/lib/features/customers/customerSlice";
+import { useState } from "react";
 
 export default function BankPage() {
   const dialogs = useAppSelector((state) => state.dialogs);
   const dispatch = useAppDispatch();
+  const customers = useAppSelector(selectCustomers);
+  const [customerSearch, setCustomerSearch] = useState("");
+  const filteredCustomers = customers.filter((customer) => {
+    const fullName = `${customer.first_name}${customer.last_name}`.toLowerCase();
+    return fullName.includes(customerSearch.toLowerCase());
+  });
+
+  const searchCustomers = (
+    <form>
+      <div className="form-field">
+        <label htmlFor="customer-name-search">Search by Name</label>
+        <input
+          id="customer-name-search"
+          name="customerNameSearch"
+          type="text"
+          placeholder="Search for customer..."
+          onChange={handleCustomerSearch}
+        />
+      </div>
+    </form>
+  );
+
+  function handleCustomerSearch(event: any): void {
+    const { value } = event.target;
+    setCustomerSearch(value);
+  }
 
   function openAddCustomerDialog() {
     dispatch(dialogsAction.openAddCustomerDialog());
@@ -23,7 +51,8 @@ export default function BankPage() {
             New Customer
           </button>
         </div>
-        <CustomersTable />
+        {customers?.length > 6 ? searchCustomers : null}
+        <CustomersTable customers={filteredCustomers} />
       </div>
       {dialogs.addCustomer && <AddCustomerDialog />}
     </>

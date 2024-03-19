@@ -1,10 +1,6 @@
 import { MatIcon } from "@/app/components/icons/MatIcon";
 import PopoverMenu from "@/app/components/popovers/PopoverMenu";
-import {
-  customerAction,
-  selectCustomers,
-  selectCustomersStatus,
-} from "@/lib/features/customers/customerSlice";
+import { customerAction, selectCustomersStatus } from "@/lib/features/customers/customerSlice";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import React from "react";
@@ -16,10 +12,13 @@ import { ViewCustomerDialog } from "./dialogs/ViewCustomerDialog";
 import { formatCurrency } from "@/app/utils/formatters";
 import { accountsAction } from "@/lib/features/accounts/accountsSlice";
 
-export function CustomersTable() {
+type CustomerTableProps = {
+  customers: any[];
+};
+
+export function CustomersTable({ customers }: CustomerTableProps) {
   const dispatch = useAppDispatch();
   const dialogs = useAppSelector<any>((state) => state.dialogs);
-  const customers = useAppSelector(selectCustomers);
   const customersStatus = useAppSelector(selectCustomersStatus);
 
   function openDeleteCustomerDialog(customer: any) {
