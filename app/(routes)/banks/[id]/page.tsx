@@ -14,7 +14,7 @@ export default function BankPage() {
   const customers = useAppSelector(selectCustomers);
   const [customerSearch, setCustomerSearch] = useState("");
   const filteredCustomers = customers.filter((customer) => {
-    const fullName = `${customer.first_name}${customer.last_name}${customer.pin}`.toLowerCase();
+    const fullName = `${customer.first_name} ${customer.last_name} ${customer.pin}`.toLowerCase();
     return fullName.includes(customerSearch.toLowerCase());
   });
 
@@ -34,8 +34,7 @@ export default function BankPage() {
   );
 
   function handleCustomerSearch(event: any): void {
-    const { value } = event.target;
-    setCustomerSearch(value);
+    setCustomerSearch(event.target.value);
   }
 
   function openAddCustomerDialog() {
