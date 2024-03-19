@@ -14,17 +14,17 @@ export default function BankPage() {
   const customers = useAppSelector(selectCustomers);
   const [customerSearch, setCustomerSearch] = useState("");
   const filteredCustomers = customers.filter((customer) => {
-    const fullName = `${customer.first_name}${customer.last_name}`.toLowerCase();
+    const fullName = `${customer.first_name}${customer.last_name}${customer.pin}`.toLowerCase();
     return fullName.includes(customerSearch.toLowerCase());
   });
 
   const searchCustomers = (
     <form>
       <div className="form-field">
-        <label htmlFor="customer-name-search">Search by Name</label>
+        <label htmlFor="customer-search">Customer Search</label>
         <input
-          id="customer-name-search"
-          name="customerNameSearch"
+          id="customer-search"
+          name="customerSearch"
           type="text"
           placeholder="Search for customer..."
           onChange={handleCustomerSearch}
