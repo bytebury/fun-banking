@@ -2,6 +2,7 @@ import { Card } from "@/app/components/card/Card";
 import { Metadata } from "next";
 import Link from "next/link";
 import ResetPasswordForm from "./form";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Fun Banking | Reset Password",
@@ -15,7 +16,9 @@ export default function ResetPasswordPage() {
         <p>
           Know your password already? <Link href="/signin">Sign in</Link>.
         </p>
-        <ResetPasswordForm />
+        <Suspense>
+          <ResetPasswordForm />
+        </Suspense>
       </Card>
     </main>
   );

@@ -9,7 +9,7 @@ import {
 } from "@/app/utils/form-validators";
 import { POST } from "@/app/utils/http-client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ChangeEvent, Suspense, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 export default function ResetPasswordForm() {
   type FormField = keyof typeof formFieldLabelMap;
@@ -95,47 +95,45 @@ export default function ResetPasswordForm() {
   }
 
   return (
-    <Suspense>
-      <form onSubmit={resetPassword} className="flex flex-col gap-2 my-4">
-        <div className="flex flex-col gap-2">
-          <div className={`form-field ${formErrors.password && "error"}`}>
-            {" "}
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              name="password"
-              placeholder="Password"
-              onChange={handleChange}
-              autoFocus
-              autoComplete="password"
-            />
-            <div className="error-message">{formErrors.password}</div>
-          </div>
-          <div className={`form-field ${formErrors.passwordConfirmation && "error"}`}>
-            <label htmlFor="password">Password Confirmation</label>
-            <input
-              id="passwordConfirmation"
-              type="password"
-              name="passwordConfirmation"
-              placeholder="Password Confirmation"
-              onChange={handleChange}
-              autoFocus
-              autoComplete="password"
-            />
-            <div className="error-message">{formErrors.passwordConfirmation}</div>
-          </div>
-        </div>
-        <footer className="justify-start my-2">
+    <form onSubmit={resetPassword} className="flex flex-col gap-2 my-4">
+      <div className="flex flex-col gap-2">
+        <div className={`form-field ${formErrors.password && "error"}`}>
+          {" "}
+          <label htmlFor="password">Password</label>
           <input
-            type="submit"
-            value="Reset Password"
-            className="common filled"
-            disabled={isInvalid() || isDisabled}
+            id="password"
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={handleChange}
+            autoFocus
+            autoComplete="password"
           />
-          <input type="reset" value="Cancel" className="common ghost" />
-        </footer>
-      </form>
-    </Suspense>
+          <div className="error-message">{formErrors.password}</div>
+        </div>
+        <div className={`form-field ${formErrors.passwordConfirmation && "error"}`}>
+          <label htmlFor="password">Password Confirmation</label>
+          <input
+            id="passwordConfirmation"
+            type="password"
+            name="passwordConfirmation"
+            placeholder="Password Confirmation"
+            onChange={handleChange}
+            autoFocus
+            autoComplete="password"
+          />
+          <div className="error-message">{formErrors.passwordConfirmation}</div>
+        </div>
+      </div>
+      <footer className="justify-start my-2">
+        <input
+          type="submit"
+          value="Reset Password"
+          className="common filled"
+          disabled={isInvalid() || isDisabled}
+        />
+        <input type="reset" value="Cancel" className="common ghost" />
+      </footer>
+    </form>
   );
 }
