@@ -4,6 +4,7 @@ import { SegmentedButton } from "@/app/components/buttons/SegmentedButton";
 import { Dialog } from "@/app/components/dialog/Dialog";
 import { MatIcon } from "@/app/components/icons/MatIcon";
 import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
+import { Switch } from "@/app/components/switch/Switch";
 import { useAuth } from "@/app/guards/AuthContext";
 import { AMOUNT_TOO_LARGE, hasErrors } from "@/app/utils/form-validators";
 import { formatCurrency } from "@/app/utils/formatters";
@@ -24,6 +25,7 @@ export function TransferMoneyDialog() {
   const account = useAppSelector(selectAccount);
   const { isLoggedIn } = useAuth();
   const { showSnackbar } = useSnackbar();
+  const [keepOpen, setKeepOpen] = useState(false);
 
   const [formData, setFormData] = useState({
     transactionType: "",
@@ -109,7 +111,9 @@ export function TransferMoneyDialog() {
       const response = await PUT("/transactions", payload);
 
       if (response.ok) {
-        closeTransferMoneyDialog();
+        if (!keepOpen) {
+          closeTransferMoneyDialog();
+        }
 
         if (isLoggedIn) {
           dispatch(fetchCustomers(customer!.bank_id));
@@ -209,6 +213,17 @@ export function TransferMoneyDialog() {
             />
           </div>
         </main>
+        <div className="w-full flex gap-2 items-center text-sm">
+          <Switch
+            id="test"
+            onChange={(checked) => {
+              setKeepOpen(checked);
+            }}
+            enabled={keepOpen}
+          >
+            Keep open?
+          </Switch>
+        </div>
         <footer>
           <input
             type="reset"
