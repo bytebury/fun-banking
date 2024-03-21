@@ -43,6 +43,13 @@ export function CustomersTable({ filterValue }: CustomerTableProps) {
     });
   }, [filterValue, customers]);
 
+  useEffect(() => {
+    if (!isMultiSelectMode) {
+      const updatedCustomers = customers.map((customer) => ({ ...customer, isSelected: false }));
+      setCustomers(updatedCustomers);
+    }
+  }, [isMultiSelectMode, customers]);
+
   function openDeleteCustomerDialog(customer: any) {
     dispatch(customerAction.setCustomer(customer));
     dispatch(dialogsAction.openDeleteCustomer());

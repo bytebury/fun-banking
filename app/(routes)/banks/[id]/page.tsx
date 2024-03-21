@@ -58,17 +58,27 @@ export default function BankPage() {
   return (
     <>
       <div className="flex flex-col gap-4">
-        <div className="flex justify-between">
-          <div className="text-sm flex gap-2 items-center">
-            Bulk Transfer{" "}
-            <Switch id="okay" onChange={handleSwitch} enabled={isCustomerSelectionOn} />
-          </div>
+        <div className="flex justify-end">
           <button onClick={openAddCustomerDialog} className="sm common filled">
             <MatIcon icon="add" />
             New Customer
           </button>
         </div>
+
         {customers?.length > 6 ? searchCustomers : null}
+        {customers?.length > 1 && (
+          <div
+            className={`text-sm flex gap-2 items-center -my-2 ${
+              customers?.length > 6
+                ? "justify-end flex-row-reverse"
+                : "justify-start flex-row-reverse"
+            }`}
+          >
+            <Switch id="okay" onChange={handleSwitch} enabled={isCustomerSelectionOn}>
+              Bulk Transfer
+            </Switch>
+          </div>
+        )}
         <CustomersTable filterValue={customerSearch} />
       </div>
       {dialogs.addCustomer && <AddCustomerDialog />}
