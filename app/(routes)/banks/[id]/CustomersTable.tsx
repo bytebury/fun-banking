@@ -98,7 +98,9 @@ export function CustomersTable({ customers }: CustomerTableProps) {
                       htmlFor={`checkbox_select_${customer.id}`}
                       className={
                         (isMultiSelectMode ? "cursor-pointer " : "cursor-default ") +
-                        (customer.accounts.length > 1 ? "text-gray-400 cursor-not-allowed" : "")
+                        (customer.accounts.length > 1 && isMultiSelectMode
+                          ? "text-gray-400 cursor-not-allowed"
+                          : "")
                       }
                     >
                       {customer.first_name} {customer.last_name}
