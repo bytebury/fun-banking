@@ -24,14 +24,18 @@ export function CustomersTable({ filterValue }: CustomerTableProps) {
   const dispatch = useAppDispatch();
   const dialogs = useAppSelector<any>((state) => state.dialogs);
   const customersFromStore = useAppSelector(selectCustomers);
+  const selectedCustomers = useAppSelector((state) => state.customers.selectedCustomers);
   const [customers, setCustomers] = useState(customersFromStore);
   const [filteredCustomers, setFilteredCustomers] = useState(customers);
   const customersStatus = useAppSelector(selectCustomersStatus);
   const isMultiSelectMode = useAppSelector((state) => state.customers.isMultiSelectEnabled);
 
   useEffect(() => {
-    setCustomers(customersFromStore);
-  }, [customersFromStore]);
+    const updatedCustomersFromStore = customersFromStore.map((customer) => {
+      return { ...customer, isSelected: !!selectedCustomers[customer.id] };
+    });
+    setCustomers(updatedCustomersFromStore);
+  }, [customersFromStore, selectedCustomers]);
 
   useEffect(() => {
     setFilteredCustomers(() => {

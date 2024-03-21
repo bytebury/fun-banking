@@ -17,9 +17,10 @@ import {
 } from "@/lib/features/customers/customerSlice";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export function TransferMoneyDialog() {
+  const formRef = useRef<HTMLFormElement>(null);
   const dispatch = useAppDispatch();
   const customer = useAppSelector(selectCustomer);
   const account = useAppSelector(selectAccount);
@@ -42,6 +43,10 @@ export function TransferMoneyDialog() {
 
   function closeTransferMoneyDialog() {
     dispatch(dialogsAction.closeTransferMoney());
+
+    if (isLoggedIn) {
+      dispatch(fetchCustomers(customer!.bank_id));
+    }
   }
 
   function handleChange(event: any) {
@@ -97,6 +102,16 @@ export function TransferMoneyDialog() {
     return Object.values(formData).some((value) => !value) || hasErrors(formErrors);
   }
 
+  function resetForm(): void {
+    formRef.current?.reset();
+    setFormData({
+      transactionType: "",
+      accountId: !!account ? account.id : customer?.accounts[0].id + "",
+      amount: "",
+      description: "",
+    });
+  }
+
   async function createTransfer(event: any) {
     event.preventDefault();
 
@@ -116,7 +131,11 @@ export function TransferMoneyDialog() {
         }
 
         if (isLoggedIn) {
-          dispatch(fetchCustomers(customer!.bank_id));
+          if (!keepOpen) {
+            dispatch(fetchCustomers(customer!.bank_id));
+          } else {
+            resetForm();
+          }
           showSnackbar(
             `Successfully ${isWithdraw ? "withdrew" : "deposited"} ${formatCurrency(
               parseFloat(formData.amount)
@@ -145,7 +164,7 @@ export function TransferMoneyDialog() {
         <MatIcon icon="price-change-outline" />
         <h1 className="capitalize">Transfer Request for {customer?.first_name}</h1>
       </header>
-      <form className="flex flex-col gap-3" onSubmit={createTransfer}>
+      <form ref={formRef} className="flex flex-col gap-3" onSubmit={createTransfer}>
         <main className="flex flex-col gap-2">
           <SegmentedButton>
             <input
@@ -154,6 +173,7 @@ export function TransferMoneyDialog() {
               type="radio"
               value="deposit"
               onChange={handleChange}
+              checked={formData.transactionType === "deposit"}
             />
             <label htmlFor="transaction_type_deposit" className="w-1/2">
               Deposit
@@ -164,6 +184,7 @@ export function TransferMoneyDialog() {
               type="radio"
               value="withdraw"
               onChange={handleChange}
+              checked={formData.transactionType === "withdraw"}
             />
             <label htmlFor="transaction_type_withdraw" className="w-1/2">
               Withdraw

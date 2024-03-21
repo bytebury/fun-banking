@@ -3,6 +3,7 @@ import { Dialog } from "@/app/components/dialog/Dialog";
 import { MatIcon } from "@/app/components/icons/MatIcon";
 import { Notice } from "@/app/components/notice/Notice";
 import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
+import { Switch } from "@/app/components/switch/Switch";
 import { AMOUNT_TOO_LARGE, hasErrors } from "@/app/utils/form-validators";
 import { formatCurrency } from "@/app/utils/formatters";
 import { PUT } from "@/app/utils/http-client";
@@ -13,9 +14,10 @@ import {
 } from "@/lib/features/customers/customerSlice";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export function BulkTransferDialog() {
+  const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
     transactionType: "",
     amount: "",
@@ -26,6 +28,7 @@ export function BulkTransferDialog() {
     amount: "",
     description: "",
   });
+  const [keepOpen, setKeepOpen] = useState(false);
   const { showSnackbar } = useSnackbar();
 
   const dispatch = useAppDispatch();
@@ -119,14 +122,24 @@ export function BulkTransferDialog() {
     } catch (error) {
       console.error(error);
     } finally {
-      dispatch(fetchCustomers(customers[0].bank_id));
-      dispatch(customerAction.clearSelected());
-      dispatch(dialogsAction.closeBulkTransfer());
+      if (!keepOpen) {
+        dispatch(fetchCustomers(customers[0].bank_id));
+        dispatch(customerAction.clearSelected());
+        dispatch(dialogsAction.closeBulkTransfer());
+      }
+
+      resetForm();
     }
   }
 
   function close(): void {
+    dispatch(fetchCustomers(customers[0].bank_id));
     dispatch(dialogsAction.closeBulkTransfer());
+  }
+
+  function resetForm(): void {
+    setFormData({ transactionType: "", amount: "", description: "" });
+    formRef.current?.reset();
   }
 
   return (
@@ -135,8 +148,7 @@ export function BulkTransferDialog() {
         <MatIcon icon="savings-outline" />
         <h1>Bulk Money Transfer ({numberOfSelectedCustomers})</h1>
       </header>
-      <Notice icon="warning-outline">This will update multiple customers at once!</Notice>
-      <form className="flex flex-col gap-3" onSubmit={createBulkTransfer}>
+      <form ref={formRef} className="flex flex-col gap-3" onSubmit={createBulkTransfer}>
         <main className="flex flex-col gap-2">
           <SegmentedButton>
             <input
@@ -144,6 +156,7 @@ export function BulkTransferDialog() {
               name="transactionType"
               type="radio"
               value="deposit"
+              checked={formData.transactionType === "deposit"}
               onChange={handleChange}
             />
             <label htmlFor="transaction_type_deposit" className="w-1/2">
@@ -154,6 +167,7 @@ export function BulkTransferDialog() {
               name="transactionType"
               type="radio"
               value="withdraw"
+              checked={formData.transactionType === "withdraw"}
               onChange={handleChange}
             />
             <label htmlFor="transaction_type_withdraw" className="w-1/2">
@@ -185,6 +199,17 @@ export function BulkTransferDialog() {
             />
           </div>
         </main>
+        <div className="w-full flex gap-2 items-center text-sm">
+          <Switch
+            id="test"
+            onChange={(checked) => {
+              setKeepOpen(checked);
+            }}
+            enabled={keepOpen}
+          >
+            Keep open?
+          </Switch>
+        </div>
         <footer>
           <input type="reset" onClick={close} className="common ghost" value="Cancel" />
           <input type="submit" value="Complete" className="common ghost" disabled={isInvalid()} />
