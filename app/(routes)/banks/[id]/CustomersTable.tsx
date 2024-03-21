@@ -1,9 +1,13 @@
 import { MatIcon } from "@/app/components/icons/MatIcon";
 import PopoverMenu from "@/app/components/popovers/PopoverMenu";
-import { customerAction, selectCustomersStatus } from "@/lib/features/customers/customerSlice";
+import {
+  customerAction,
+  selectCustomers,
+  selectCustomersStatus,
+} from "@/lib/features/customers/customerSlice";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { UpdateCustomerDialog } from "./dialogs/UpdateCustomerDialog";
 import { DeleteCustomerDialog } from "./dialogs/DeleteCustomerDialog";
 import { ThunkStatus } from "@/lib/thunk";
@@ -13,14 +17,31 @@ import { formatCurrency } from "@/app/utils/formatters";
 import { accountsAction } from "@/lib/features/accounts/accountsSlice";
 
 type CustomerTableProps = {
-  customers: any[];
+  filterValue?: string;
 };
 
-export function CustomersTable({ customers }: CustomerTableProps) {
+export function CustomersTable({ filterValue }: CustomerTableProps) {
   const dispatch = useAppDispatch();
   const dialogs = useAppSelector<any>((state) => state.dialogs);
+  const customersFromStore = useAppSelector(selectCustomers);
+  const [customers, setCustomers] = useState(customersFromStore);
+  const [filteredCustomers, setFilteredCustomers] = useState(customers);
   const customersStatus = useAppSelector(selectCustomersStatus);
   const isMultiSelectMode = useAppSelector((state) => state.customers.isMultiSelectEnabled);
+
+  useEffect(() => {
+    setCustomers(customersFromStore);
+  }, [customersFromStore]);
+
+  useEffect(() => {
+    setFilteredCustomers(() => {
+      return customers.filter((customer) => {
+        const fullName =
+          `${customer.first_name} ${customer.last_name} ${customer.pin}`.toLowerCase();
+        return fullName.includes(filterValue?.toLowerCase() ?? "");
+      });
+    });
+  }, [filterValue, customers]);
 
   function openDeleteCustomerDialog(customer: any) {
     dispatch(customerAction.setCustomer(customer));
@@ -52,9 +73,18 @@ export function CustomersTable({ customers }: CustomerTableProps) {
 
     if (checked) {
       dispatch(customerAction.addCustomerToSelection(customerId));
+      selectCustomer(Number(customerId));
     } else {
       dispatch(customerAction.removeCustomerFromSelection(customerId));
+      selectCustomer(Number(customerId), false);
     }
+  }
+
+  function selectCustomer(customerId: number, isSelected = true): void {
+    const updatedCustomers = customers.map((customer) => {
+      return customer.id === customerId ? { ...customer, isSelected } : customer;
+    });
+    setCustomers(updatedCustomers);
   }
 
   if (customersStatus === ThunkStatus.Loading) {
@@ -68,7 +98,7 @@ export function CustomersTable({ customers }: CustomerTableProps) {
           <div className="col-span-5">Customer</div>
           <div className="col-span-7 text-right pr-11">Balance</div>
         </div>
-        {customers.length === 0 ? (
+        {filteredCustomers.length === 0 ? (
           <div className="rounded-b-2xl border border-outline px-3 py-2 text-gray-600">
             You do not have any customers yet. Would you like to{" "}
             <button className="inline underline text-primary" onClick={openCreateCustomerDialog}>
@@ -77,7 +107,7 @@ export function CustomersTable({ customers }: CustomerTableProps) {
             ?
           </div>
         ) : (
-          customers.map((customer: any) => {
+          filteredCustomers.map((customer: any) => {
             return (
               <div
                 key={customer.id}
@@ -92,6 +122,7 @@ export function CustomersTable({ customers }: CustomerTableProps) {
                         value={customer.id}
                         type="checkbox"
                         disabled={customer.accounts.length > 1}
+                        checked={customer.isSelected ?? false}
                       />
                     )}
                     <label

@@ -9,4 +9,5 @@ export type Customer = {
   bank_id: number;
   bank: Bank;
   accounts: Account[];
+  isSelected?: boolean;
 };

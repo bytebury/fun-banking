@@ -108,7 +108,7 @@ export function BulkTransferDialog() {
       const response = await Promise.all(requests);
 
       if (response.every((r) => r.ok)) {
-        showSnackbar(`Successfully did the transfer for all of the customers.`);
+        showSnackbar(`Successfully processed transfers for all of the customers.`);
       } else {
         showSnackbar(
           `We were only able to transfer money to ${

@@ -16,10 +16,6 @@ export default function BankPage() {
   const customers = useAppSelector(selectCustomers);
   const [customerSearch, setCustomerSearch] = useState("");
   const isCustomerSelectionOn = useAppSelector((state) => state.customers.isMultiSelectEnabled);
-  const filteredCustomers = customers.filter((customer) => {
-    const fullName = `${customer.first_name} ${customer.last_name} ${customer.pin}`.toLowerCase();
-    return fullName.includes(customerSearch.toLowerCase());
-  });
   const numberOfSelectedCustomers = useAppSelector(
     (state) => Object.keys(state.customers.selectedCustomers).length
   );
@@ -73,7 +69,7 @@ export default function BankPage() {
           </button>
         </div>
         {customers?.length > 6 ? searchCustomers : null}
-        <CustomersTable customers={filteredCustomers} />
+        <CustomersTable filterValue={customerSearch} />
       </div>
       {dialogs.addCustomer && <AddCustomerDialog />}
       {dialogs.bulkTransfer && <BulkTransferDialog />}
