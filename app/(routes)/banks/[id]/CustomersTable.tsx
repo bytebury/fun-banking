@@ -1,6 +1,10 @@
 import { MatIcon } from "@/app/components/icons/MatIcon";
 import PopoverMenu from "@/app/components/popovers/PopoverMenu";
-import { customerAction, selectCustomersStatus } from "@/lib/features/customers/customerSlice";
+import {
+  customerAction,
+  selectCustomersStatus,
+  selectIsMultiSelectMode,
+} from "@/lib/features/customers/customerSlice";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import React from "react";
@@ -20,6 +24,7 @@ export function CustomersTable({ customers }: CustomerTableProps) {
   const dispatch = useAppDispatch();
   const dialogs = useAppSelector<any>((state) => state.dialogs);
   const customersStatus = useAppSelector(selectCustomersStatus);
+  const isMultiSelectMode = useAppSelector((state) => state.customers.isMultiSelectEnabled);
 
   function openDeleteCustomerDialog(customer: any) {
     dispatch(customerAction.setCustomer(customer));
@@ -73,8 +78,16 @@ export function CustomersTable({ customers }: CustomerTableProps) {
                 className="grid grid-cols-12 items-center last:rounded-b-2xl border border-b-0 last:border-b border-outline px-3 py-2 hover:bg-slate-50"
               >
                 <div className="col-span-5">
-                  <div className="font-bold capitalize">
-                    {customer.first_name} {customer.last_name}
+                  <div className="flex font-bold capitalize gap-2">
+                    {isMultiSelectMode && (
+                      <input id={`checkbox_select_${customer.id}`} type="checkbox" />
+                    )}
+                    <label
+                      htmlFor={`checkbox_select_${customer.id}`}
+                      className={isMultiSelectMode ? "cursor-pointer" : "cursor-default"}
+                    >
+                      {customer.first_name} {customer.last_name}
+                    </label>
                   </div>
                   <div className="text-gray-600 text-xs">PIN-{customer.pin}</div>
                 </div>

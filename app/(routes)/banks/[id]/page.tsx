@@ -5,8 +5,9 @@ import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { CustomersTable } from "./CustomersTable";
 import { AddCustomerDialog } from "./dialogs/AddCustomerDialog";
-import { selectCustomers } from "@/lib/features/customers/customerSlice";
+import { customerAction, selectCustomers } from "@/lib/features/customers/customerSlice";
 import { useState } from "react";
+import { Switch } from "@/app/components/switch/Switch";
 
 export default function BankPage() {
   const dialogs = useAppSelector((state) => state.dialogs);
@@ -19,7 +20,7 @@ export default function BankPage() {
   });
 
   const searchCustomers = (
-    <form>
+    <form className="-mt-4">
       <div className="form-field">
         <label htmlFor="customer-search">Customer Search</label>
         <input
@@ -41,10 +42,17 @@ export default function BankPage() {
     dispatch(dialogsAction.openAddCustomerDialog());
   }
 
+  function handleSwitch(value: boolean): void {
+    dispatch(customerAction.setMultiSelect(value));
+  }
+
   return (
     <>
       <div className="flex flex-col gap-4">
-        <div className="flex justify-end">
+        <div className="flex justify-between">
+          <div className="text-sm flex gap-2 items-center">
+            Bulk Transfer <Switch id="okay" onChange={handleSwitch} />
+          </div>
           <button onClick={openAddCustomerDialog} className="sm common filled">
             <MatIcon icon="add" />
             New Customer

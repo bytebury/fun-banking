@@ -1,0 +1,48 @@
+input.switch {
+  background: blue;
+  display: none;
+}
+
+label.switch {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 52px;
+  height: 28px;
+  border-radius: 20px;
+  border: 2px solid var(--outline);
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
+  cursor: pointer;
+
+  &:has(input:not(:checked)) {
+    &::before {
+      position: absolute;
+      left: 3px;
+      content: "";
+      height: 16px;
+      width: 16px;
+      background: var(--input-outline);
+      border-radius: 100%;
+    }
+  }
+
+  &:has(input:checked) {
+    background: var(--primary);
+
+    &::before {
+      position: absolute;
+      text-align: center;
+      color: var(--primary);
+      right: 0;
+      font-family: "Material Icons";
+      font-size: 16px;
+      line-height: 24px;
+      content: "\e5ca";
+      height: 24px;
+      width: 24px;
+      background: white;
+      border-radius: 100%;
+    }
+  }
+}

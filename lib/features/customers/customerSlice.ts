@@ -22,6 +22,7 @@ const customerSlice = createSlice({
     currentStatus: ThunkStatus.Idle,
     totalBankBalance: 0,
     currentCustomerTotalBalance: 0,
+    isMultiSelectEnabled: false,
   },
   reducers: {
     setCustomer(state, action) {
@@ -29,6 +30,12 @@ const customerSlice = createSlice({
         ...state,
         current: action.payload,
         currentCustomerTotalBalance: getTotalBalanceOfCustomer(action.payload),
+      };
+    },
+    setMultiSelect(state, action) {
+      return {
+        ...state,
+        isMultiSelectEnabled: action.payload,
       };
     },
   },
@@ -85,6 +92,7 @@ export const fetchCustomer = createAsyncThunk(
   }
 );
 
+export const selectIsMultiSelectMode = (state: any): boolean => state.isMultiSelectEnabled || false;
 export const selectCustomers = (state: any): Customer[] => state.customers.all;
 export const selectCustomersStatus = (state: any): ThunkStatus => state.customers.allStatus;
 export const selectCustomer = (state: any): Customer | null => state.customers.current;
