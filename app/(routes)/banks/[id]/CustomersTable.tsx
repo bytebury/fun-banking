@@ -1,10 +1,6 @@
 import { MatIcon } from "@/app/components/icons/MatIcon";
 import PopoverMenu from "@/app/components/popovers/PopoverMenu";
-import {
-  customerAction,
-  selectCustomersStatus,
-  selectIsMultiSelectMode,
-} from "@/lib/features/customers/customerSlice";
+import { customerAction, selectCustomersStatus } from "@/lib/features/customers/customerSlice";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import React from "react";
@@ -51,6 +47,16 @@ export function CustomersTable({ customers }: CustomerTableProps) {
     dispatch(dialogsAction.openViewCustomer());
   }
 
+  function handleSelectCustomer(event: any): void {
+    const { value: customerId, checked } = event.target;
+
+    if (checked) {
+      dispatch(customerAction.addCustomerToSelection(customerId));
+    } else {
+      dispatch(customerAction.removeCustomerFromSelection(customerId));
+    }
+  }
+
   if (customersStatus === ThunkStatus.Loading) {
     return <div>Loading...</div>;
   }
@@ -80,11 +86,20 @@ export function CustomersTable({ customers }: CustomerTableProps) {
                 <div className="col-span-5">
                   <div className="flex font-bold capitalize gap-2">
                     {isMultiSelectMode && (
-                      <input id={`checkbox_select_${customer.id}`} type="checkbox" />
+                      <input
+                        id={`checkbox_select_${customer.id}`}
+                        onChange={handleSelectCustomer}
+                        value={customer.id}
+                        type="checkbox"
+                        disabled={customer.accounts.length > 1}
+                      />
                     )}
                     <label
                       htmlFor={`checkbox_select_${customer.id}`}
-                      className={isMultiSelectMode ? "cursor-pointer" : "cursor-default"}
+                      className={
+                        (isMultiSelectMode ? "cursor-pointer " : "cursor-default ") +
+                        (customer.accounts.length > 1 ? "text-gray-400 cursor-not-allowed" : "")
+                      }
                     >
                       {customer.first_name} {customer.last_name}
                     </label>
