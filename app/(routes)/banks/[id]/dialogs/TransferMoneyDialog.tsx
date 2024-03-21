@@ -213,17 +213,19 @@ export function TransferMoneyDialog() {
             />
           </div>
         </main>
-        <div className="w-full flex gap-2 items-center text-sm">
-          <Switch
-            id="test"
-            onChange={(checked) => {
-              setKeepOpen(checked);
-            }}
-            enabled={keepOpen}
-          >
-            Keep open?
-          </Switch>
-        </div>
+        {isLoggedIn && (
+          <div className="w-full flex gap-2 items-center text-sm">
+            <Switch
+              id="test"
+              onChange={(checked) => {
+                setKeepOpen(checked);
+              }}
+              enabled={keepOpen}
+            >
+              Keep open?
+            </Switch>
+          </div>
+        )}
         <footer>
           <input
             type="reset"
