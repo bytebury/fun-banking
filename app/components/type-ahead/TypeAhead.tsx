@@ -58,6 +58,7 @@ export function TypeAhead({ id, data, children }: TypeAheadProps): JSX.Element {
         onChange={handleChange}
         value={currentValue}
         onFocus={() => setShowSuggestions(true)}
+        autoComplete="off"
       />
       <label htmlFor={id}>{children}</label>
       {showSuggestions && (
