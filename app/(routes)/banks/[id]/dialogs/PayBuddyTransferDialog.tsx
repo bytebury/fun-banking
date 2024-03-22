@@ -2,6 +2,7 @@ import { Dialog } from "@/app/components/dialog/Dialog";
 import { MatIcon } from "@/app/components/icons/MatIcon";
 import { Notice } from "@/app/components/notice/Notice";
 import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
+import { TypeAhead } from "@/app/components/type-ahead/TypeAhead";
 import { AMOUNT_TOO_LARGE, hasErrors } from "@/app/utils/form-validators";
 import { formatCurrency } from "@/app/utils/formatters";
 import { GET, PUT } from "@/app/utils/http-client";
@@ -156,10 +157,22 @@ export function PayBuddyTransferDialog() {
         <h1>Send Money with PayBuddy</h1>
       </header>
       <Notice icon="warning-outline">
-        Please double check your recipient. Once you send money, you cannot get it back.
+        <div className="text-sm">Once you send money, you cannot get it back.</div>
       </Notice>
       <form ref={formRef} className="flex flex-col gap-3" onSubmit={createTransfer}>
         <main className="flex flex-col gap-2">
+          <div className="form-field">
+            <TypeAhead
+              id="paybuddy_typeahead"
+              data={recipients.map((r) => ({
+                displayText: `${r.first_name} ${r.last_name}`,
+                searchText: `${r.first_name} ${r.last_name}`,
+                value: r,
+              }))}
+            >
+              Send To
+            </TypeAhead>
+          </div>
           <div className={`form-field ${formErrors.amount && "error"}`}>
             <label htmlFor="transfer_money_dialog_amount">Amount</label>
             <input

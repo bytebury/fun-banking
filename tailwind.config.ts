@@ -20,6 +20,7 @@ const config: Config = {
         "tertiary-pressed": "#dfadcf",
         "error-shadow": "#f7dedc",
         outline: "#00000022",
+        "input-outline": "#00000075",
         neutral: "#f6f8f1",
         "neutral-hover": "#e9ece0",
         "neutral-pressed": "#dde2d2",
