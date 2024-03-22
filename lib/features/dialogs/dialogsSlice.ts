@@ -12,6 +12,7 @@ const dialogsSlice = createSlice({
     transferMoney: false,
     editAccount: false,
     bulkTransfer: false,
+    payBuddyTransfer: false,
   },
   reducers: {
     openCreateBankDialog(state) {
@@ -109,6 +110,12 @@ const dialogsSlice = createSlice({
     },
     closeBulkTransfer(state) {
       return { ...state, bulkTransfer: false };
+    },
+    openPayBuddyTransfer(state) {
+      return { ...state, payBuddyTransfer: true };
+    },
+    closePayBuddyTransfer(state) {
+      return { ...state, payBuddyTransfer: false };
     },
   },
 });

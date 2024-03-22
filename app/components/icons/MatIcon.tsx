@@ -46,6 +46,7 @@ export type Icon =
   | "analytics-outline"
   | "manage-accounts-outline"
   | "receipt-long-outline"
+  | "send-money"
   | "share-windows";
 
 type MatIconParams = {

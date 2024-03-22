@@ -6,6 +6,7 @@ export type Account = {
   balance: number;
   customer_id: number;
   customer: Customer;
+  type: "checking";
   created_at: Date | string;
   updated_at: Date | string;
 };

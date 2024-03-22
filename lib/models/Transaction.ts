@@ -13,6 +13,7 @@ export type Transaction = {
   user: User;
   created_at: Date | string;
   updated_at: Date | string;
+  type: "manual" | "paybuddy";
 };
 
 export enum TransactionStatus {
