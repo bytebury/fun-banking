@@ -5,8 +5,10 @@ type TypeAheadProps = {
   id: string;
   data: { displayText: string; value: any; searchText: string }[];
   children?: JSX.Element | string;
+  name: string;
+  onSelected: any;
 };
-export function TypeAhead({ id, data, children }: TypeAheadProps): JSX.Element {
+export function TypeAhead({ id, data, children, name, onSelected }: TypeAheadProps): JSX.Element {
   const wrapperRef = useRef<HTMLElement>(null);
   const [filteredData, setFilteredData] = useState(data);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -47,6 +49,7 @@ export function TypeAhead({ id, data, children }: TypeAheadProps): JSX.Element {
     setShowSuggestions(false);
 
     // TODO: EMIT THE EVENT!
+    onSelected(data);
   }
 
   return (
@@ -54,6 +57,7 @@ export function TypeAhead({ id, data, children }: TypeAheadProps): JSX.Element {
       <input
         className={showSuggestions ? styles.inputFocused : styles.input}
         id={id}
+        name={name}
         type="text"
         onChange={handleChange}
         value={currentValue}

@@ -6,41 +6,36 @@ import { TypeAhead } from "@/app/components/type-ahead/TypeAhead";
 import { AMOUNT_TOO_LARGE, hasErrors } from "@/app/utils/form-validators";
 import { formatCurrency } from "@/app/utils/formatters";
 import { GET, PUT } from "@/app/utils/http-client";
-import { fetchAccount, selectAccount } from "@/lib/features/accounts/accountsSlice";
-import {
-  selectCustomers,
-  fetchCustomers,
-  selectCustomer,
-} from "@/lib/features/customers/customerSlice";
+import { selectAccount } from "@/lib/features/accounts/accountsSlice";
+import { fetchCustomers, selectCustomer } from "@/lib/features/customers/customerSlice";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Customer } from "@/lib/models/Customer";
 import { useEffect, useRef, useState } from "react";
 
-export function PayBuddyTransferDialog() {
+export function BankBuddyTransferDialog() {
   const formRef = useRef<HTMLFormElement>(null);
   const customer = useAppSelector(selectCustomer);
   const account = useAppSelector(selectAccount);
   const [formData, setFormData] = useState({
-    accountId: account.id,
+    accountId: "",
     amount: "",
     description: "",
   });
   const [formErrors, setFormErrors] = useState({
+    accountId: "",
     amount: "",
     description: "",
   });
   const { showSnackbar } = useSnackbar();
 
   const dispatch = useAppDispatch();
-  const selectedCustomers = useAppSelector((state) => state.customers.selectedCustomers);
-  const customers = useAppSelector(selectCustomers);
   const [recipients, setRecipients] = useState<Customer[]>([]);
 
   useEffect(() => {
     const fetchRecipients = async () => {
       try {
-        const response = await GET(`/paybuddy/banks/${customer!.bank_id}/customers`);
+        const response = await GET(`/bankbuddy/banks/${customer!.bank_id}/customers`);
 
         if (response.ok) {
           const recipientsData = await response.json();
@@ -67,6 +62,8 @@ export function PayBuddyTransferDialog() {
 
   function validateField(name: keyof typeof formData, value: string) {
     const errors = { ...formErrors };
+
+    console.log(value);
 
     if (!value) {
       setFormErrors({ ...formErrors, [name]: "" });
@@ -96,6 +93,16 @@ export function PayBuddyTransferDialog() {
     setFormErrors(errors);
   }
 
+  function validateCustomerSelection(event: any): void {
+    const accountId = event.value?.accounts.at(0)?.id;
+
+    if (!accountId) {
+      setFormErrors({ ...formErrors, accountId: "Invalid customer selection" });
+    }
+
+    setFormData({ ...formData, accountId });
+  }
+
   function formatAmount(event: any): void {
     const numericValue = parseFloat(formData.amount.replace(/[^\d.]/g, ""));
 
@@ -114,47 +121,37 @@ export function PayBuddyTransferDialog() {
   async function createTransfer(event: any): Promise<void> {
     event.preventDefault();
 
-    const amount = parseFloat(formData.amount) * -1;
-    const description = formData.description;
+    const payload = {
+      to_account_id: formData.accountId,
+      from_account_id: account.id,
+      amount: parseFloat(formData.amount),
+      description: formData.description,
+    };
 
-    const payloads = Object.keys(selectedCustomers)
-      .map((customerId: any) => {
-        const customer = customers.find((customer) => customer.id === Number(customerId));
-        if (customer) {
-          return { account_id: customer.accounts[0].id, amount, description };
-        }
-      })
-      .filter(Boolean);
-    const requests = payloads.map((payload: any) => PUT("/transactions", payload));
     try {
-      const response = await Promise.all(requests);
+      const response = await PUT("/bankbuddy/transfer", payload);
 
-      if (response.every((r) => r.ok)) {
+      if (response.ok) {
         showSnackbar(`Successfully processed transfers for all of the customers.`);
+        close();
       } else {
-        showSnackbar(
-          `We were only able to transfer money to ${
-            response.filter((r) => !r.ok).length
-          } of the customers.`
-        );
+        showSnackbar(`Something went wrong sending money to that customer.`);
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      dispatch(fetchAccount(formData.accountId));
     }
   }
 
   function close(): void {
     dispatch(fetchCustomers(customer!.bank_id));
-    dispatch(dialogsAction.closePayBuddyTransfer());
+    dispatch(dialogsAction.closeBankBuddyTransfer());
   }
 
   return (
     <Dialog>
       <header>
         <MatIcon icon="send-money" />
-        <h1>Send Money with PayBuddy</h1>
+        <h1>Send Money with BankBuddy</h1>
       </header>
       <Notice icon="warning-outline">
         <div className="text-sm">Once you send money, you cannot get it back.</div>
@@ -163,12 +160,14 @@ export function PayBuddyTransferDialog() {
         <main className="flex flex-col gap-2">
           <div className="form-field">
             <TypeAhead
-              id="paybuddy_typeahead"
+              id="bankbuddy_typeahead"
+              name="accountId"
               data={recipients.map((r) => ({
                 displayText: `${r.first_name} ${r.last_name}`,
                 searchText: `${r.first_name} ${r.last_name}`,
                 value: r,
               }))}
+              onSelected={validateCustomerSelection}
             >
               Send To
             </TypeAhead>
