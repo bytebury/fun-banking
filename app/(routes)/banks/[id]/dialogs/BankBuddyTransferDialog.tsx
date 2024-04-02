@@ -4,9 +4,9 @@ import { Notice } from "@/app/components/notice/Notice";
 import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { TypeAhead } from "@/app/components/type-ahead/TypeAhead";
 import { AMOUNT_TOO_LARGE, hasErrors } from "@/app/utils/form-validators";
-import { formatCurrency } from "@/app/utils/formatters";
+import { capitalize, formatCurrency } from "@/app/utils/formatters";
 import { GET, PUT } from "@/app/utils/http-client";
-import { selectAccount } from "@/lib/features/accounts/accountsSlice";
+import { fetchAccount, selectAccount } from "@/lib/features/accounts/accountsSlice";
 import { fetchCustomers, selectCustomer } from "@/lib/features/customers/customerSlice";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -39,7 +39,7 @@ export function BankBuddyTransferDialog() {
 
         if (response.ok) {
           const recipientsData = await response.json();
-          setRecipients(recipientsData);
+          setRecipients(recipientsData.filter((recipient: any) => recipient.id !== customer?.id));
         } else {
           showSnackbar("Something went wrong retrieving recipients");
         }
@@ -94,10 +94,14 @@ export function BankBuddyTransferDialog() {
   }
 
   function validateCustomerSelection(event: any): void {
-    const accountId = event.value?.accounts.at(0)?.id;
+    const accountId = event?.value?.accounts
+      .filter((account: any) => account.type === "checking")
+      .at(0)?.id;
 
     if (!accountId) {
       setFormErrors({ ...formErrors, accountId: "Invalid customer selection" });
+    } else {
+      setFormErrors({ ...formErrors, accountId: "" });
     }
 
     setFormData({ ...formData, accountId });
@@ -144,6 +148,7 @@ export function BankBuddyTransferDialog() {
 
   function close(): void {
     dispatch(fetchCustomers(customer!.bank_id));
+    dispatch(fetchAccount(account.id));
     dispatch(dialogsAction.closeBankBuddyTransfer());
   }
 
@@ -158,12 +163,12 @@ export function BankBuddyTransferDialog() {
       </Notice>
       <form ref={formRef} className="flex flex-col gap-3" onSubmit={createTransfer}>
         <main className="flex flex-col gap-2">
-          <div className="form-field">
+          <div className={`form-field ${formErrors.accountId && "error"}`}>
             <TypeAhead
               id="bankbuddy_typeahead"
               name="accountId"
               data={recipients.map((r) => ({
-                displayText: `${r.first_name} ${r.last_name}`,
+                displayText: capitalize(`${r.first_name} ${r.last_name}`),
                 searchText: `${r.first_name} ${r.last_name}`,
                 value: r,
               }))}
@@ -171,6 +176,7 @@ export function BankBuddyTransferDialog() {
             >
               Send To
             </TypeAhead>
+            <div className="error-message">{formErrors.accountId}</div>
           </div>
           <div className={`form-field ${formErrors.amount && "error"}`}>
             <label htmlFor="transfer_money_dialog_amount">Amount</label>

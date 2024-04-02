@@ -53,3 +53,14 @@ export const formatKs = (value: string | number): string => {
   }
   return (value / 1_000_000).toFixed(1) + "M";
 };
+
+export const capitalize = (value: string): string => {
+  if (!value?.trim()) {
+    return "";
+  }
+
+  return value
+    .split(" ")
+    .map((value) => value.at(0)?.toUpperCase() + value.slice(1))
+    .join(" ");
+};

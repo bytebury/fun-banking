@@ -23,6 +23,7 @@ export function TypeAhead({ id, data, children, name, onSelected }: TypeAheadPro
     function handleClickOutside(event: any) {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
         setShowSuggestions(false);
+        onSelected(selectedValue);
       }
     }
 
@@ -30,7 +31,7 @@ export function TypeAhead({ id, data, children, name, onSelected }: TypeAheadPro
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [onSelected]);
 
   function handleChange(event: any): void {
     const { value } = event.target;
@@ -48,7 +49,7 @@ export function TypeAhead({ id, data, children, name, onSelected }: TypeAheadPro
     setCurrentValue(data.displayText);
     setShowSuggestions(false);
 
-    // TODO: EMIT THE EVENT!
+    // Emit the event
     onSelected(data);
   }
 
