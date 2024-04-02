@@ -31,7 +31,7 @@ export function TypeAhead({ id, data, children, name, onSelected }: TypeAheadPro
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [onSelected]);
+  }, [onSelected, selectedValue]);
 
   function handleChange(event: any): void {
     const { value } = event.target;
