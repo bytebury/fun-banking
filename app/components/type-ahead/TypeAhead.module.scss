@@ -24,6 +24,7 @@ ul.listItems {
     padding: 4px 18px;
     font-weight: normal !important;
     align-items: start !important;
+    @apply duration-0;
   }
 
   button:hover {

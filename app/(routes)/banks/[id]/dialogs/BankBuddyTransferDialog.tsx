@@ -139,7 +139,8 @@ export function BankBuddyTransferDialog() {
         showSnackbar(`Successfully processed transfers for all of the customers.`);
         close();
       } else {
-        showSnackbar(`Something went wrong sending money to that customer.`);
+        const error = await response.json();
+        showSnackbar(error.message);
       }
     } catch (error) {
       console.error(error);
