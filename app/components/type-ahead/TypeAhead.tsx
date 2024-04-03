@@ -84,13 +84,17 @@ export function TypeAhead({ id, data, children, name, onSelected }: TypeAheadPro
       <label htmlFor={id}>{children}</label>
       {showSuggestions && (
         <ul className={styles.listItems}>
-          {filteredData.map((fd, index) => {
-            return (
-              <li key={index} className="relative">
-                <button onClick={(e) => handleSelection(e, fd)}>{fd.displayText}</button>
-              </li>
-            );
-          })}
+          {filteredData.length > 0 &&
+            filteredData.map((fd, index) => {
+              return (
+                <li key={index} className="relative">
+                  <button onClick={(e) => handleSelection(e, fd)}>{fd.displayText}</button>
+                </li>
+              );
+            })}
+          {filteredData.length === 0 && (
+            <div className="py-1 px-4 text-gray-400">No results, try typing something else.</div>
+          )}
         </ul>
       )}
     </div>
