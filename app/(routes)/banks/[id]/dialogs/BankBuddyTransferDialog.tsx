@@ -204,7 +204,12 @@ export function BankBuddyTransferDialog() {
           </div>
         </main>
         <footer>
-          <input type="reset" onClick={close} className="common ghost" value="Cancel" />
+          <input
+            type="reset"
+            onClick={() => dispatch(dialogsAction.closeBankBuddyTransfer())}
+            className="common ghost"
+            value="Cancel"
+          />
           <input type="submit" value="Send Money" className="common ghost" disabled={isInvalid()} />
         </footer>
       </form>

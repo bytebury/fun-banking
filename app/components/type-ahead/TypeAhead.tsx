@@ -21,7 +21,7 @@ export function TypeAhead({ id, data, children, name, onSelected }: TypeAheadPro
 
   useEffect(() => {
     function handleClickOutside(event: any) {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target) && showSuggestions) {
         setShowSuggestions(false);
         onSelected(selectedValue);
       }
@@ -31,7 +31,23 @@ export function TypeAhead({ id, data, children, name, onSelected }: TypeAheadPro
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [onSelected, selectedValue]);
+  }, [onSelected, selectedValue, showSuggestions]);
+
+  useEffect(() => {
+    function handleBackspace(event: any) {
+      if (selectedValue && showSuggestions && event.code === "Backspace") {
+        setSelectedValue(null);
+        setCurrentValue("");
+        onSelected(null);
+      }
+    }
+
+    document.addEventListener("keydown", handleBackspace);
+
+    return () => {
+      document.removeEventListener("keydown", handleBackspace);
+    };
+  }, [onSelected, selectedValue, showSuggestions]);
 
   function handleChange(event: any): void {
     const { value } = event.target;
