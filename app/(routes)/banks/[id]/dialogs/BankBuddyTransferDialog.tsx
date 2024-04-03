@@ -167,10 +167,10 @@ export function BankBuddyTransferDialog() {
             <TypeAhead
               id="bankbuddy_typeahead"
               name="accountId"
-              data={recipients.map((r) => ({
-                displayText: capitalize(`${r.first_name} ${r.last_name}`),
-                searchText: `${r.first_name} ${r.last_name}`,
-                value: r,
+              data={recipients.map((recipient) => ({
+                displayText: capitalize(`${recipient.first_name} ${recipient.last_name}`),
+                searchText: `${recipient.first_name} ${recipient.last_name}`,
+                value: recipient,
               }))}
               onSelected={validateCustomerSelection}
             >
