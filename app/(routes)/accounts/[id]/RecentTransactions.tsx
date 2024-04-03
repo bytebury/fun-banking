@@ -3,6 +3,7 @@ import {
   fetchCompletedTransactions,
   selectCompletedTransactions,
 } from "@/lib/features/accounts/accountsSlice";
+import { selectCustomer } from "@/lib/features/customers/customerSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { ThunkStatus } from "@/lib/thunk";
 import Link from "next/link";
@@ -16,6 +17,7 @@ type RecentTransactionsProps = {
 export function RecentTransactions({ account }: RecentTransactionsProps) {
   const dispatch = useAppDispatch();
   const { data: transactions, status } = useAppSelector(selectCompletedTransactions);
+  const customer = useAppSelector(selectCustomer);
   const [pageNumber, setPageNumber] = useState(1);
   const itemsPerPage = 8;
 
@@ -31,6 +33,31 @@ export function RecentTransactions({ account }: RecentTransactionsProps) {
 
   function goToPreviousPage(): void {
     setPageNumber((pageNumber) => (pageNumber -= 1));
+  }
+
+  function getApprovalMessage(transaction: any) {
+    if (transaction.type === "bank_buddy" && transaction.bank_buddy_sender) {
+      if (transaction.bank_buddy_sender_id === customer?.id) {
+        return <>Sent via BankBuddy</>;
+      }
+      return (
+        <>
+          Sent via BankBuddy by{" "}
+          <span className="capitalize">
+            {transaction.bank_buddy_sender.first_name} {transaction.bank_buddy_sender.last_name}
+          </span>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <span className="capitalize">{transaction.status}</span> by{" "}
+        <Link href={`/profile/${transaction.user.username}`} className="capitalize">
+          {transaction.user.first_name} {transaction.user.last_name}
+        </Link>
+      </>
+    );
   }
 
   if (!transactions.items || status === ThunkStatus.Loading) {
@@ -59,12 +86,7 @@ export function RecentTransactions({ account }: RecentTransactionsProps) {
                 }`}
               >
                 <div className="flex flex-col">
-                  <div className={`text-gray-500 text-xs`}>
-                    <span className="capitalize">{transaction.status}</span> by{" "}
-                    <Link href={`/profile/${transaction.user.username}`} className="capitalize">
-                      {transaction.user.first_name} {transaction.user.last_name}
-                    </Link>
-                  </div>
+                  <div className={`text-gray-500 text-xs`}>{getApprovalMessage(transaction)}</div>
                   <p>{transaction.description}</p>
                   <time className="text-gray-500 text-xs" dateTime={transaction.created_at}>
                     {formatDate(transaction.created_at, { hour: "numeric", minute: "numeric" })}
