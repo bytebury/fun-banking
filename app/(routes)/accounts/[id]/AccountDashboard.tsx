@@ -17,6 +17,8 @@ import { GET } from "@/app/utils/http-client";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { AccountStatementDocument } from "./AccountStatementDocument";
 import { BankBuddyTransferDialog } from "../../banks/[id]/dialogs/BankBuddyTransferDialog";
+import { isFeatureOn } from "@/app/utils/feature-flag.utils";
+import { AccountTransferDialog } from "../../banks/[id]/dialogs/AccountTransferDialog";
 
 type AccountDashboardProps = { account: any };
 
@@ -64,6 +66,10 @@ export function AccountDashboard({ account }: AccountDashboardProps) {
 
   function openBankBuddyTransferDialog(): void {
     dispatch(dialogsAction.openBankBuddyTransfer());
+  }
+
+  function openAccountTransferDialog(): void {
+    dispatch(dialogsAction.openAccountTransfer());
   }
 
   function getStatementAsCSV(): any[] {
@@ -115,6 +121,22 @@ export function AccountDashboard({ account }: AccountDashboardProps) {
               Send Money
             </button>
           </div>
+          {isFeatureOn("transfers") && (
+            <div className="flex items-center justify-center">
+              {customer.accounts.length > 1 ? (
+                <div>
+                  <button
+                    onClick={openAccountTransferDialog}
+                    className="font-normal underline text-primary"
+                  >
+                    Transfer Between Accounts
+                  </button>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+          )}
         </div>
       </Card>
       {statement.length > 0 && (
@@ -148,6 +170,7 @@ export function AccountDashboard({ account }: AccountDashboardProps) {
       {dialogs.transferMoney && <TransferMoneyDialog />}
       {dialogs.editAccount && <EditAccountNameDialog />}
       {dialogs.bankBuddyTransfer && <BankBuddyTransferDialog />}
+      {dialogs.accountTransfer && <AccountTransferDialog />}
     </div>
   );
 }

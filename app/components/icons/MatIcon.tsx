@@ -48,6 +48,7 @@ export type Icon =
   | "receipt-long-outline"
   | "send-money"
   | "verified"
+  | "animation"
   | "share-windows";
 
 type MatIconParams = {

@@ -13,6 +13,7 @@ const dialogsSlice = createSlice({
     editAccount: false,
     bulkTransfer: false,
     bankBuddyTransfer: false,
+    accountTransfer: false,
   },
   reducers: {
     openCreateBankDialog(state) {
@@ -116,6 +117,12 @@ const dialogsSlice = createSlice({
     },
     closeBankBuddyTransfer(state) {
       return { ...state, bankBuddyTransfer: false };
+    },
+    openAccountTransfer(state) {
+      return { ...state, accountTransfer: true };
+    },
+    closeAccountTransfer(state) {
+      return { ...state, accountTransfer: false };
     },
   },
 });
