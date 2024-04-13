@@ -64,11 +64,11 @@ export function ShopList() {
   }
 
   return (
-    <div>
+    <div className="flex flex-col gap-0.5">
       {shops.data.map((shop) => {
         return (
           <div className="flex gap-1.5 items-center" key={shop.id}>
-            <MatIcon icon="storefront-outline" className="text-primary shrink-0" />
+            <MatIcon icon="storefront-outline" className="shrink-0" />
             <div className="whitespace-nowrap text-ellipsis overflow-hidden text-sm">
               <Link href={`shops/${shop.id}`}>{shop.name}</Link>
             </div>
