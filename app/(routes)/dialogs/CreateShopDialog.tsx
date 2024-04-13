@@ -6,6 +6,7 @@ import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { hasErrors } from "@/app/utils/form-validators";
 import { PUT } from "@/app/utils/http-client";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
+import { fetchShops } from "@/lib/features/shops/shops.slice";
 import { useAppDispatch } from "@/lib/hooks";
 import { ShopRequest } from "@/lib/models/Shop";
 import { useState } from "react";
@@ -99,7 +100,7 @@ export function CreateShopDialog() {
         // router.push(`/shops/${id}`);
         close();
         showSnackbar("Successfully created your new shop!");
-        // dispatch(fetchShops());
+        dispatch(fetchShops());
       } else {
         const { message } = await response.json();
         showSnackbar(message);
