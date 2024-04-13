@@ -13,8 +13,16 @@ export type Transaction = {
   user: User;
   created_at: Date | string;
   updated_at: Date | string;
-  type: "manual" | "bankbuddy";
+  type: "manual" | "bankbuddy" | "transfer";
+  origin: TransactionType;
 };
+
+export enum TransactionType {
+  Manual,
+  BankBuddy,
+  Transfer,
+  Shopping,
+}
 
 export enum TransactionStatus {
   Pending = "pending",
