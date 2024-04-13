@@ -73,7 +73,7 @@ export default function DashboardPage() {
                   <h1 className="flex items-center gap-1">
                     Shops <HelpText size={20}>A place where customers can purchase items</HelpText>
                   </h1>
-                  {user?.subscription_tier < SubscriptionTier.Premium ? (
+                  {(user?.subscription_tier ?? SubscriptionTier.Free) < SubscriptionTier.Premium ? (
                     <PremiumButton>Get Premium</PremiumButton>
                   ) : (
                     <button onClick={openCreateShopDialog} className="sm common filled">
