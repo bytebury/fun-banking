@@ -10,13 +10,13 @@ type bankLimits = {
   employees: number;
   customers: number;
   accounts: number;
-  stores: number;
+  shops: number;
 };
 
 export type FeatureFlags = {
   ads: boolean;
   account_transfers: boolean;
-  stores: boolean;
+  shops: boolean;
 };
 
 export type BankConfig = {
@@ -24,7 +24,6 @@ export type BankConfig = {
   limits: {
     [SubscriptionTier.Free]: bankLimits;
     [SubscriptionTier.Premium]: bankLimits;
-    [SubscriptionTier.Family]: bankLimits;
     [SubscriptionTier.Organization]: bankLimits;
   };
 };

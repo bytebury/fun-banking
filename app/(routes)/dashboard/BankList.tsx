@@ -25,7 +25,7 @@ export function BankList() {
   if (banksStatus === ThunkStatus.Loading || !banks) {
     return (
       <div className="flex flex-col gap-2">
-        {Array.from({ length: 5 }).map((_, index) => {
+        {Array.from({ length: 3 }).map((_, index) => {
           return (
             <div key={index} className="flex items-center gap-2">
               <div className="shimmer w-6 h-6 rounded-full bg-gray-100 shrink-0"></div>

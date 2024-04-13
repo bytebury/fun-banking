@@ -53,5 +53,5 @@ export const fetchCurrentUser = createAsyncThunk<User>("users/current", async (_
   return response.json();
 });
 
-export const selectCurrentUser = (state: any): User => state.users.current;
+export const selectCurrentUser = (state: any): User | undefined => state.users.current;
 export const selectCurrentUserStatus = (state: any): ThunkStatus => state.users.currentStatus;

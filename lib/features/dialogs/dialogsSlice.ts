@@ -14,6 +14,7 @@ const dialogsSlice = createSlice({
     bulkTransfer: false,
     bankBuddyTransfer: false,
     accountTransfer: false,
+    createShop: false,
   },
   reducers: {
     openCreateBankDialog(state) {
@@ -123,6 +124,9 @@ const dialogsSlice = createSlice({
     },
     closeAccountTransfer(state) {
       return { ...state, accountTransfer: false };
+    },
+    toggleCreateShop(state, action) {
+      return { ...state, createShop: action.payload };
     },
   },
 });

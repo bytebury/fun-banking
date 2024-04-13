@@ -13,11 +13,12 @@ import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { useEffect, useState } from "react";
 import { Dialog } from "@/app/components/dialog/Dialog";
 import { selectFeatures } from "@/lib/features/config/configSlice";
-import { StoreList } from "./StoreList";
+import { ShopList } from "./ShopList";
 import { selectCurrentUser } from "@/lib/features/users/usersSlice";
 import { SubscriptionTier } from "@/lib/models/User";
 import { PremiumButton } from "@/app/components/buttons/PremiumButton";
 import { HelpText } from "@/app/components/help-text/HelpText";
+import { CreateShopDialog } from "../dialogs/CreateShopDialog";
 
 export default function DashboardPage() {
   const features = useAppSelector(selectFeatures);
@@ -39,8 +40,12 @@ export default function DashboardPage() {
     setShowDisclaimer(false);
   }
 
-  function openCreateBankDialog() {
+  function openCreateBankDialog(): void {
     dispatch(dialogsAction.openCreateBankDialog());
+  }
+
+  function openCreateShopDialog(): void {
+    dispatch(dialogsAction.toggleCreateShop(true));
   }
 
   return (
@@ -62,23 +67,24 @@ export default function DashboardPage() {
                 <BankList />
               </nav>
             </Card>
-            {features?.stores && (
+            {features?.shops && (
               <Card type="outlined" className="flex flex-col gap-4 w-full md:w-72 shrink-0">
                 <section className="flex items-center justify-between">
                   <h1 className="flex items-center gap-1">
-                    Stores <HelpText size={20}>A place where customers can purchase items</HelpText>
+                    Shops <HelpText size={20}>A place where customers can purchase items</HelpText>
                   </h1>
-                  {user.subscription_tier < SubscriptionTier.Premium ? (
+                  {user?.subscription_tier < SubscriptionTier.Premium ? (
                     <PremiumButton>Get Premium</PremiumButton>
                   ) : (
-                    <button onClick={openCreateBankDialog} className="sm common filled">
+                    <button onClick={openCreateShopDialog} className="sm common filled">
                       <MatIcon icon="add" />
                       New
                     </button>
                   )}
+                  {dialogs?.createShop && <CreateShopDialog />}
                 </section>
                 <nav>
-                  <StoreList />
+                  <ShopList />
                 </nav>
               </Card>
             )}

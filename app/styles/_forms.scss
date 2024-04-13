@@ -57,7 +57,15 @@
   }
 }
 
-.form-field.error {
+.form-field {
+  & > .error-message,
+  & > .form-error {
+    display: none;
+  }
+}
+
+.form-field.error,
+.form-field.form-error {
   label {
     color: var(--error);
   }
@@ -67,7 +75,9 @@
     @apply focus:ring-2 ring-error-shadow outline-none;
   }
 
-  .error-message {
+  .error-message,
+  .form-error {
+    display: block;
     color: var(--error);
     @apply text-xs mt-1;
   }

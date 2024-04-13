@@ -51,6 +51,8 @@ export type Icon =
   | "animation"
   | "workspace-premium-outline"
   | "help-outline"
+  | "add-business-outline"
+  | "storefront-outline"
   | "share-windows";
 
 type MatIconParams = {

@@ -22,6 +22,5 @@ export enum UserRole {
 export enum SubscriptionTier {
   Free,
   Premium,
-  Family,
   Organization,
 }
