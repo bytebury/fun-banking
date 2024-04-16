@@ -9,10 +9,12 @@ import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { fetchShops } from "@/lib/features/shops/shops.slice";
 import { useAppDispatch } from "@/lib/hooks";
 import { ShopRequest } from "@/lib/models/Shop";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function CreateShopDialog() {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const { showSnackbar } = useSnackbar();
 
   const [disabled, setDisabled] = useState(false);
@@ -91,13 +93,13 @@ export function CreateShopDialog() {
     try {
       const payload: ShopRequest = {
         name: formData.shop_name,
-        tax_rate: parseFloat(formData.tax_rate),
+        tax_rate: parseFloat(formData.tax_rate) / 100,
       };
       const response = await PUT("/shops", payload);
 
       if (response.ok) {
         const { id } = await response.json();
-        // router.push(`/shops/${id}`);
+        router.push(`/shops/${id}`);
         close();
         showSnackbar("Successfully created your new shop!");
         dispatch(fetchShops());
@@ -126,6 +128,7 @@ export function CreateShopDialog() {
               id="shop_name"
               name="shop_name"
               type="text"
+              autoComplete="off"
               maxLength={50}
               onChange={handleChange}
               onBlur={handleChange}
@@ -140,6 +143,7 @@ export function CreateShopDialog() {
                 name="tax_rate"
                 type="number"
                 inputMode="decimal"
+                step="0.01"
                 onChange={handleChange}
                 onBlur={(event) => {
                   handleChange(event);

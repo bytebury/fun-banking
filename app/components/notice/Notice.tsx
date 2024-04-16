@@ -4,7 +4,7 @@ import styles from "./Notice.module.scss";
 type NoticeParams = {
   icon?: Icon;
   type?: "default" | "error" | "info";
-  children: JSX.Element | string;
+  children: any;
 };
 
 export function Notice({ icon, children, type }: NoticeParams) {

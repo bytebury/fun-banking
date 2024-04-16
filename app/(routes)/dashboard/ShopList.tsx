@@ -41,7 +41,7 @@ export function ShopList() {
   if ((user?.subscription_tier ?? 0) < SubscriptionTier.Premium) {
     return (
       <div className="flex flex-col gap-2 text-gray-600 text-sm">
-        This feature is only allowed for premium users.
+        This feature is only available for premium users.
         <div>
           <Link className="premium-link" href={"dashboard"}>
             Upgrade to Premium Today

@@ -1,21 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = {
+  createBank: false,
+  addCustomer: false,
+  deleteCustomer: false,
+  editCustomer: false,
+  deleteBank: false,
+  viewCustomer: false,
+  transferMoney: false,
+  editAccount: false,
+  bulkTransfer: false,
+  bankBuddyTransfer: false,
+  accountTransfer: false,
+  createShop: false,
+  editShop: false,
+  deleteShop: false,
+  createItem: false,
+  editItem: false,
+  deleteItem: false,
+};
+
 const dialogsSlice = createSlice({
-  name: "dialogsSlice",
-  initialState: {
-    createBank: false,
-    addCustomer: false,
-    deleteCustomer: false,
-    editCustomer: false,
-    deleteBank: false,
-    viewCustomer: false,
-    transferMoney: false,
-    editAccount: false,
-    bulkTransfer: false,
-    bankBuddyTransfer: false,
-    accountTransfer: false,
-    createShop: false,
-  },
+  name: "dialogs",
+  initialState,
   reducers: {
     openCreateBankDialog(state) {
       return {
@@ -128,7 +135,25 @@ const dialogsSlice = createSlice({
     toggleCreateShop(state, action) {
       return { ...state, createShop: action.payload };
     },
+    toggleEditShop(state, action) {
+      return { ...state, editShop: action.payload };
+    },
+    toggleDeleteShop(state, action) {
+      return { ...state, deleteShop: action.payload };
+    },
+    toggleCreateItem(state, action) {
+      return { ...state, createItem: action.payload };
+    },
+    toggleEditItem(state, action) {
+      return { ...state, editItem: action.payload };
+    },
+    toggleDeleteItem(state, action) {
+      return { ...state, deleteItem: action.payload };
+    },
   },
 });
 
 export const { actions: dialogsAction, reducer: dialogsReducer } = dialogsSlice;
+
+export const selectDialogs = (state: any) =>
+  state.dialogs as { [k in keyof typeof initialState]: boolean };

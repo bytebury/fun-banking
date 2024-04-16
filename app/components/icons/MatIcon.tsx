@@ -19,6 +19,7 @@ export type Icon =
   | "dashboard-outline"
   | "inactive-order-outline"
   | "waving-hand-outline"
+  | "satellite-alt-outline"
   | "settings-outline"
   | "content-paste"
   | "inventory"
@@ -53,6 +54,7 @@ export type Icon =
   | "help-outline"
   | "add-business-outline"
   | "storefront-outline"
+  | "category-outline"
   | "share-windows";
 
 type MatIconParams = {

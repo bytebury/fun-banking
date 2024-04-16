@@ -1,3 +1,4 @@
+import { Item } from "./Item";
 import { User } from "./User";
 
 export type Shop = {
@@ -6,6 +7,7 @@ export type Shop = {
   tax_rate: number;
   user_id: number;
   user: User;
+  items: Item[];
   created_at: Date;
   updated_at: Date;
 };
