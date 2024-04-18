@@ -21,7 +21,7 @@ export function EditItemDialog() {
     shop_id: item?.shop_id ?? 0,
     name: item?.name ?? "",
     description: item?.description ?? "",
-    price: convertToPrice(item?.price.toString() ?? "").toString(),
+    price: formatCurrency(convertToPrice(item?.price.toString() ?? "")),
     number_in_stock: item?.number_in_stock.toString() ?? "",
   });
   const [formErrors, setFormErrors] = useState({

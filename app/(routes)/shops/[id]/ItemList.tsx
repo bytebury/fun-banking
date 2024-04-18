@@ -28,11 +28,6 @@ export function ItemList({ items }: Props) {
     dispatch(dialogsAction.toggleEditItem(true));
   }
 
-  function openViewDialog(item: Item): void {
-    dispatch(itemsAction.setItem(item));
-    console.log(item);
-  }
-
   if (items.status < ThunkStatus.Success) {
     return <div>Loading...</div>;
   }
@@ -71,9 +66,10 @@ export function ItemList({ items }: Props) {
               {item.name}
               <div className="pill bg-tonal w-fit text-xs">{formatCurrency(item.price)}</div>
             </div>
-            <div>
+            <div>{item.description}</div>
+            <div className="text-gray-600 text-xs">
               {item.number_in_stock ? (
-                `${item.number_in_stock} in stock`
+                `${item.number_in_stock} left in stock`
               ) : (
                 <span className="text-rose-500">out of stock</span>
               )}
@@ -82,12 +78,6 @@ export function ItemList({ items }: Props) {
           <div className="w-fit">
             <PopoverMenu>
               <ul>
-                <li>
-                  <button onClick={() => openViewDialog(item)}>
-                    <MatIcon icon="visibility-outline" />
-                    View {item.name}
-                  </button>
-                </li>
                 <li>
                   <button onClick={() => openEditDialog(item)}>
                     <MatIcon icon="edit-outline" />

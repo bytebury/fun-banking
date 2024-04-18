@@ -4,6 +4,7 @@ import { useSnackbar } from "@/app/components/snackbar/snackbar-context";
 import { DELETE } from "@/app/utils/http-client";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
 import { itemsAction, selectCurrentItem } from "@/lib/features/items/items.slice";
+import { fetchItems } from "@/lib/features/shops/shops.slice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 export function DeleteItemDialog() {
@@ -22,6 +23,7 @@ export function DeleteItemDialog() {
       if (response.ok) {
         close();
         showSnackbar(`Successfully deleted ${item?.name}`);
+        dispatch(fetchItems(item?.shop_id.toString() ?? ""));
         dispatch(itemsAction.setItem(null));
       } else {
         const { message } = await response.json();
