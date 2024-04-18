@@ -3,6 +3,7 @@ import { Notice } from "@/app/components/notice/Notice";
 import PopoverMenu from "@/app/components/popovers/PopoverMenu";
 import { formatCurrency } from "@/app/utils/formatters";
 import { dialogsAction } from "@/lib/features/dialogs/dialogsSlice";
+import { itemsAction } from "@/lib/features/items/items.slice";
 import { useAppDispatch } from "@/lib/hooks";
 import { Item } from "@/lib/models/Item";
 import { ThunkStatus } from "@/lib/thunk";
@@ -15,6 +16,21 @@ export function ItemList({ items }: Props) {
 
   function openCreateItemDialog(): void {
     dispatch(dialogsAction.toggleCreateItem(true));
+  }
+
+  function openDeleteDialog(item: Item): void {
+    dispatch(itemsAction.setItem(item));
+    dispatch(dialogsAction.toggleDeleteItem(true));
+  }
+
+  function openEditDialog(item: Item): void {
+    dispatch(itemsAction.setItem(item));
+    dispatch(dialogsAction.toggleEditItem(true));
+  }
+
+  function openViewDialog(item: Item): void {
+    dispatch(itemsAction.setItem(item));
+    console.log(item);
   }
 
   if (items.status < ThunkStatus.Success) {
@@ -67,20 +83,20 @@ export function ItemList({ items }: Props) {
             <PopoverMenu>
               <ul>
                 <li>
-                  <button>
+                  <button onClick={() => openViewDialog(item)}>
                     <MatIcon icon="visibility-outline" />
                     View {item.name}
                   </button>
                 </li>
                 <li>
-                  <button>
+                  <button onClick={() => openEditDialog(item)}>
                     <MatIcon icon="edit-outline" />
                     Manage {item.name}
                   </button>
                 </li>
                 <hr />
                 <li>
-                  <button>
+                  <button onClick={() => openDeleteDialog(item)}>
                     <MatIcon icon="delete-outline" />
                     Delete {item.name}
                   </button>

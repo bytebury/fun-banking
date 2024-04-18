@@ -6,7 +6,9 @@ import { ThunkStatus } from "@/lib/thunk";
 import { ItemList } from "./ItemList";
 import { MatIcon } from "@/app/components/icons/MatIcon";
 import { dialogsAction, selectDialogs } from "@/lib/features/dialogs/dialogsSlice";
-import { CreateItemDialog } from "../../dialogs/CreateItemDialog";
+import { CreateItemDialog } from "./dialogs/CreateItemDialog";
+import { DeleteItemDialog } from "./dialogs/DeleteItemDialog";
+import { EditItemDialog } from "./dialogs/EditItemDialog";
 
 export default function ShopsPage() {
   const dispatch = useAppDispatch();
@@ -33,6 +35,8 @@ export default function ShopsPage() {
         <ItemList items={items}></ItemList>
       </div>
       {dialogs.createItem && <CreateItemDialog />}
+      {dialogs.deleteItem && <DeleteItemDialog />}
+      {dialogs.editItem && <EditItemDialog />}
     </>
   );
 }

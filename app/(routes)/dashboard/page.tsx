@@ -18,7 +18,7 @@ import { selectCurrentUser } from "@/lib/features/users/usersSlice";
 import { SubscriptionTier } from "@/lib/models/User";
 import { PremiumButton } from "@/app/components/buttons/PremiumButton";
 import { HelpText } from "@/app/components/help-text/HelpText";
-import { CreateShopDialog } from "../dialogs/CreateShopDialog";
+import { CreateShopDialog } from "../shops/[id]/dialogs/CreateShopDialog";
 
 export default function DashboardPage() {
   const features = useAppSelector(selectFeatures);
