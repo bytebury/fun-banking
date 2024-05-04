@@ -12,4 +12,4 @@ export type Shop = {
   updated_at: Date;
 };
 
-export type ShopRequest = Pick<Shop, "name" | "tax_rate">;
+export type ShopRequest = Pick<Shop, "name" | "tax_rate"> & Partial<Shop>;
