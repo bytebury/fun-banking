@@ -5,6 +5,7 @@ import {
 } from "@/lib/features/accounts/accountsSlice";
 import { selectCustomer } from "@/lib/features/customers/customerSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { TransactionType } from "@/lib/models/Transaction";
 import { ThunkStatus } from "@/lib/thunk";
 import Link from "next/link";
 import React from "react";
@@ -36,7 +37,7 @@ export function RecentTransactions({ account }: RecentTransactionsProps) {
   }
 
   function getApprovalMessage(transaction: any) {
-    if (transaction.type === "bank_buddy") {
+    if (transaction.type === TransactionType.BankBuddy) {
       if (transaction.bank_buddy_sender_id === customer?.id) {
         return <>Sent via BankBuddy</>;
       }

@@ -13,15 +13,14 @@ export type Transaction = {
   user: User;
   created_at: Date | string;
   updated_at: Date | string;
-  type: "manual" | "bankbuddy" | "transfer";
-  origin: TransactionType;
+  type: TransactionType;
 };
 
 export enum TransactionType {
-  Manual,
-  BankBuddy,
-  Transfer,
-  Shopping,
+  Manual = "manual",
+  BankBuddy = "bank_buddy",
+  Transfer = "transfer",
+  Shopping = "shopping",
 }
 
 export enum TransactionStatus {
